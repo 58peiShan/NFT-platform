@@ -1,10 +1,10 @@
 import { Routes, Route, NavLink } from "react-router-dom";
 import React from "react";
 
-function Product() {
+function Error() {
   return (
    <>404</>
   );
 }
 
-export default Product;
+export default Error;

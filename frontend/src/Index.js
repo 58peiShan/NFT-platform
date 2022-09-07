@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import Header from "./component/Header.jsx";
 import Home from "./pages/home/home.jsx";
 import Product from "./pages/products/index.jsx";
+import Cart from "./pages/cart/index.jsx";
 import Error from "./pages/Error.jsx";
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Product/>} />
+        <Route path="/cart" element={<Cart/>} />
         <Route path="*" element={<Error/>} />
       </Routes>
     </>
@@ -27,3 +29,7 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+if (module.hot) {
+  module.hot.accept();
+}
