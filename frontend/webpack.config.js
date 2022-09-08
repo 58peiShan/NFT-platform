@@ -5,7 +5,7 @@ const webpack = require("webpack");
 module.exports = {
   mode: "development",
   devtool: "inline-souce-map",
-  entry: ["./src/App.jsx", "./src/index.js"],
+  entry: ["webpack-hot-middleware/client","./src/App.jsx", "./src/index.js"],
   output: {
     filename: "./js/[name].js",
     path: path.resolve(__dirname, "dist"),
@@ -47,7 +47,7 @@ module.exports = {
     ],
   },
   plugins: [
-    // new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       filename: "index.html",

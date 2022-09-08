@@ -1,25 +1,75 @@
 :root {
   --primary: rgb(104, 104, 104);
-  --select:rgb(42, 89, 151);
+  --secondary: rgb(165, 165, 165);
+  --select: rgb(49, 150, 218);
+  --select-hover: rgb(87, 171, 228);
   --highlight: rgb(0, 0, 0);
   --background-color: linear-gradient(45deg, #788ff5, #1deeee);
+  --btnFont: 15px;
 }
 * {
   margin: 0;
   padding: 0;
+  font-family: "Noto Sans", sans-serif;
+}
+
+h1 {
+  font-size: 45px;
 }
 body,
 html {
   height: 100vh;
   width: 100vw;
-  background: var(--background-color);
+  overflow-x: hidden;
+  // background: var(--background-color);
 }
-a a:link {
-  text-decoration: none !important;
+
+button {
+  margin: 0 15px;
+  width: 140px;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: var(--btnFont);
 }
-header {
-  height: 100px;
+
+.banner {
+  width: 100vw;
+  height: 230px;
+}
+.btnMain {
+  background: var(--select);
+  a {
+    color: #fff;
+    text-decoration: none;
+    align-items: center;
+  }
+}
+.btnMain:hover {
+  cursor: pointer;
+  background: var(--select-hover);
+}
+
+.btnSec {
+  color: var(--select);
+  background-color: #fff;
+}
+
+.d-flex {
   display: flex;
+}
+
+.d-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+header {
+  z-index: 3;
+  position: sticky;
+  top: 0;
+  height: 80px;
   justify-content: space-around;
   align-items: center;
   background-color: rgb(255, 255, 255);
@@ -27,6 +77,8 @@ header {
   font-size: 1.5rem;
   list-style-type: none;
   .logo {
+    color: var(--highlight);
+    font-weight: 700;
     display: flex;
     align-items: center;
     height: 80px;
@@ -36,6 +88,7 @@ header {
   }
 
   .links {
+    font-size: 20px;
     display: flex;
     width: 60vw;
     justify-content: space-around;
@@ -54,24 +107,95 @@ input {
   border-radius: 10px;
   padding: 10px;
 }
+.bg {
+  height: 586px;
+  background-size: cover;
+  background-color: rgb(255, 255, 255);
+  background-position: center center;
+  opacity: 0.3;
+  filter: blur(8px);
+  -webkit-mask: linear-gradient(rgb(255, 255, 255), transparent);
+}
 
+.bg + .divcontainer {
+  position: absolute;
+  top: 20%;
+  left: 15%;
+}
+.divcontainer > h1 {
+  margin: 30px 0 40px 0;
+}
+.divcontainer {
+  width: 75vw;
+  margin: auto;
+  padding-top: 50px;
+
+  ul {
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    a {
+      font-weight: 500;
+      padding: 5px 30px;
+      text-decoration: none;
+      color: var(--secondary);
+      border-bottom: var(--secondary) 2px solid;
+    }
+    a:hover {
+      color: var(--primary);
+    }
+  }
+  li a.active {
+    color: var(--highlight);
+    border-bottom: var(--highlight) 2px solid;
+  }
+  .text {
+    flex-direction: column;
+    justify-content: space-around;
+    height: 40vh;
+    p {
+      width: 75%;
+      font-size: 24px;
+    }
+  }
+  .img {
+    justify-content: center;
+  }
+}
+.cardInfo {
+  padding-bottom: 35px;
+  align-items: center;
+  object-fit: cover;
+  justify-content: space-around;
+  justify-self: space-around;
+  border-radius: 50%;
+}
+.cardInfo div:first-child {
+  img {
+    height: 40px;
+    width: 40px;
+  }
+}
 .card {
   margin: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   overflow: hidden;
   padding: 0;
-  width: 300px;
-  height: 450px;
   border-radius: 20px;
   background-color: #fff;
-  .container{
+  box-shadow: #ccc 0px 3px 5px;
+
+  .container {
     text-align: start;
     padding-left: 30px;
   }
-  .imgContainer{
-    height: 70%;
+  .imgContainer {
+    height: 80%;
     width: 100%;
   }
   img {
@@ -80,17 +204,22 @@ input {
     object-fit: cover;
     border-radius: 20px 20px 0 0;
   }
-  .buyBtn{
+  .buyBtn {
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     height: 40px;
-   transform: translateY(100%);
-    background-color:var(--select);
+    transform: translateY(100%);
+    background-color: var(--select);
     cursor: pointer;
   }
+}
+.card.product {
+  width: 300px;
+  height: 450px;
+  justify-content: space-between;
 }
 .card:hover {
   .buyBtn {

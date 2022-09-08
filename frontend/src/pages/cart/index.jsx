@@ -1,9 +1,13 @@
-import {NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import React from "react";
 
 function Cart() {
   return (
-   <>Cart</>
+    <>
+      <div className="divcontainer">
+        
+      </div>
+    </>
   );
 }
 

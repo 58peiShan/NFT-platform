@@ -1,10 +1,12 @@
 import React from "react";
 import productImg from "../img/Spaceface.jpg";
 
-function Card() {
+function Card(props) {
+  const category =  props.category
   return (
     <>
-      <div className="card">
+       <h1>{category}</h1>
+      <div className="card product">
         <div className="imgContainer">
           <img src={productImg} alt="Avatar" />
         </div>
