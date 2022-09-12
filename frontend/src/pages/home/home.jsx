@@ -2,6 +2,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import React from "react";
 import indexImg from "../../img/immortal.jpg";
 import authorImg from "../../img/author_JIMMY.png";
+import Footer from '../../component/Footer.jsx';
 
 function Home() {
   return (
@@ -17,7 +18,7 @@ function Home() {
           </div>
         </div>
         <div className="img d-flex">
-          <div className="card" style={{ width: "35vw",height:'600px',justifyContent:'space-between' }}>
+          <div className="card" style={{ width: "500px",height:'400px',justifyContent:'space-between' }}>
             <div className="imgContainer">
               <img src={indexImg} alt="" />
             </div>
@@ -30,6 +31,7 @@ function Home() {
                 <p>JIMMYYY</p>
               </div>
               <div>[??????]</div>
+   
             </div>
           </div>
         </div>

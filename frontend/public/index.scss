@@ -5,7 +5,7 @@
   --select-hover: rgb(87, 171, 228);
   --highlight: rgb(0, 0, 0);
   --background-color: linear-gradient(45deg, #788ff5, #1deeee);
-  --btnFont: 15px;
+  --btnFont: 14px;
 }
 * {
   margin: 0;
@@ -34,6 +34,19 @@ button {
   font-size: var(--btnFont);
 }
 
+table {
+  width: 100%;
+  text-align: center;
+  th {
+    background: #333;
+  }
+}
+
+thead {
+  background-color: #333;
+  color: #fff;
+}
+
 .banner {
   width: 100vw;
   height: 230px;
@@ -60,9 +73,34 @@ button {
   display: flex;
 }
 
+.flex-column {
+  flex-direction: column;
+}
+
 .d-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+}
+
+.login {
+  color: #fff;
+  padding: 40px;
+  width: 350px;
+  height: 450px;
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: var(--select);
+  input{
+    padding: 0 30px;
+    height: 50px;
+    margin: 10px 0;
+    border: 0;
+    border-radius: 50px;
+  }
+  input:focus-visible{
+    border: 0;
+
+  }
 }
 
 header {
@@ -100,12 +138,31 @@ header {
     }
   }
 }
-input {
-  width: 30vw;
-  font-size: 1rem;
-  border: var(--primary) 1px solid;
-  border-radius: 10px;
-  padding: 10px;
+footer {
+  background: black;
+  width: 100vw;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+}
+.searchContainer {
+  width: 40vw;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+  input {
+    width: 40vw;
+    font-size: 1rem;
+    border: var(--primary) 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .icon {
+    position: absolute;
+    top: 25%;
+    right: 17px;
+    z-index: 1;
+  }
 }
 .bg {
   height: 586px;
@@ -127,9 +184,13 @@ input {
 }
 .divcontainer {
   width: 75vw;
+  height: 100vh;
   margin: auto;
   padding-top: 50px;
-
+  .productList {
+    display: flex;
+    margin-top: 30px;
+  }
   ul {
     cursor: pointer;
     width: 100%;
@@ -193,9 +254,15 @@ input {
   .container {
     text-align: start;
     padding-left: 30px;
+    .price {
+      margin-top: 10px;
+    }
+    .d-flex {
+      align-items: center;
+    }
   }
   .imgContainer {
-    height: 80%;
+    height: 70%;
     width: 100%;
   }
   img {
@@ -206,6 +273,7 @@ input {
   }
   .buyBtn {
     color: #fff;
+    font-size: var(--btnFont);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -220,13 +288,20 @@ input {
   width: 300px;
   height: 450px;
   justify-content: space-between;
+  p {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--primary);
+  }
 }
 .card:hover {
+  transition: box-shadow 0.3s ease-in 0s;
+  box-shadow: var(--primary) 0px 0px 50px;
   .buyBtn {
     display: flex;
     flex-direction: column;
     transform: translateY(0%);
-    transition: 0.2s;
+    transition: ease-in 0.2s;
   }
   img {
     object-fit: cover;

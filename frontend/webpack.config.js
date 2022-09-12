@@ -14,6 +14,7 @@ module.exports = {
   devServer: {
     static: path.join(__dirname, "public"), // 網站內容從哪來，預設會使用 '/'
     port: 3000,
+    historyApiFallback: true
   },
   module: {
     rules: [
