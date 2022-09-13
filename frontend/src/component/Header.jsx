@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { FaUserCircle, FaSearch } from "react-icons/fa";
-import React from "react";
+import { FaUserCircle, FaSearch,FaShoppingCart } from "react-icons/fa";
+import React, {useState} from "react";
 import logo from "../img/opensea.png";
 
 function Header() {
+  const [buyThing, setBuyThing] = useState(0)
   return (
     <header className="d-flex">
       <div className="logo">
@@ -18,7 +19,8 @@ function Header() {
         </div>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/products">Explore</NavLink>
-        <NavLink to="/cart">Cart</NavLink>
+        <NavLink to="/cart"><FaShoppingCart/></NavLink>
+        <div className="">{buyThing}</div>
         <NavLink to="/user">
           <FaUserCircle />
         </NavLink>

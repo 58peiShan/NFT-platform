@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import "../public/index.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import Header from "./component/Header.jsx";

@@ -3,19 +3,15 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 module.exports = {
-  mode: "development",
-  devtool: "inline-souce-map",
-  entry: ["webpack-hot-middleware/client","./src/App.jsx", "./src/index.js"],
+  mode: "production",
+  devtool: "souce-map",
+  entry: ["./src/App.jsx", "./src/index.js"],
   output: {
     filename: "./js/[name].js",
     path: path.resolve(__dirname, "dist"),
     publicPath: "/",
   },
-  devServer: {
-    static: path.join(__dirname, "public"), // 網站內容從哪來，預設會使用 '/'
-    port: 3000,
-    historyApiFallback: true
-  },
+
   module: {
     rules: [
       {
@@ -48,6 +44,11 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false,
+      },
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
