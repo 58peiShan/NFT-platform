@@ -42,6 +42,7 @@ function Product() {
             <Route path="/gifs" element={<Card category="gifs" />} />
             <Route path="/video" element={<Card category="video" />} />
             <Route path="/music" element={<Card category="music"/>} />
+            <Route path="/" element={<Card/>} exact/>
           </Routes>
         </div>
       </div>

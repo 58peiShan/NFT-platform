@@ -5,7 +5,7 @@ const webpack = require("webpack");
 module.exports = {
   mode: "production",
   devtool: "souce-map",
-  entry: ["./src/App.jsx", "./src/index.js"],
+  entry: "./src/index.js",
   output: {
     filename: "./js/[name].js",
     path: path.resolve(__dirname, "dist"),
@@ -17,6 +17,9 @@ module.exports = {
       {
         test: /\.svg$/,
         loader: "svg-inline-loader",
+        options: {
+          outputPath: "./img",
+        },
       },
       {
         test: /\.(js|jsx)/,
@@ -37,6 +40,7 @@ module.exports = {
             loader: "file-loader",
             options: {
               name: "[name].[ext]",
+              outputPath: "./img",
             },
           },
         ],
@@ -44,11 +48,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false,
-      },
-    }),
+  
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",

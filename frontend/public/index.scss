@@ -47,10 +47,21 @@ thead {
   color: #fff;
 }
 
+tbody{
+  td,th{
+    width: 18%;
+  }
+  img{
+    width: 70%;
+  }
+  
+}
+
 .banner {
   width: 100vw;
   height: 230px;
 }
+
 .btnMain {
   background: var(--select);
   a {
@@ -123,6 +134,18 @@ header {
     img {
       height: 100%;
     }
+  }
+  .buyAmount{
+    display: flex;
+    font-size: 14px;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    z-index: 1;
+    background-color: red;
   }
 
   .links {

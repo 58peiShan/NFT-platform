@@ -6,8 +6,6 @@ module.exports = {
   mode: "development",
   devtool: "cheap-eval-source-map",
   entry: [
-    "webpack-dev-server/client?http://localhost:3000",
-    "webpack/hot/dev-server",
     "./src/index.js",
   ],
   output: {
@@ -18,6 +16,8 @@ module.exports = {
   devServer: {
     static: path.join(__dirname, "dist"),
     port: 3000,
+    historyApiFallback:true
+
   },
   module: {
     rules: [
@@ -44,6 +44,7 @@ module.exports = {
             loader: "file-loader",
             options: {
               name: "[name].[ext]",
+              outputPath: './img'
             },
           },
         ],

@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { Provider } from "react-redux";
+import store from './store/index'
 import "../public/index.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactDOM from "react-dom/client";
@@ -10,8 +12,6 @@ import User from "./pages/user/index.jsx";
 import Error from "./pages/Error.jsx";
 
 const App = () => {
-  
-
   return (
     <>
       <Header />
@@ -19,7 +19,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/products/*" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/user" element={<User/>} />
+        <Route path="/user" element={<User />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </>
@@ -28,11 +28,13 @@ const App = () => {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
+  //<React.StrictMode>
+  <BrowserRouter>
+    <Provider store={store}>
       <App />
-    </BrowserRouter>
-  </React.StrictMode>
+    </Provider>
+  </BrowserRouter>
+  //</React.StrictMode>
 );
 
 if (module.hot) {
