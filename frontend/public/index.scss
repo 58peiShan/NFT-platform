@@ -21,10 +21,14 @@ html {
   height: 100vh;
   width: 100vw;
   overflow-x: hidden;
-  // background: var(--background-color);
+}
+
+a,a:link{
+  text-decoration: none;
 }
 
 button {
+  cursor: pointer;
   margin: 0 15px;
   width: 140px;
   height: 50px;
@@ -66,7 +70,6 @@ tbody{
   background: var(--select);
   a {
     color: #fff;
-    text-decoration: none;
     align-items: center;
   }
 }
@@ -97,20 +100,27 @@ tbody{
   color: #fff;
   padding: 40px;
   width: 350px;
-  height: 450px;
+  height: 400px;
   margin: 0 auto;
   border-radius: 10px;
   background-color: var(--select);
+  justify-content: space-between;
   input{
+    width: 80%;
     padding: 0 30px;
     height: 50px;
-    margin: 10px 0;
+    margin: 10px auto;
     border: 0;
     border-radius: 50px;
   }
   input:focus-visible{
     border: 0;
 
+  }
+  div{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -156,7 +166,6 @@ header {
     a {
       display: flex;
       color: var(--primary);
-      text-decoration: none;
       align-items: center;
     }
   }
@@ -225,7 +234,6 @@ footer {
     a {
       font-weight: 500;
       padding: 5px 30px;
-      text-decoration: none;
       color: var(--secondary);
       border-bottom: var(--secondary) 2px solid;
     }
@@ -305,6 +313,11 @@ footer {
     transform: translateY(100%);
     background-color: var(--select);
     cursor: pointer;
+    
+  }
+  .buyBtn.disabled {
+    background: var(--primary);
+    cursor: default
   }
 }
 .card.product {

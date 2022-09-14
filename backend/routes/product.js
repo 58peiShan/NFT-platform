@@ -11,7 +11,6 @@ router.get(`/`, async (req, res) => {
   res.json(datas);
 });
 router.get(`/:sort`, async (req, res) => {
-  console.log(req.params.sort);
   const sort = req.params.sort;
   res.set("Access-Control-Allow-Origin", "*");
   const sql = "SELECT * FROM artwork WHERE category=?";
@@ -20,14 +19,12 @@ router.get(`/:sort`, async (req, res) => {
 });
 router.get(`/:id`, async (req, res) => {
   console.log(req.params.id);
-  // const sort = req.params.sort
   res.set("Access-Control-Allow-Origin", "*");
   const sql = "SELECT * FROM artwork WHERE id=?";
   const [datas] = await db.query(sql, [id]);
   res.json(datas);
 });
 router.get(`/id/:id`, async (req, res) => {
-  console.log(req.params.id);
   const id = req.params.id;
   res.set("Access-Control-Allow-Origin", "*");
   const sql = "SELECT * FROM artwork WHERE id=?";

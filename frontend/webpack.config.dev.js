@@ -2,10 +2,12 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
+require('dotenv').config();
 module.exports = {
   mode: "development",
-  devtool: "cheap-eval-source-map",
+  devtool: "source-map",
   entry: [
+    "webpack-hot-middleware/client?noInfo=true&reload=true",
     "./src/index.js",
   ],
   output: {
@@ -15,9 +17,9 @@ module.exports = {
   },
   devServer: {
     static: path.join(__dirname, "dist"),
-    port: 3000,
-    historyApiFallback:true
-
+    port: process.env.FRONT_END_PORT,
+    open: true,
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -44,7 +46,7 @@ module.exports = {
             loader: "file-loader",
             options: {
               name: "[name].[ext]",
-              outputPath: './img'
+              outputPath: "./img",
             },
           },
         ],
@@ -52,7 +54,7 @@ module.exports = {
     ],
   },
   plugins: [
-    
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       filename: "index.html",

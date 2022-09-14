@@ -4,20 +4,21 @@ import {
   NavLink,
   useLocation,
   useParams,
+  Link,
 } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import LogIn from "./LogIn.jsx";
+import SignIn from "./SignIn.jsx";
 
 function User() {
-  return (
+  return localStorage.getItem("id") ? (
+    <h1>hi,{localStorage.getItem("id")}</h1>
+  ) : (
     <>
-      <div className="divcontainer d-flex ">
-        <div className="login d-flex flex-column">
-        <h1>Hi</h1>
-          <input type="text" placeholder="account"/>
-          <input type="email" />
-          <input type="password" />
-        </div>
-      </div>
+      <Routes>
+        <Route path="/user/SignIn" element={<SignIn />} />
+        <Route path="/" element={<LogIn />} />
+      </Routes>
     </>
   );
 }

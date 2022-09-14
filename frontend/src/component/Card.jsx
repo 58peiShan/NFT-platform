@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { FaEthereum } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Card(props) {
   const [list, setList] = useState([]);
-  const category = props.category;
   const sort = useParams()["*"];
   const purchaseList = JSON.parse(localStorage.getItem("purchase")) || [];
+  const cardBtn = useSelector((state) => state.cardBtn);
+  const total = useSelector((state) => state.productReducer);
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+     dispatch({ type: "IS_INCART" });
+  },[total])
 
   useEffect(() => {
     if (sort) {
@@ -25,20 +30,19 @@ function Card(props) {
         });
     }
   }, [sort]);
-  
-  const handleBuy = (id) => {
-    const purchase = {
-      item: id,
-    };
-    update();
-    purchaseList.push(purchase);
-    dispatch({ type: "INCREMENT" });
-  };
-  function update() {
-    let purchaseString = JSON.stringify(purchaseList);
-    localStorage.setItem("purchase", purchaseString);
-  }
 
+
+  const handleBuy = (id) => {
+    if (purchaseList.includes(id)) {
+      return;
+    } else {
+      const purchase = id;
+      purchaseList.push(purchase);
+      let purchaseString = JSON.stringify(purchaseList);
+      localStorage.setItem("purchase", purchaseString);
+      dispatch({ type: "CHANGE" });
+    }
+  };
   return (
     <>
       {list.map((v, i) => {
@@ -59,7 +63,9 @@ function Card(props) {
                 </div>
               </div>
               <div
-                className="buyBtn"
+                className={
+                  purchaseList.includes(v.id) ? `${cardBtn}` : "buyBtn"
+                }
                 onClick={() => {
                   handleBuy(v.id);
                 }}

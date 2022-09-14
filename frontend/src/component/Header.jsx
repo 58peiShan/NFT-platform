@@ -1,20 +1,23 @@
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { Link, NavLink, useLocation, useParams } from "react-router-dom";
 import { FaUserCircle, FaSearch, FaShoppingCart } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import logo from "../img/opensea.png";
 
 function Header() {
-  const sort = useParams()["*"];
-
-  const buyThing = useSelector((state) => state);
-
+  const buyThing = useSelector((state) => state.productReducer);
+  const handleLogin = () => {
+    localStorage.setItem("id", 5);
+  };
   return (
     <header className="d-flex">
-      <div className="logo">
-        <img src={logo} alt="logo" /> CloseSea
-      </div>
+      <Link to="/"><div className="logo">
+        <img src={logo} alt="logo" />
+        CloseSea
+      </div></Link>
       <div className="links">
+        <span onClick={handleLogin}>登入</span>
+
         <div className="searchContainer">
           <span>
             <FaSearch className="icon" />
@@ -26,8 +29,7 @@ function Header() {
         <NavLink to="/cart">
           <FaShoppingCart />
         </NavLink>
-        {(buyThing > 0 )? <div className="buyAmount">{buyThing}</div> : <></>}
-
+        {buyThing > 0 ? <div className="buyAmount">{buyThing}</div> : <></>}
         <NavLink to="/user">
           <FaUserCircle />
         </NavLink>

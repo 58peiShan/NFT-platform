@@ -1,27 +1,27 @@
 import { NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
 
 function Cart() {
-  // const list = [];
-  const id = JSON.parse(localStorage.getItem("purchase"));
-  const [list, setList] = useState([]);
+  const purchaseList = JSON.parse(localStorage.getItem("purchase"));
+  const list = useSelector((state) => state.cartlist);
+  const dispatch = useDispatch();
 
-  const handleDel = (id) => {};
-  useEffect(() => {
-    if (id) {
-      for (let i = 0; i < id.length; i++) {
-        fetch(`http://localhost:5000/product/id/${id[i].item}`)
-          .then((res) => res.json())
-          .then((data) => {
-            // list.push(...data),
-            setList(...list, data);
-            console.log("setList1");
-            console.log(list);
-          });
-      }
-    }
-  }, []);
+  const handleDel = (id) => {
+    const i = purchaseList.findIndex((element) => element == id);
+    console.log(i);
+    let remove = purchaseList.splice(i, i);
+    localStorage.setItem('purchase',purchaseList)
+  };
+
+  useEffect(() => {}, []);
+
+  const fetchSt = () => {
+    dispatch({ type: "ADD" });
+    console.log(list);
+  };
+
   return (
     <>
       <div className="divcontainer">
@@ -36,10 +36,11 @@ function Cart() {
               <th>X</th>
             </tr>
           </thead>
+          <button onClick={fetchSt}>拿料</button>
           <tbody>
             {list.length < 1 ? (
               <tr>
-                <td colSpan={6}>無資料</td>
+                <td colSpan={6}>nodata</td>
               </tr>
             ) : (
               list.map((v, i) => {

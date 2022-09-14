@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Provider } from "react-redux";
-import store from './store/index'
+import store from "./store/index";
 import "../public/index.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactDOM from "react-dom/client";
@@ -12,6 +12,8 @@ import User from "./pages/user/index.jsx";
 import Error from "./pages/Error.jsx";
 
 const App = () => {
+  
+  const id = localStorage.getItem("id");
   return (
     <>
       <Header />
@@ -19,7 +21,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/products/*" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/user" element={<User />} />
+        <Route path="/user/*" element={<User id={id} />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </>
