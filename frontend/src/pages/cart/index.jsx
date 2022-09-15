@@ -7,20 +7,36 @@ function Cart() {
   const purchaseList = JSON.parse(localStorage.getItem("purchase"));
   const list = useSelector((state) => state.cartlist);
   const dispatch = useDispatch();
-
+  const total = useSelector((state) => state.productReducer);
+  // const list = [
+  //   { id: 3, workName: "Spider Tanks", price: 5, img: "music1.gif", amount: 1 },
+  // ];
   const handleDel = (id) => {
     const i = purchaseList.findIndex((element) => element == id);
-    console.log(i);
     let remove = purchaseList.splice(i, i);
-    localStorage.setItem('purchase',purchaseList)
+    localStorage.setItem("purchase", "[" + purchaseList + "]");
   };
 
-  useEffect(() => {}, []);
-
-  const fetchSt = () => {
-    dispatch({ type: "ADD" });
-    console.log(list);
-  };
+  const  outputList =  list.map((v, i) => {
+    return (
+      <tr key={i}>
+        <td>
+          <img src={`/img/${v.img}`} alt="" />
+        </td>
+        <td>{v.workName}</td>
+        <td>{v.price}</td>
+        <td>{v.amount}</td>
+        <td>{v.price * v.amount}</td>
+        <td
+          onClick={(e) => {
+            handleDel(v.id);
+          }}
+        >
+          <FaTrash />
+        </td>
+      </tr>
+    );
+  });
 
   return (
     <>
@@ -36,33 +52,13 @@ function Cart() {
               <th>X</th>
             </tr>
           </thead>
-          <button onClick={fetchSt}>拿料</button>
           <tbody>
-            {list.length < 1 ? (
+            {total < 1 ? (
               <tr>
                 <td colSpan={6}>nodata</td>
               </tr>
             ) : (
-              list.map((v, i) => {
-                return (
-                  <tr key={i}>
-                    <td>
-                      <img src={`/img/${v.img}`} alt="" />
-                    </td>
-                    <td>{v.workName}</td>
-                    <td>{v.price}</td>
-                    <td>{v.amount}</td>
-                    <td>{v.price * v.amount}</td>
-                    <td
-                      onClick={(e) => {
-                        handleDel(v.id);
-                      }}
-                    >
-                      <FaTrash />
-                    </td>
-                  </tr>
-                );
-              })
+              outputList
             )}
           </tbody>
         </table>

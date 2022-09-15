@@ -30,7 +30,7 @@ function Header() {
           <FaShoppingCart />
         </NavLink>
         {buyThing > 0 ? <div className="buyAmount">{buyThing}</div> : <></>}
-        <NavLink to="/user">
+        <NavLink to="/user/login">
           <FaUserCircle />
         </NavLink>
       </div>

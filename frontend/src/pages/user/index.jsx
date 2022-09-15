@@ -15,10 +15,14 @@ function User() {
     <h1>hi,{localStorage.getItem("id")}</h1>
   ) : (
     <>
-      <Routes>
-        <Route path="/user/SignIn" element={<SignIn />} />
-        <Route path="/" element={<LogIn />} />
-      </Routes>
+      <div className="divcontainer d-flex ">
+        <div className="login d-flex flex-column">
+          <Routes>
+            <Route path="/SignIn" element={<SignIn />} />
+            <Route path="/Login" element={<LogIn />} />
+          </Routes>
+        </div>
+      </div>
     </>
   );
 }

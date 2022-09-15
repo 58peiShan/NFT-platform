@@ -11,9 +11,10 @@ function Card(props) {
   const total = useSelector((state) => state.productReducer);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-     dispatch({ type: "IS_INCART" });
-  },[total])
+  useEffect(() => {
+    dispatch({ type: "IS_INCART" });
+    dispatch({ type: "ADD" });
+  },[]);
 
   useEffect(() => {
     if (sort) {
@@ -30,7 +31,6 @@ function Card(props) {
         });
     }
   }, [sort]);
-
 
   const handleBuy = (id) => {
     if (purchaseList.includes(id)) {

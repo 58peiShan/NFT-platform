@@ -100,8 +100,8 @@ tbody{
   color: #fff;
   padding: 40px;
   width: 350px;
-  height: 400px;
-  margin: 0 auto;
+  height: 500px;
+  margin:0 auto;
   border-radius: 10px;
   background-color: var(--select);
   justify-content: space-between;
@@ -109,7 +109,7 @@ tbody{
     width: 80%;
     padding: 0 30px;
     height: 50px;
-    margin: 10px auto;
+    margin: 15px auto;
     border: 0;
     border-radius: 50px;
   }
@@ -118,6 +118,7 @@ tbody{
 
   }
   div{
+    margin: 20px 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;

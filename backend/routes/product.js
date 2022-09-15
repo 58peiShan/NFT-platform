@@ -3,8 +3,6 @@ var router = express.Router();
 const db = require("../util/database");
 
 router.get(`/`, async (req, res) => {
-  console.log(req.params.sort);
-  const sort = req.params.sort;
   res.set("Access-Control-Allow-Origin", "*");
   const sql = "SELECT * FROM artwork";
   const [datas] = await db.query(sql);
