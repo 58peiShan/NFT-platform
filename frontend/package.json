@@ -4,19 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server --open",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "webpack --config webpack.config.prod.js",
+    "dev": "webpack-dev-server --config webpack.config.dev.js",
+    "server": "node server.js --config webpack.config.dev.js"
   },
   "author": "penny",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "proxy": "^1.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.4.0",
+    "react-redux": "^8.0.2",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1",
     "sass": "^1.54.8",
     "sass-loader": "^10.3.1",
     "webpack-cli": "^4.10.0"
@@ -28,11 +34,15 @@
     "babel-loader": "^8.2.5",
     "css-loader": "^5.2.7",
     "express": "^4.18.1",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.2",
     "mini-css-extract-plugin": "^1.6.2",
+    "svg-inline-loader": "^0.8.2",
+    "url-loader": "^4.1.1",
     "webpack": "^4.46.0",
     "webpack-dev-middleware": "^5.3.3",
-    "webpack-dev-server": "^4.10.1"
+    "webpack-dev-server": "^4.10.1",
+    "webpack-hot-middleware": "^2.25.2"
   },
   "browserslist": {
     "production": [
@@ -45,5 +55,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
