@@ -8,6 +8,8 @@ class SignIn extends Component {
     password: "",
     accountMsg: "",
     mailMsg: "",
+    passwordMsg: "",
+    submitCheck: false,
   };
   render() {
     const checkAccount = (account) => {
@@ -40,34 +42,44 @@ class SignIn extends Component {
     };
     const signIn = (e) => {
       e.preventDefault();
-
-      fetch(`http://localhost:5000/adduser`, {
-        method: "POST",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          id: this.state.account,
-          mail: this.state.mail,
-          password: this.state.password,
-        }),
-      })
-        .then(
-          (data) =>console.log( data.json()),
-          this.setState({
-            account: "",
-            mail: "",
-            password: "",
-          })
-        )
-        .catch((error) => console.log(error));
+      if (
+        this.state.account == "" ||
+        this.state.mail == "" ||
+        this.state.password == "" ||
+        this.state.passwordMsg !== "" ||
+        this.state.accountMsg !== "" ||
+        this.state.mailMsg !== ""
+      ) {
+        alert("資料不完整！");
+      } else {
+        fetch(`http://localhost:5000/adduser`, {
+          method: "POST",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            id: this.state.account,
+            mail: this.state.mail,
+            password: this.state.password,
+          }),
+        })
+          .then(
+            (data) => console.log(data.json()),
+            this.setState({
+              account: "",
+              mail: "",
+              password: "",
+            })
+          )
+          .catch((error) => console.log(error));
+      }
     };
     return (
       <>
         <h1>Welcom</h1>
-        <form action="">
+        <form action="" name="signin">
           <div>
             <input
               type="text"
@@ -98,7 +110,24 @@ class SignIn extends Component {
                 });
               }}
             />
-            <input type="passwordComfirm" placeholder="password comfirm" />
+            <input
+              type="password"
+              placeholder="password comfirm"
+              onChange={(e) => {
+                if (e.target.value !== this.state.password) {
+                  this.setState({
+                    passwordMsg: "兩次密碼不一致",
+                  });
+                } else {
+                  this.setState({
+                    passwordMsg: "",
+                  });
+                }
+              }}
+            />
+            <p style={{ color: "white", fontSize: "9px" }}>
+              {this.state.passwordMsg}
+            </p>
           </div>
           <div className="d-flex">
             <button onClick={signIn}>註冊</button>

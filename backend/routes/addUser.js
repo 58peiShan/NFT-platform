@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 const db = require("../util/database");
-const multer = require("multer");
 
 router.post(`/`, async (req, res) => {
   const account = req.body.id;
