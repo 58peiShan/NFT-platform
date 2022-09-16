@@ -23,7 +23,8 @@ html {
   overflow-x: hidden;
 }
 
-a,a:link{
+a,
+a:link {
   text-decoration: none;
 }
 
@@ -51,14 +52,14 @@ thead {
   color: #fff;
 }
 
-tbody{
-  td,th{
+tbody {
+  td,
+  th {
     width: 18%;
   }
-  img{
-    width: 70%;
+  img {
+    width: 60%;
   }
-  
 }
 
 .banner {
@@ -101,23 +102,28 @@ tbody{
   padding: 40px;
   width: 350px;
   height: 500px;
-  margin:0 auto;
+  margin: 0 auto;
   border-radius: 10px;
   background-color: var(--select);
   justify-content: space-between;
-  input{
+  input {
     width: 80%;
     padding: 0 30px;
     height: 50px;
-    margin: 15px auto;
+    margin: 5px auto;
     border: 0;
     border-radius: 50px;
   }
-  input:focus-visible{
+  input:focus-visible {
     border: 0;
-
   }
-  div{
+  p {
+    color: #fff;
+    font-size: 9px;
+    height: 20px;
+  }
+
+  div {
     margin: 20px 0;
     flex-direction: column;
     justify-content: center;
@@ -146,7 +152,7 @@ header {
       height: 100%;
     }
   }
-  .buyAmount{
+  .buyAmount {
     display: flex;
     font-size: 14px;
     align-items: center;
@@ -222,7 +228,14 @@ footer {
   padding-top: 50px;
   .productList {
     display: flex;
+    flex-wrap: wrap;
     margin-top: 30px;
+  }
+  .total {
+    justify-content: end;
+    height: 100px;
+    align-items: center;
+    font-size: 24px;
   }
   ul {
     cursor: pointer;
@@ -314,11 +327,10 @@ footer {
     transform: translateY(100%);
     background-color: var(--select);
     cursor: pointer;
-    
   }
   .buyBtn.disabled {
     background: var(--primary);
-    cursor: default
+    cursor: default;
   }
 }
 .card.product {
