@@ -3,7 +3,7 @@
 
 
 為畫面參考OpenSea的簡易NFT販售平台，有基本功能登入註冊及購物車
-前端框架為React，並使用Express做為後端Server，server端口為5000port，資料庫使用MySQL
+前端框架為React，並使用node+Express做為後端Server，server端口為5000port，資料庫使用MySQL
 
 ## 啟動方式
 
