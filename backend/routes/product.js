@@ -15,13 +15,7 @@ router.get(`/:sort`, async (req, res) => {
   const [datas] = await db.query(sql, [sort]);
   res.json(datas);
 });
-router.get(`/:id`, async (req, res) => {
-  console.log(req.params.id);
-  res.set("Access-Control-Allow-Origin", "*");
-  const sql = "SELECT * FROM artwork WHERE id=?";
-  const [datas] = await db.query(sql, [id]);
-  res.json(datas);
-});
+
 router.get(`/id/:id`, async (req, res) => {
   const id = req.params.id;
   res.set("Access-Control-Allow-Origin", "*");
