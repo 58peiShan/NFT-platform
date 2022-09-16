@@ -3,21 +3,24 @@
 
 
 為畫面參考OpenSea的簡易NFT販售平台，有基本功能登入註冊及購物車
-前端框架為React，並使用Express做為後端Server，資料庫使用MySQL
+前端框架為React，並使用Express做為後端Server，server端口為5000port，資料庫使用MySQL
 
 ## 啟動方式
 
-1.由分支master clone下來後，分別cd至兩個資料夾：frontend,backend，執行npm install
+1.由分支master/dev clone下來後，分別cd至兩個資料夾：frontend,backend，執行npm install
 
-2.在backend資料夾根目錄建立.env檔案，並在單引號內填入本機資料庫的設定：
+2.在backend資料夾根目錄建立.env檔案，並在單引號內填入本機資料庫的設定以及前端地址（ex:3000）：
 MYSQL_HOST = ''
 MYSQL_USER = ''
 MYSQL_PASSWORD = ''
 MYSQL_DB = ''
+CORS=''
+
 
 3.在frontend資料夾根目錄建立.env檔案，並在單引號內填入欲連線port（ex:3000）的設定：
 FRONT_END_PORT=''
 
 4.執行.sql檔
 
-5.於frontend folder內 npm run dev；於backtend folder內 npm run server以nodemon啟動伺服器
+5.於frontend folder內 npm run dev；
+於backtend folder內 npm run server
