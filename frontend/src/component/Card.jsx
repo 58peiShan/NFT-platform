@@ -13,8 +13,7 @@ function Card(props) {
 
   useEffect(() => {
     dispatch({ type: "IS_INCART" });
-    dispatch({ type: "ADD" });
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (sort) {
@@ -33,15 +32,18 @@ function Card(props) {
   }, [sort]);
 
   const handleBuy = (id) => {
-    if (purchaseList.includes(id)) {
-      return;
-    } else {
+    //if (!localStorage.getItem("auth")) {
+     // alert("請先登入！");
+     // return;
+    //} else if (purchaseList.includes(id)) {
+      //return;
+   // } else {
       const purchase = id;
       purchaseList.push(purchase);
       let purchaseString = JSON.stringify(purchaseList);
       localStorage.setItem("purchase", purchaseString);
       dispatch({ type: "CHANGE" });
-    }
+   // }
   };
   return (
     <>

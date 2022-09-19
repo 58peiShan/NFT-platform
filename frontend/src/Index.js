@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Provider } from "react-redux";
+import { useDispatch } from "react-redux";
 import store from "./store/index";
 import "../public/index.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -12,8 +13,11 @@ import User from "./pages/user/index.jsx";
 import Error from "./pages/Error.jsx";
 
 const App = () => {
-  
   const id = localStorage.getItem("id");
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch({ type: "ADD" });
+  },[])
   return (
     <>
       <Header />
