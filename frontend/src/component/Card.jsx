@@ -33,21 +33,21 @@ function Card(props) {
 
   const handleBuy = (id) => {
     //if (!localStorage.getItem("auth")) {
-     // alert("請先登入！");
-     // return;
-    //} else if (purchaseList.includes(id)) {
-      //return;
-   // } else {
+    // alert("請先登入！");
+    // return;
+    //} else
+    if (purchaseList.includes(id)) {
+      return;
+    } else {
       const purchase = id;
       purchaseList.push(purchase);
       let purchaseString = JSON.stringify(purchaseList);
       localStorage.setItem("purchase", purchaseString);
       dispatch({ type: "CHANGE" });
-   // }
+    }
   };
   return (
     <>
-    1516156
       {list.map((v, i) => {
         return (
           <div key={i}>
