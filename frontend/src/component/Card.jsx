@@ -47,6 +47,7 @@ function Card(props) {
   };
   return (
     <>
+    1516156
       {list.map((v, i) => {
         return (
           <div key={i}>
