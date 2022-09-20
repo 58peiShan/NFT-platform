@@ -11,13 +11,13 @@ function Header() {
   };
   return (
     <header className="d-flex">
-      <Link to="/"><div className="logo">
-        <img src={logo} alt="logo" />
-        CloseSea
-      </div></Link>
+      <Link to="/">
+        <div className="logo">
+          <img src={logo} alt="logo" />
+          CloseSea
+        </div>
+      </Link>
       <div className="links">
-        <span onClick={handleLogin}>登入</span>
-
         <div className="searchContainer">
           <span>
             <FaSearch className="icon" />

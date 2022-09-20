@@ -142,6 +142,7 @@ header {
   color: var(--primary);
   font-size: 1.5rem;
   list-style-type: none;
+  
   .logo {
     color: var(--highlight);
     font-weight: 700;
@@ -175,6 +176,9 @@ header {
       color: var(--primary);
       align-items: center;
     }
+  }
+  a.active {
+    color: var(--select);
   }
 }
 footer {
