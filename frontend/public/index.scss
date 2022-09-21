@@ -198,12 +198,15 @@ footer {
     font-size: 1rem;
     border: var(--primary) 1px solid;
     border-radius: 10px;
-    padding: 10px;
+    padding: 10px 10px 10px 50px;
+  }
+  input:focus.icon{
+    display: none;
   }
   .icon {
     position: absolute;
     top: 25%;
-    right: 17px;
+    left: 17px;
     z-index: 1;
   }
 }
