@@ -1,23 +1,24 @@
-import { NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 
 function Cart() {
-  const purchaseList = JSON.parse(localStorage.getItem("purchase"));
-  const list = useSelector((state) => state.cartlist);
   const dispatch = useDispatch();
+  const purchaseList = JSON.parse(localStorage.getItem("purchase"));
+  const list = useSelector((state) => state.cartlist.purchase) || [];
   const total = useSelector((state) => state.productReducer);
-  // const list = [
-  //   { id: 3, workName: "Spider Tanks", price: 5, img: "music1.gif", amount: 1 },
-  // ];
   const handleDel = (id) => {
+    dispatch({ type: "PURCHASE_RESET" });
+    dispatch({ type: "DECREASE" });
     const i = purchaseList.findIndex((element) => element == id);
-    let remove = purchaseList.splice(i, i);
+    if (i === 0) {
+      let remove = purchaseList.splice(0, 1);
+    } else {
+      let remove = purchaseList.splice(i, i);
+    }
     localStorage.setItem("purchase", "[" + purchaseList + "]");
   };
-
-  const  outputList =  list.map((v, i) => {
+  const outputList = list.map((v, i) => {
     return (
       <tr key={i}>
         <td>

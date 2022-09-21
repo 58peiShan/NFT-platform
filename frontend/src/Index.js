@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import store from "./store/index";
 import "../public/index.scss";
@@ -11,13 +11,15 @@ import Product from "./pages/products/index.jsx";
 import Cart from "./pages/cart/index.jsx";
 import User from "./pages/user/index.jsx";
 import Error from "./pages/Error.jsx";
+import { fetchPurchase } from "./actions/cartListAction";
 
 const App = () => {
+  const total = useSelector((state) => state.productReducer);
   const id = localStorage.getItem("id");
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch({ type: "ADD" });
-  },[])
+  useEffect(() => {
+    dispatch(fetchPurchase());
+  }, [total]);
   return (
     <>
       <Header />
