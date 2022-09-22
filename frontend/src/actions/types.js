@@ -6,3 +6,4 @@ export const GET_CARD = "GET_CARD";
 export const NO_SEARCH = "NO_SEARCH";
 export const GET_CARD_SUCCESS = "GET_CARD_SUCCESS";
 export const GET_CARD_BYCATE = "GET_CARD_BYCATE";
+export const LOGIN_IMG = "LOGIN_IMG";

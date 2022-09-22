@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const db = require("../util/database");
+const sha1 = require('sha1')
 
 router.post(`/`, async (req, res) => {
   const account = req.body.id;
@@ -9,9 +10,8 @@ router.post(`/`, async (req, res) => {
   const sql =
     "INSERT INTO `users` (`account`, `password`, `email`) VALUES (?, ?, ?)";
   if (account && mail && password) {
-    const [datas] = await db.query(sql, [account, mail, password]);
+    const [datas] = await db.query(sql, [account, password, mail]);
     res.json(datas);
-    console.log(datas);
   } else {
     const [datas] = [];
     res.json(datas);

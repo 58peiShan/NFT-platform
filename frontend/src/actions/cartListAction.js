@@ -21,7 +21,6 @@ export const getPurchaseSuccess = (purchase) => {
 };
 
 export const getPurchaseError = (error) => {
-  console.log("request purchase error");
   return {
     type: types.GET_PURCHASE_FAILED,
     error: error,

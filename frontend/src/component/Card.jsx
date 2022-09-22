@@ -19,13 +19,12 @@ function Card(props) {
   }, [sort]);
 
   const handleBuy = (id) => {
-    //if (!localStorage.getItem("auth")) {
-    // alert("請先登入！");
-    // return;
-    //} else
-    if (purchaseList.includes(id)) {
+    if (!localStorage.getItem("auth")) {
+     alert("請先登入！");
+     return;
+    } else if (purchaseList.includes(id)) {
       return;
-    } else {
+   } else {
       const purchase = id;
       purchaseList.push(purchase);
       let purchaseString = JSON.stringify(purchaseList);

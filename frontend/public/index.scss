@@ -18,10 +18,12 @@ h1 {
 }
 body,
 html {
-  height: 100vh;
+  height: 100%;
   width: 100vw;
+ }
+ body{
   overflow-x: hidden;
-}
+ }
 
 a,
 a:link {
@@ -37,6 +39,7 @@ button {
   border-radius: 10px;
   font-weight: 700;
   font-size: var(--btnFont);
+  margin-bottom: 20px;
 }
 
 table {
@@ -96,7 +99,35 @@ tbody {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
-
+.nameEdit {
+  color: var(--primary);
+  background: #fff;
+  border: none;
+  font-size: 45px;
+  font-weight: bold;
+}
+.mailEdit{
+  height: 55px !important;
+  font-size: 30px;
+  margin-right: 20px !important;
+}
+.mailEdit::placeholder,.mailEdit:disabled{
+  color: #fff;
+}
+.mailEdit:focus-visible.mailEdit::placeholder{
+  color: #ddd;
+}
+.nameEdit:focus-visible {
+  border: none;
+  font-size: 45px;
+  font-weight: bold;
+  outline: none;
+}
+.nameEdit:hover{
+  color: #333;
+  font-size: 50px;
+  transition: .3s;
+}
 .login {
   color: #fff;
   padding: 40px;
@@ -106,6 +137,15 @@ tbody {
   border-radius: 10px;
   background-color: var(--select);
   justify-content: space-between;
+
+  .userdatas {
+    cursor: default;
+    color: #eeeeee;
+    .userdata {
+      color: #fff;
+      font-size: 30px;
+    }
+  }
   input {
     width: 80%;
     padding: 0 30px;
@@ -142,7 +182,7 @@ header {
   color: var(--primary);
   font-size: 1.5rem;
   list-style-type: none;
-  
+
   .logo {
     color: var(--highlight);
     font-weight: 700;
@@ -200,7 +240,7 @@ footer {
     border-radius: 10px;
     padding: 10px 10px 10px 50px;
   }
-  input:focus.icon{
+  input:focus.icon {
     display: none;
   }
   .icon {

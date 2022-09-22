@@ -3,7 +3,7 @@ import { Provider, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import store from "./store/index";
 import "../public/index.scss";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import Header from "./component/Header.jsx";
 import Home from "./pages/home/home.jsx";
@@ -17,6 +17,11 @@ const App = () => {
   const total = useSelector((state) => state.productReducer);
   const id = localStorage.getItem("id");
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
+
   useEffect(() => {
     dispatch(fetchPurchase());
   }, [total]);

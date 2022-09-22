@@ -1,23 +1,37 @@
-import { Link, NavLink, useLocation, useParams } from "react-router-dom";
-import { FaUserCircle, FaSearch, FaShoppingCart } from "react-icons/fa";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import {
+  FaUserCircle,
+  FaSearch,
+  FaShoppingCart,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import logo from "../img/opensea.png";
 import { fetchSearch } from "../actions/cardAction";
 function Header() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const buyThing = useSelector((state) => state.productReducer);
-
+  const auth = localStorage.getItem("auth");
   const seacherHandler = (e) => {
     if (e) {
       dispatch({ type: "GET_CARD" });
       dispatch(fetchSearch(e));
-    }else{
+    } else {
       dispatch({ type: "NO_SEARCH" });
     }
   };
-  const handleLogin = () => {
-    localStorage.setItem("id", 5);
+  const logoutHandler = () => {
+    const logout = confirm("確定要登出嗎？");
+    if (logout) {
+      localStorage.removeItem("auth");
+      localStorage.removeItem("purchase");
+      navigate("/");
+    } else {
+      return;
+    }
   };
   return (
     <header className="d-flex">
@@ -35,7 +49,6 @@ function Header() {
           <input
             type="search"
             id="search"
-            // ref={ref}
             onChange={(e) => {
               seacherHandler(e.target.value);
             }}
@@ -47,9 +60,21 @@ function Header() {
           <FaShoppingCart />
         </NavLink>
         {buyThing > 0 ? <div className="buyAmount">{buyThing}</div> : <></>}
-        <NavLink to="/user/login">
-          <FaUserCircle />
-        </NavLink>
+
+        {auth ? (
+          <>
+            <NavLink to="/user/dashboard">
+              <FaUserCircle style={{ color: "black" }} />
+            </NavLink>
+            <a>
+              <FaSignOutAlt onClick={logoutHandler} />
+            </a>
+          </>
+        ) : (
+          <NavLink to="/user/login">
+            <FaUserCircle />
+          </NavLink>
+        )}
       </div>
     </header>
   );
