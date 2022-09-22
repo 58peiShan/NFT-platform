@@ -26,7 +26,8 @@ SET time_zone = "+00:00";
 --
 -- 資料表結構 `artwork`
 --
-
+CREATE DATABASE `artwork`;
+USE `artwork`;
 CREATE TABLE `artwork` (
   `id` int NOT NULL,
   `workName` text NOT NULL,
