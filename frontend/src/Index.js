@@ -18,8 +18,9 @@ const App = () => {
   const id = localStorage.getItem("id");
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scroll(0,0);
   }, [pathname]);
 
   useEffect(() => {
