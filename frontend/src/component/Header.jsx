@@ -6,9 +6,9 @@ import logo from "../img/opensea.png";
 import { fetchSearch } from "../actions/cardAction";
 function Header() {
   const dispatch = useDispatch();
-  const buyThing = useSelector((state) => state.productReducer);
+  const buyThing = useSelector(state => state.productReducer);
 
-  const seacherHandler = (e) => {
+  const seacherHandler = e => {
     if (e) {
       dispatch({ type: "GET_CARD" });
       dispatch(fetchSearch(e));
@@ -35,10 +35,7 @@ function Header() {
           <input
             type="search"
             id="search"
-            // ref={ref}
-            onChange={(e) => {
-              seacherHandler(e.target.value);
-            }}
+            onChange={e => seacherHandler(e.target.value)}
           ></input>
         </div>
         <NavLink to="/">Home</NavLink>

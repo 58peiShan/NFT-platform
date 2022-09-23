@@ -7,37 +7,31 @@ function Cart() {
   const purchaseList = JSON.parse(localStorage.getItem("purchase"));
   const list = useSelector((state) => state.cartlist.purchase) || [];
   const total = useSelector((state) => state.productReducer);
-  const handleDel = (id) => {
+  const handleDel = id => {
     dispatch({ type: "PURCHASE_RESET" });
     dispatch({ type: "DECREASE" });
-    const i = purchaseList.findIndex((element) => element == id);
+    const i = purchaseList.findIndex(element => element == id);
     if (i === 0) {
       let remove = purchaseList.splice(0, 1);
     } else {
       let remove = purchaseList.splice(i, i);
     }
-    localStorage.setItem("purchase", "[" + purchaseList + "]");
+    localStorage.setItem("purchase", JSON.stringify(purchaseList));
   };
-  const outputList = list.map((v, i) => {
-    return (
-      <tr key={i}>
-        <td>
-          <img src={`/img/${v.img}`} alt="" />
-        </td>
-        <td>{v.workName}</td>
-        <td>{v.price}</td>
-        <td>{v.amount}</td>
-        <td>{v.price * v.amount}</td>
-        <td
-          onClick={(e) => {
-            handleDel(v.id);
-          }}
-        >
-          <FaTrash />
-        </td>
-      </tr>
-    );
-  });
+  const outputList = list.map((v, i) => (
+    <tr key={i}>
+      <td>
+        <img src={`/img/${v.img}`} alt="" />
+      </td>
+      <td>{v.workName}</td>
+      <td>{v.price}</td>
+      <td>{v.amount}</td>
+      <td>{v.price * v.amount}</td>
+      <td onClick={(e) => handleDel(v.id)}>
+        <FaTrash />
+      </td>
+    </tr>
+  ));
 
   return (
     <>

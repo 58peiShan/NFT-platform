@@ -7,8 +7,8 @@ function Card(props) {
   const list = useSelector((state) => state.cardReducer.card);
   const sort = useParams()["*"];
   const purchaseList = JSON.parse(localStorage.getItem("purchase")) || [];
-  const cardBtn = useSelector((state) => state.cardBtn);
-  const total = useSelector((state) => state.productReducer);
+  const {cardBtn,total} = useSelector((state) => state);
+  // const  = useSelector((state) => state.productReducer);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: "IS_INCART" });
@@ -37,37 +37,33 @@ function Card(props) {
   return (
     <>
       {list.length > 0 ? (
-        list.map((v, i) => {
-          return (
-            <div key={i}>
-              <div className="card product">
-                <div className="imgContainer">
-                  <img src={`/img/${v.img}`} />
-                </div>
-                <div className="container ">
-                  <h3>{v.workName}</h3>
-                  <div className="price">
-                    <p>price</p>
-                    <div className="d-flex">
-                      <FaEthereum />
-                      <h3>{v.price}</h3>
-                    </div>
+        list.map((v, i) => (
+          <div key={i}>
+            <div className="card product">
+              <div className="imgContainer">
+                <img src={`/img/${v.img}`} />
+              </div>
+              <div className="container ">
+                <h3>{v.workName}</h3>
+                <div className="price">
+                  <p>price</p>
+                  <div className="d-flex">
+                    <FaEthereum />
+                    <h3>{v.price}</h3>
                   </div>
                 </div>
-                <div
-                  className={
-                    purchaseList.includes(v.id) ? `${cardBtn}` : "buyBtn"
-                  }
-                  onClick={() => {
-                    handleBuy(v.id);
-                  }}
-                >
-                  BUY NOW
-                </div>
+              </div>
+              <div
+                className={
+                  purchaseList.includes(v.id) ? `${cardBtn}` : "buyBtn"
+                }
+                onClick={() => handleBuy(v.id)}
+              >
+                BUY NOW
               </div>
             </div>
-          );
-        })
+          </div>
+        ))
       ) : (
         <div className="divcontainer">暫無資料</div>
       )}

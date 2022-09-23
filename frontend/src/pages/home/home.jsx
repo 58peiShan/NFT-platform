@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import Card from "../../component/Card.jsx";
 
 function Home() {
-  const search = useSelector((state) => state.cardReducer.search);
+  const search = useSelector(state => state.cardReducer.search);
   return search ? (
     <div className="divcontainer">
       <div className="productList d-flex">

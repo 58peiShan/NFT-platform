@@ -14,12 +14,11 @@ import Error from "./pages/Error.jsx";
 import { fetchPurchase } from "./actions/cartListAction";
 
 const App = () => {
-  const total = useSelector((state) => state.productReducer);
+  const total = useSelector(state => state.productReducer);
   const id = localStorage.getItem("id");
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchPurchase());
-  }, [total]);
+  useEffect(() => 
+    dispatch(fetchPurchase()), [total]);
   return (
     <>
       <Header />

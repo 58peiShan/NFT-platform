@@ -12,35 +12,33 @@ class SignIn extends Component {
     submitCheck: false,
   };
   render() {
-    const checkAccount = (account) => {
+    const checkAccount = account => {
       if (account) {
         fetch(`http://localhost:5000/user/${account}`)
-          .then((res) => res.text())
-          .then((data) => {
+          .then(res => res.text())
+          .then(data => 
             this.setState({
               account: account,
               accountMsg: data,
-            });
-          });
+            }));
       } else {
         return;
       }
     };
-    const checkMail = (mail) => {
+    const checkMail = mail => {
       if (mail) {
         fetch(`http://localhost:5000/user/mail/${mail}`)
-          .then((res) => res.text())
-          .then((data) => {
+          .then(res => res.text())
+          .then(data => 
             this.setState({
               mail: mail,
               mailMsg: data,
-            });
-          });
+            }));
       } else {
         return;
       }
     };
-    const signIn = (e) => {
+    const signIn = e => {
       e.preventDefault();
       if (
         this.state.account == "" ||
@@ -66,14 +64,14 @@ class SignIn extends Component {
           }),
         })
           .then(
-            (data) => console.log(data.json()),
+            data => console.log(data.json()),
             this.setState({
               account: "",
               mail: "",
               password: "",
             })
           )
-          .catch((error) => console.log(error));
+          .catch(error => console.log(error));
       }
     };
     return (
@@ -84,9 +82,9 @@ class SignIn extends Component {
             <input
               type="text"
               placeholder="account"
-              onChange={(e) => {
-                checkAccount(e.target.value);
-              }}
+              onChange={e => 
+                checkAccount(e.target.value)
+              }
             />
             <p style={{ color: "white", fontSize: "9px" }}>
               {this.state.accountMsg}
