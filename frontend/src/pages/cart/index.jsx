@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import ScaleLoader from "react-spinners/ClipLoader";
+
+const override= {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "rgb(49, 150, 218)",
+};
 
 function Cart() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const auth = localStorage.getItem("auth");
   const purchaseList = JSON.parse(localStorage.getItem("purchase"));
   const list = useSelector((state) => state.cartlist.purchase) || [];
@@ -28,6 +37,7 @@ function Cart() {
     (previousValue, currentValue) => previousValue + currentValue,
     initialValue
   );
+
 
   const outputList = list.map((v, i) => {
     return (
@@ -82,7 +92,15 @@ function Cart() {
       </div>
     </>
   ) : (
-    <div className="container d-flex">請先登入！</div>
+    <div className="divcontainer">
+      <div className="container d-flex"style={{justifyContent:"center"}}>
+        <h1 >請先登入！</h1></div>
+        <ScaleLoader  loading={true} cssOverride={override} size={50} />
+
+      <div style={{color:'white'}}>{setTimeout(() => {
+        navigate("/user/login");
+      }, 1000)}</div>
+    </div>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import withRouter from "../../component/withRouter";
 
 class SignIn extends Component {
   constructor() {
@@ -43,7 +44,8 @@ class SignIn extends Component {
               mail: mail,
               mailMsg: data,
             });
-          });
+          },
+          );
       } else {
         this.setState({
           mailMsg: "格式錯誤",
@@ -87,7 +89,8 @@ class SignIn extends Component {
                   password: "",
                   passwordConfirm: "",
                 });
-              };
+              },alert('註冊成功，回登入頁'),
+              this.props.navigate("/user/login");
             }
           })
           .catch((error) => console.log(error));
@@ -156,4 +159,4 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+export default withRouter(SignIn);
