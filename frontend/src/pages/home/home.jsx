@@ -5,6 +5,7 @@ import authorImg from "../../img/author_JIMMY.png";
 import Footer from "../../component/Footer.jsx";
 import { useSelector } from "react-redux";
 import Card from "../../component/Card.jsx";
+import { useEffect } from "react";
 
 function Home() {
   const search = useSelector(state => state.cardReducer.search);
@@ -14,7 +15,8 @@ function Home() {
         <Card />
       </div>
     </div>
-  ) : (
+  ) 
+  : (
     <div className="">
       <div className="bg" style={{ backgroundImage: `url(${indexImg})` }}></div>
       <div className="divcontainer d-grid">

@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { FaEthereum } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from "../actions/cardAction";
 function Card(props) {
-  const list = useSelector((state) => state.cardReducer.card);
-  const sort = useParams()["*"];
-  const purchaseList = JSON.parse(localStorage.getItem("purchase")) || [];
-  const {cardBtn,total} = useSelector((state) => state);
-  // const  = useSelector((state) => state.productReducer);
   const dispatch = useDispatch();
+  const param = useLocation().pathname;
+  const sort = useParams()["*"];
+  const list = useSelector((state) => state.cardReducer.card);
+  const purchaseList = JSON.parse(localStorage.getItem("purchase")) || [];
+  const [cardBtn, total] = useSelector((state) => [
+    state.cardBtn,
+    state.productReducer,
+  ]);
+
+  useEffect(() => {
+    let paramFit = /^\/products/ 
+    if (paramFit.test(param)) {
+      dispatch(fetchCategory(sort));
+    } else {
+      return;
+    }
+  }, [sort, param]);
+
   useEffect(() => {
     dispatch({ type: "IS_INCART" });
   }, []);
-
-  useEffect(() => {
-    dispatch(fetchCategory(sort));
-  }, [sort]);
 
   const handleBuy = (id) => {
     //if (!localStorage.getItem("auth")) {

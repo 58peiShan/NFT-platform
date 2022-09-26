@@ -1,18 +1,24 @@
-import { Link, NavLink, useLocation, useParams } from "react-router-dom";
+import { Link, NavLink, useLocation} from "react-router-dom";
 import { FaUserCircle, FaSearch, FaShoppingCart } from "react-icons/fa";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import logo from "../img/opensea.png";
 import { fetchSearch } from "../actions/cardAction";
 function Header() {
   const dispatch = useDispatch();
-  const buyThing = useSelector(state => state.productReducer);
+  const buyThing = useSelector((state) => state.productReducer);
+  const searchRef = useRef()
+  const { pathname } = useLocation();
 
-  const seacherHandler = e => {
+  useEffect(() => {
+    searchRef.current.value = "";
+  }, [pathname]);
+
+  const seacherHandler = (e) => {
     if (e) {
       dispatch({ type: "GET_CARD" });
       dispatch(fetchSearch(e));
-    }else{
+    } else {
       dispatch({ type: "NO_SEARCH" });
     }
   };
@@ -35,7 +41,8 @@ function Header() {
           <input
             type="search"
             id="search"
-            onChange={e => seacherHandler(e.target.value)}
+            ref={searchRef}
+            onChange={(e) => seacherHandler(e.target.value)}
           ></input>
         </div>
         <NavLink to="/">Home</NavLink>

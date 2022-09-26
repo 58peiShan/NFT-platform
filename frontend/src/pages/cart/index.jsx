@@ -5,12 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 function Cart() {
   const dispatch = useDispatch();
   const purchaseList = JSON.parse(localStorage.getItem("purchase"));
-  const list = useSelector((state) => state.cartlist.purchase) || [];
-  const total = useSelector((state) => state.productReducer);
-  const handleDel = id => {
+  const [list, total] = useSelector((state) => [
+    state.cartlist.purchase || [],
+    state.productReducer,
+  ]);
+  const handleDel = (id) => {
     dispatch({ type: "PURCHASE_RESET" });
     dispatch({ type: "DECREASE" });
-    const i = purchaseList.findIndex(element => element == id);
+    const i = purchaseList.findIndex((element) => element == id);
     if (i === 0) {
       let remove = purchaseList.splice(0, 1);
     } else {
