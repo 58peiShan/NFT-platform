@@ -11,69 +11,71 @@ class SignIn extends Component {
     passwordMsg: "",
     submitCheck: false,
   };
+  checkAccount = (account) => {
+    if (account) {
+      fetch(`http://localhost:5000/user/${account}`)
+        .then((res) => res.text())
+        .then((data) =>
+          this.setState({
+            account: account,
+            accountMsg: data,
+          })
+        );
+    } else {
+      return;
+    }
+  };
+  checkMail = (mail) => {
+    if (mail) {
+      fetch(`http://localhost:5000/user/mail/${mail}`)
+        .then((res) => res.text())
+        .then((data) =>
+          this.setState({
+            mail: mail,
+            mailMsg: data,
+          })
+        );
+    } else {
+      return;
+    }
+  };
+  signIn = (e) => {
+    e.preventDefault();
+    if (
+      this.state.account == "" ||
+      this.state.mail == "" ||
+      this.state.password == "" ||
+      this.state.passwordMsg !== "" ||
+      this.state.accountMsg !== "" ||
+      this.state.mailMsg !== ""
+    ) {
+      alert("資料不完整！");
+    } else {
+      fetch(`http://localhost:5000/adduser`, {
+        method: "POST",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          id: this.state.account,
+          mail: this.state.mail,
+          password: this.state.password,
+        }),
+      })
+        .then(
+          (data) => console.log(data.json()),
+          this.setState({
+            account: "",
+            mail: "",
+            password: "",
+          })
+        )
+        .catch((error) => console.log(error));
+    }
+  };
   render() {
-    const checkAccount = account => {
-      if (account) {
-        fetch(`http://localhost:5000/user/${account}`)
-          .then(res => res.text())
-          .then(data => 
-            this.setState({
-              account: account,
-              accountMsg: data,
-            }));
-      } else {
-        return;
-      }
-    };
-    const checkMail = mail => {
-      if (mail) {
-        fetch(`http://localhost:5000/user/mail/${mail}`)
-          .then(res => res.text())
-          .then(data => 
-            this.setState({
-              mail: mail,
-              mailMsg: data,
-            }));
-      } else {
-        return;
-      }
-    };
-    const signIn = e => {
-      e.preventDefault();
-      if (
-        this.state.account == "" ||
-        this.state.mail == "" ||
-        this.state.password == "" ||
-        this.state.passwordMsg !== "" ||
-        this.state.accountMsg !== "" ||
-        this.state.mailMsg !== ""
-      ) {
-        alert("資料不完整！");
-      } else {
-        fetch(`http://localhost:5000/adduser`, {
-          method: "POST",
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            id: this.state.account,
-            mail: this.state.mail,
-            password: this.state.password,
-          }),
-        })
-          .then(
-            data => console.log(data.json()),
-            this.setState({
-              account: "",
-              mail: "",
-              password: "",
-            })
-          )
-          .catch(error => console.log(error));
-      }
-    };
     return (
       <>
         <h1>Welcom</h1>
@@ -82,9 +84,7 @@ class SignIn extends Component {
             <input
               type="text"
               placeholder="account"
-              onChange={e => 
-                checkAccount(e.target.value)
-              }
+              onChange={(e) => this.checkAccount(e.target.value)}
             />
             <p style={{ color: "white", fontSize: "9px" }}>
               {this.state.accountMsg}
@@ -93,7 +93,7 @@ class SignIn extends Component {
               type="email"
               placeholder="email"
               onChange={(e) => {
-                checkMail(e.target.value);
+                this.checkMail(e.target.value);
               }}
             />
             <p style={{ color: "white", fontSize: "9px" }}>
@@ -128,7 +128,7 @@ class SignIn extends Component {
             </p>
           </div>
           <div className="d-flex">
-            <button onClick={signIn}>註冊</button>
+            <button onClick={this.signIn}>註冊</button>
             <Link to="/user/login">已有帳號，登入</Link>
           </div>
         </form>
