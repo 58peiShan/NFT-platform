@@ -7,25 +7,15 @@ function Card(props) {
   const dispatch = useDispatch();
   const param = useLocation().pathname;
   const sort = useParams()["*"];
-  const list = useSelector((state) => state.cardReducer.card);
   const purchaseList = JSON.parse(localStorage.getItem("purchase")) || [];
-  const [cardBtn, total] = useSelector((state) => [
-    state.cardBtn,
-    state.productReducer,
-  ]);
+  const {
+    productReducer: total,
+    cardReducer: { card: list },
+  } = useSelector((state) => state);
 
   useEffect(() => {
-    let paramFit = /^\/products/ 
-    if (paramFit.test(param)) {
-      dispatch(fetchCategory(sort));
-    } else {
-      return;
-    }
+    /^\/products/.test(param) && dispatch(fetchCategory(sort));
   }, [sort, param]);
-
-  useEffect(() => {
-    dispatch({ type: "IS_INCART" });
-  }, []);
 
   const handleBuy = (id) => {
     //if (!localStorage.getItem("auth")) {
@@ -64,7 +54,7 @@ function Card(props) {
               </div>
               <div
                 className={
-                  purchaseList.includes(v.id) ? `${cardBtn}` : "buyBtn"
+                  purchaseList.includes(v.id) ? `buyBtn disabled` : "buyBtn"
                 }
                 onClick={() => handleBuy(v.id)}
               >
