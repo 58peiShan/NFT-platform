@@ -16,7 +16,7 @@ MYSQL_PASSWORD = 'password'
 MYSQL_DB = 'database'  
 CORS='http://localhost:3000'  
 API_PORT = '5000'  
-
+NFT_API_KEY='你的TokenView API Key'
 
 3.在frontend資料夾根目錄建立.env檔案，並在單引號內填入欲連線port（ex:3000）的設定：  
 FRONT_END_PORT=''  
