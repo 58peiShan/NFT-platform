@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-09-22 11:54:09
+-- 產生時間： 2022-09-29 11:31:59
 -- 伺服器版本： 8.0.30
 -- PHP 版本： 8.0.19
 
@@ -43,15 +43,17 @@ CREATE TABLE `artwork` (
 --
 
 INSERT INTO `artwork` (`id`, `workName`, `price`, `img`, `amount`, `category`, `author`) VALUES
-(1, 'Spaceface', 3.2, 'Spaceface.jpg', 1, 'image', 'Adamtoksoz'),
-(2, 'Kanpai Panda1', 6, 'imgwork-1.png', 1, 'image', 'Kanpai-Labs'),
+(1, 'Spaceface', 3.2, 'Spaceface.jpg', 0, 'image', 'Adamtoksoz'),
+(2, 'Kanpai Panda1', 6, 'imgwork-1.png', 0, 'image', 'Kanpai-Labs'),
 (3, 'Spider Tanks', 5, 'music1.gif', 1, 'music', 'Snoop Dogg - B.O.D.R'),
 (4, '2 Geez (Instrumental)', 6, 'music2.gif', 1, 'music', 'Snoop Dogg - B.O.D.R'),
 (5, 'immortal', 4, 'immortal.jpg', 1, 'image', 'Ier6'),
 (6, 'SPACE COIN', 4.5, 'gif1.gif', 1, 'gifs', 'SDE'),
 (7, 'ZAP#4797', 3.1, 'imgwork-4.jpg', 1, 'image', 'SAAD97'),
 (8, 'Kanpai Panda2', 3.6, 'imgwork-2.png', 1, 'image', 'Kanpai-Labs'),
-(9, '79879789', 3.2, 'ds', 1, '1', '1');
+(10, 'Leilani Kilgore', 7, 'Leilani Kilgore.jpg', 1, 'music', 'FuntimeNikki'),
+(11, 'Construction Token #496', 70, 'ConstructionToken496.png', 1, 'image', 'jeffgdavis'),
+(12, 'ConstructionToken#113', 35, '113.png', 1, 'image', 'jeffgdavis');
 
 -- --------------------------------------------------------
 
@@ -73,8 +75,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `userName`, `account`, `password`, `email`, `purchase`) VALUES
-(95, NULL, 'hype123456', 'cookie123', 'qw@gmail.com', NULL),
-(97, 'GAGU', 'jack45678', 'a', '583@gass.com', NULL);
+(95, 'sweetJohn', 'sweet456', '6367c48dd193d56ea7b0baad25b19455e529f5ee', 'biteOne@gmail.com', NULL),
+(97, 'GAGU', 'jack45678', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '583@gass.com', NULL),
+(104, 'Finnona', 'Adventure123', '0ce60eacd334fe2945c1f99e67ff5cb19c2f936f', 'Adventure123@sa.com', '[1]'),
+(105, NULL, 'saysomthing', '8c0da104259ae45f23bfeaab025b3436408ed166', 'saysomthing@as.com', NULL);
 
 --
 -- 已傾印資料表的索引
@@ -100,13 +104,13 @@ ALTER TABLE `users`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `artwork`
 --
 ALTER TABLE `artwork`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
