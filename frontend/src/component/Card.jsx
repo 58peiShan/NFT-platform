@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useParams, Link } from "react-router-dom";
 import { FaEthereum } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from "../actions/cardAction";
+
 function Card(props) {
-  const list = useSelector((state) => state.cardReducer.card);
+  const dispatch = useDispatch();
+  const param = useLocation().pathname;
   const sort = useParams()["*"];
   const purchaseList = JSON.parse(localStorage.getItem("purchase")) || [];
-  const cardBtn = useSelector((state) => state.cardBtn);
-  const total = useSelector((state) => state.productReducer);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch({ type: "IS_INCART" });
-  }, []);
+  const {
+    cardReducer: { card: list },
+  } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(fetchCategory(sort));
-  }, [sort]);
+    /^\/products/.test(param) && dispatch(fetchCategory(sort));
+  }, [sort, param]);
 
-  const handleBuy = (id) => {
+  const handleBuy = (id, amount) => {
     if (!localStorage.getItem("auth")) {
-     alert("請先登入！");
-     return;
-    } else if (purchaseList.includes(id)) {
+      alert("請先登入！");
       return;
-   } else {
+    } else if (purchaseList.includes(id) || amount === 0) {
+      return;
+    } else {
       const purchase = id;
       purchaseList.push(purchase);
       let purchaseString = JSON.stringify(purchaseList);
@@ -41,7 +40,9 @@ function Card(props) {
             <div key={i}>
               <div className="card product">
                 <div className="imgContainer">
-                  <img src={`/img/${v.img}`} />
+                  <Link to={`/products/item/${v.id}`}>
+                    <img src={`/img/${v.img}`} />
+                  </Link>
                 </div>
                 <div className="container ">
                   <h3>{v.workName}</h3>
@@ -55,13 +56,13 @@ function Card(props) {
                 </div>
                 <div
                   className={
-                    purchaseList.includes(v.id) ? `${cardBtn}` : "buyBtn"
+                    purchaseList.includes(v.id) || v.amount === 0
+                      ? "buyBtn disabled"
+                      : "buyBtn"
                   }
-                  onClick={() => {
-                    handleBuy(v.id);
-                  }}
+                  onClick={() => handleBuy(v.id, v.amount)}
                 >
-                  BUY NOW
+                  {v.amount === 0 ? "SOLD OUT" : "BUY NOW"}
                 </div>
               </div>
             </div>

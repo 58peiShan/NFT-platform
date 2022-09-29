@@ -20,10 +20,10 @@ body,
 html {
   height: 100%;
   width: 100vw;
- }
- body{
+}
+body {
   overflow-x: hidden;
- }
+}
 
 a,
 a:link {
@@ -41,12 +41,66 @@ button {
   font-size: var(--btnFont);
   margin-bottom: 20px;
 }
+select {
+  text-align: center;
+  height: 40px;
+  width: 40%;
+  border-radius: 10px;
+  font-size: 18px;
+  appearance: none;
+}
+
+option {
+  border-radius: 10px;
+}
+
+.status {
+  margin: 200px auto !important ;
+  padding-bottom: 200px;
+  .reload {
+    z-index: 10;
+    font-size: 30px;
+    color: rgb(49, 150, 218);
+    transition: 0.2s;
+  }
+  .reload:hover {
+    rotate: -30deg;
+  }
+  table {
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    td a:any-link {
+      color: var(--primary);
+    }
+    th {
+      border: 1px solid var(--primary);
+      background: transparent;
+    }
+    th:first-child {
+      border-radius: 10px 0 0 0;
+    }
+    th:last-child {
+      border-radius: 0 10px 0 0;
+    }
+  }
+  thead {
+    background-color: rgb(255, 255, 255);
+    color: var(--select);
+  }
+}
 
 table {
   width: 100%;
   text-align: center;
   th {
     background: #333;
+  }
+  th:first-child {
+    border-radius: 10px 0 0 0;
+  }
+  th:last-child {
+    border-radius: 0 10px 0 0;
   }
 }
 
@@ -60,6 +114,9 @@ tbody {
   th {
     width: 18%;
   }
+  td {
+    height: 50px !important;
+  }
   img {
     width: 60%;
   }
@@ -72,6 +129,7 @@ tbody {
 
 .btnMain {
   background: var(--select);
+  color: #fff;
   a {
     color: #fff;
     align-items: center;
@@ -86,6 +144,10 @@ tbody {
   color: var(--select);
   background-color: #fff;
 }
+.btnSOLDOUT {
+  color: #fff;
+  background: var(--primary);
+}
 
 .d-flex {
   display: flex;
@@ -99,6 +161,7 @@ tbody {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
+
 .nameEdit {
   color: var(--primary);
   background: #fff;
@@ -106,15 +169,16 @@ tbody {
   font-size: 45px;
   font-weight: bold;
 }
-.mailEdit{
+.mailEdit {
   height: 55px !important;
   font-size: 30px;
   margin-right: 20px !important;
 }
-.mailEdit::placeholder,.mailEdit:disabled{
+.mailEdit::placeholder,
+.mailEdit:disabled {
   color: #fff;
 }
-.mailEdit:focus-visible.mailEdit::placeholder{
+.mailEdit:focus-visible.mailEdit::placeholder {
   color: #ddd;
 }
 .nameEdit:focus-visible {
@@ -123,10 +187,10 @@ tbody {
   font-weight: bold;
   outline: none;
 }
-.nameEdit:hover{
+.nameEdit:hover {
   color: #333;
   font-size: 50px;
-  transition: .3s;
+  transition: 0.3s;
 }
 .login {
   color: #fff;
@@ -137,10 +201,48 @@ tbody {
   border-radius: 10px;
   background-color: var(--select);
   justify-content: space-between;
-
+  .carousel {
+    overflow: hidden;
+  }
   .userdatas {
     cursor: default;
     color: #eeeeee;
+    .imgContainer {
+      flex-direction: row;
+      justify-content: space-between;
+      .imgBox {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        img {
+          opacity: 0.7;
+          border-radius: 50%;
+          width: 100%;
+          object-fit: cover;
+          transition: border-radius 0.5s, opacity 0.5s;
+        }
+        img:hover {
+          opacity: 1;
+          border-radius: 10%;
+        }
+      }
+    }
+    .btnContainer {
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+      cursor: default;
+      .prev,
+      .next {
+        cursor: pointer;
+        opacity: 0.7;
+      }
+      .prev:hover,
+      .next:hover {
+        opacity: 1;
+        transition: 0.3;
+      }
+    }
     .userdata {
       color: #fff;
       font-size: 30px;
@@ -183,6 +285,12 @@ header {
   font-size: 1.5rem;
   list-style-type: none;
 
+  label,
+  .menu,
+  #menu {
+    display: none;
+  }
+
   .logo {
     color: var(--highlight);
     font-weight: 700;
@@ -209,7 +317,7 @@ header {
   .links {
     font-size: 20px;
     display: flex;
-    width: 60vw;
+    width: 70%;
     justify-content: space-around;
     a {
       display: flex;
@@ -221,12 +329,31 @@ header {
     color: var(--select);
   }
 }
+
 footer {
   background: black;
   width: 100vw;
   height: 100px;
   position: absolute;
   bottom: 0;
+}
+.userContainer {
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+  input {
+    margin: 10px 0;
+  }
+  .icon {
+    position: absolute;
+    top: 68%;
+    right: 30px;
+  }
+  .iconSignin {
+    position: absolute;
+    right: 30px;
+    bottom: 137px;
+  }
 }
 .searchContainer {
   width: 40vw;
@@ -269,20 +396,72 @@ footer {
   margin: 30px 0 40px 0;
 }
 .divcontainer {
+  margin: 0 auto;
   width: 75vw;
-  height: 100vh;
-  margin: auto;
+  // height: 100vh;
   padding-top: 50px;
+  .itemImgBox {
+    border: 1px solid var(--secondary);
+    border-radius: 20px;
+    width: 40%;
+    overflow: hidden;
+    height: 600px;
+    object-fit: cover;
+    img {
+      margin-top: 50px;
+      width: 100%;
+      height: 100%;
+      border-radius: 0 0 20px 20px;
+    }
+  }
+  .itemInfoBox {
+    width: 50%;
+    flex-direction: column;
+    margin-left: 30px;
+    div {
+      justify-content: center;
+      align-items: center;
+    }
+    div:first-child {
+      margin-bottom: 20px;
+      justify-content: flex-start;
+      font-size: 20px;
+      color: var(--select);
+    }
+    h4 {
+      font-weight: normal;
+      color: var(--primary);
+      margin: 30px 0;
+    }
+    .priceBox {
+      padding: 30px;
+      border: 1px solid var(--secondary);
+      border-radius: 20px;
+      width: 100%;
+      height: 350px;
+
+      h2 svg {
+        color: var(--select);
+      }
+    }
+  }
+  .text {
+    width: 50%;
+  }
   .productList {
+    height: 100vh;
     display: flex;
     flex-wrap: wrap;
     margin-top: 30px;
   }
   .total {
+    text-align: end;
     justify-content: end;
-    height: 100px;
-    align-items: center;
+    align-items: flex-end;
     font-size: 24px;
+    .m-5 {
+      margin: 30px;
+    }
   }
   ul {
     cursor: pointer;
@@ -342,6 +521,7 @@ footer {
   border-radius: 20px;
   background-color: #fff;
   box-shadow: #ccc 0px 3px 5px;
+  transition: 0.5s;
 
   .container {
     text-align: start;
@@ -356,6 +536,7 @@ footer {
   .imgContainer {
     height: 70%;
     width: 100%;
+    transition: 0.3s;
   }
   img {
     width: 100%;
@@ -403,5 +584,78 @@ footer {
     object-fit: cover;
     border-radius: 20px 20px 0 0;
     transition: 0.2s;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  header {
+    .links {
+      // display: none;
+      z-index: 3;
+      width: 100vw;
+      position: absolute;
+      top: 80px;
+      max-height: 0;
+      overflow: hidden;
+      transition: 0.2s;
+    }
+    .searchContainer input {
+      width: 70vw;
+      margin: 20px;
+    }
+    input:checked ~ .links {
+      display: flex;
+      flex-direction: column;
+      max-height: 100vh;
+      clear: none;
+      background: #fff;
+      a {
+        margin: 20px;
+        width: 100vw;
+      }
+    }
+    span {
+      display: none;
+    }
+    label,
+    .menu {
+      display: flex;
+    }
+  }
+  .card {
+    margin: auto;
+  }
+
+  .divcontainer {
+    width: 95vw;
+    margin: 0 auto;
+    flex-direction: column;
+    height: auto;
+    .productList {
+      justify-content: center;
+    }
+    ul {
+      width: 90vw;
+      justify-content: space-around;
+      a {
+        padding: 0;
+      }
+    }
+    .img {
+      height: 90vh;
+    }
+    .text {
+      width: 100%;
+      .d-flex {
+        margin: 20px 0;
+      }
+      h1 {
+        font-size: 32px;
+      }
+      p {
+        width: 100%;
+        font-size: 18px;
+      }
+    }
   }
 }

@@ -1,8 +1,7 @@
 import * as types from "../actions/types";
 
 const initialState = {
-  purchase: [],
-  // error: null
+  purchase: []
 };
 
 const cartlistReducer = (state = initialState, action) => {

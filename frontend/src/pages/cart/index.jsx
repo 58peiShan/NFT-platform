@@ -3,8 +3,10 @@ import { FaTrash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import ScaleLoader from "react-spinners/ClipLoader";
+import { sha256 } from "js-sha256";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-const override= {
+const override = {
   display: "block",
   margin: "0 auto",
   borderColor: "rgb(49, 150, 218)",
@@ -13,12 +15,15 @@ const override= {
 function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const auth = localStorage.getItem("auth");
+  const token = localStorage.getItem("auth");
   const purchaseList = JSON.parse(localStorage.getItem("purchase"));
-  const list = useSelector((state) => state.cartlist.purchase) || [];
-  const total = useSelector((state) => state.productReducer);
+  // const list = useSelector((state) => state.cartlist.purchase) || [];
+  // const total = useSelector((state) => state.productReducer);
+  const {
+    cartlist: { purchase: list },
+    productReducer: total,
+  } = useSelector((state) => state);
 
-  const handlePay = () => {};
   const handleDel = (id) => {
     dispatch({ type: "PURCHASE_RESET" });
     dispatch({ type: "DECREASE" });
@@ -28,16 +33,22 @@ function Cart() {
     } else {
       let remove = purchaseList.splice(i, i);
     }
-    localStorage.setItem("purchase", "[" + purchaseList + "]");
+    localStorage.setItem("purchase", JSON.stringify(purchaseList));
   };
   const eachPrice = [];
   list.every((o) => eachPrice.push(o.price));
   const initialValue = 0;
-  const totalPrice = eachPrice.reduce(
-    (previousValue, currentValue) => previousValue + currentValue,
-    initialValue
-  );
-
+  const totalPrice =
+    total > 0
+      ? eachPrice.reduce(
+          (previousValue, currentValue) => previousValue + currentValue,
+          initialValue
+        )
+      : 0;
+  const CheckMacValue = sha256(
+    encodeURI(`HashKey=spPjZn66i0OhqJsQ&HashIV=hT5OJckN45isQTTs`)
+  ).toUpperCase();
+  console.log(CheckMacValue);
 
   const outputList = list.map((v, i) => {
     return (
@@ -60,7 +71,7 @@ function Cart() {
     );
   });
 
-  return auth ? (
+  return token ? (
     <>
       <div className="divcontainer">
         <table>
@@ -85,21 +96,76 @@ function Cart() {
           </tbody>
         </table>
         <hr />
-        <div className="d-flex total">
-          total：{totalPrice}
-          <button onClick={handlePay}>付款</button>
+
+        <div className="total">
+          <div className="m-5">total：{totalPrice}</div>
+          {totalPrice ? (
+            <>
+              <PayPalScriptProvider
+                options={{
+                  "client-id":
+                    "AdSZktCJPTSq1FiiwmaBvbI2zYy1gyamYwlv9ikcsEoa3cVGuA-4QiTlpzCcs2nX2rGxNDBhze3Fe4UE",
+                }}
+              >
+                <PayPalButtons
+                  style={{ color: "blue" }}
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            value: `${totalPrice}`,
+                          },
+                        },
+                      ],
+                    });
+                  }}
+                  //交易成功
+                  onApprove={(data, actions) => {
+                    return actions.order.capture().then((details) => {
+                      const name = details.payer.name.given_name;
+                      fetch(`http://localhost:5000/user/addpurchase`, {
+                        method: "PATCH",
+                        headers: {
+                          "Content-Type": "application/json",
+                          Accept: "application/json",
+                          Authorization: `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({
+                          purchase: localStorage.getItem("purchase"),
+                        }),
+                      })
+                        .then((res) => res.text())
+                        .then(
+                          (data) => localStorage.setItem("auth", data),
+                          dispatch({ type: "CARTLIST_RESET" }),
+                          dispatch({ type: "PURCHASE_RESET" }),
+                          localStorage.removeItem("purchase"),
+                          alert(`交易成功， ${name}`)
+                        );
+                    });
+                  }}
+                />
+              </PayPalScriptProvider>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </>
   ) : (
     <div className="divcontainer">
-      <div className="container d-flex"style={{justifyContent:"center"}}>
-        <h1 >請先登入！</h1></div>
-        <ScaleLoader  loading={true} cssOverride={override} size={50} />
+      <div className="container d-flex" style={{ justifyContent: "center" }}>
+        <h1>請先登入！</h1>
+      </div>
+      <ScaleLoader loading={true} cssOverride={override} size={50} />
 
-      <div style={{color:'white'}}>{setTimeout(() => {
-        navigate("/user/login");
-      }, 1000)}</div>
+      <div style={{ color: "white" }}>
+        {setTimeout(() => {
+          navigate("/user/login");
+        }, 1000)}
+      </div>
     </div>
   );
 }

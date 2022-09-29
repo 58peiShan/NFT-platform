@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import withRouter from "../../component/withRouter";
 
 class SignIn extends Component {
@@ -16,119 +17,115 @@ class SignIn extends Component {
       submitCheck: false,
     };
   }
-  render() {
-    const checkAccount = (account) => {
-      if (account.length >= 6 && account.length <= 12) {
-        fetch(`http://localhost:5000/user/${account}`)
-          .then((res) => res.text())
-          .then((data) => {
-            this.setState({
-              account: account,
-              accountMsg: data,
-            });
+  checkAccount = account => {
+    if (account.length >= 6 && account.length <= 12) {
+      fetch(`http://localhost:5000/user/${account}`)
+        .then(res => res.text())
+        .then((data) => {
+          this.setState({
+            account: account,
+            accountMsg: data,
           });
-      } else {
-        this.setState({
-          accountMsg: "帳號長度需在6~12間",
         });
-        return;
-      }
-    };
+    } else {
+      this.setState({
+        accountMsg: "帳號長度需在6~12間",
+      });
+      return;
+    }
+  };
 
-    const checkMail = (mail) => {
-      if (mail.includes("@")) {
-        fetch(`http://localhost:5000/user/mail/${mail}`)
-          .then((res) => res.text())
-          .then((data) => {
-            this.setState({
-              mail: mail,
-              mailMsg: data,
-            });
-          },
-          );
-      } else {
-        this.setState({
-          mailMsg: "格式錯誤",
+  checkMail = (mail) => {
+    if (mail.includes("@")) {
+      fetch(`http://localhost:5000/user/mail/${mail}`)
+        .then((res) => res.text())
+        .then((data) => {
+          this.setState({
+            mail: mail,
+            mailMsg: data,
+          });
         });
-        return;
-      }
-    };
+    } else {
+      this.setState({
+        mailMsg: "格式錯誤",
+      });
+      return;
+    }
+  };
 
-    const signIn = (e) => {
-      e.preventDefault();
-      if (
-        this.state.account == "" ||
-        this.state.mail == "" ||
-        this.state.passwordConfirm == "" ||
-        this.state.password == "" ||
-        this.state.passwordMsg !== "" ||
-        this.state.accountMsg !== "" ||
-        this.state.mailMsg !== ""
-      ) {
-        alert("資料不完整！");
-      } else {
-        fetch(`http://localhost:5000/adduser`, {
-          method: "POST",
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            id: this.state.account,
-            mail: this.state.mail,
-            password: this.state.password,
-          }),
-        })
-          .then((data) => {
-            if (data.ok) {
-              () => {
-                this.setState({
-                  account: "",
-                  mail: "",
-                  password: "",
-                  passwordConfirm: "",
-                });
-              },alert('註冊成功，回登入頁'),
+  signIn = (e) => {
+    e.preventDefault();
+    if (
+      this.state.account == "" ||
+      this.state.mail == "" ||
+      this.state.passwordConfirm == "" ||
+      this.state.password == "" ||
+      this.state.passwordMsg !== "" ||
+      this.state.accountMsg !== "" ||
+      this.state.mailMsg !== ""
+    ) {
+      alert("資料不完整！");
+    } else {
+      fetch(`http://localhost:5000/adduser`, {
+        method: "POST",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          id: this.state.account,
+          mail: this.state.mail,
+          password: this.state.password,
+        }),
+      })
+        .then((data) => {
+          if (data.ok) {
+            () => {
+              this.setState({
+                account: "",
+                mail: "",
+                password: "",
+                passwordConfirm: "",
+              });
+            },
+              alert("註冊成功，回登入頁"),
               this.props.navigate("/user/login");
-            }
-          })
-          .catch((error) => console.log(error));
-      }
-    };
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  };
+  render() {
     return (
       <div className="login d-flex flex-column">
         <h1>Welcome</h1>
         <form action="" name="signin">
-          <div>
+          <div className="userContainer d-flex">
             <input
               type="text"
               placeholder="account"
-              onChange={(e) => {
-                checkAccount(e.target.value);
-              }}
+              onChange={(e) => this.checkAccount(e.target.value)}
             />
             <p>{this.state.accountMsg}</p>
             <input
               type="email"
               placeholder="email"
-              onChange={(e) => {
-                checkMail(e.target.value);
-              }}
+              onChange={(e) => this.checkMail(e.target.value)}
             />
             <p>{this.state.mailMsg}</p>
             <input
-              type="password"
+              type={this.state.canSee ? "text" : "password"}
               placeholder="password"
-              onChange={(e) => {
+              onChange={(e) =>
                 this.setState({
                   password: e.target.value,
-                });
-              }}
+                })
+              }
             />
             <p></p>
             <input
-              type="password"
+              type={this.state.canSee ? "text" : "password"}
               placeholder="password comfirm"
               onChange={(e) => {
                 this.setState({
@@ -145,13 +142,21 @@ class SignIn extends Component {
                 }
               }}
             />
+            <span onClick={() => this.setState({ canSee: !this.state.canSee })}>
+              {this.state.canSee ? (
+                <FaEye className="iconSignin" style={{ color: "gray" }} />
+              ) : (
+                <FaEyeSlash className="iconSignin" style={{ color: "gray" }} />
+              )}
+            </span>
             <p>{this.state.passwordMsg}</p>
           </div>
+
           <div className="">
-            <button>
+            <button className="btnSec">
               <Link to="/user/login">已有帳號，登入</Link>
             </button>
-            <button onClick={signIn}>註冊</button>
+            <button className="btnSec" onClick={this.signIn}>註冊</button>
           </div>
         </form>
       </div>

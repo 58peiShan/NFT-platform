@@ -1,15 +1,21 @@
 import React, { useEffect, useState, useRef } from "react";
-import { FaUndo } from "react-icons/fa";
+import { FaUndo, FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 function Dashboard() {
   if (localStorage.getItem("auth")) {
+    const collectionList = useSelector(
+      (state) => state.userReducer.collectionId
+    );
+    const token = localStorage.getItem("auth");
     const nameRef = useRef(null);
     const mailRef = useRef(null);
     const [userdata, setUserdata] = useState({});
     const [isdisabled, setIsdisabled] = useState(true);
     const [isdisabled_name, setIsdisabled_name] = useState(true);
-    const token = localStorage.getItem("auth");
+    const [trans, setTrans] = useState(0);
+    let idx = 0;
     useEffect(() => {
       fetch(`http://localhost:5000/user/dashboard`, {
         method: "GET",
@@ -18,6 +24,15 @@ function Dashboard() {
         .then((res) => res.json())
         .then((data) => setUserdata(data));
     }, [token]);
+
+    const changeImg = () => {
+      if (idx > collectionList.length - 1) {
+        idx = 0;
+      } else if (idx < 0) {
+        idx = 0;
+      }
+      setTrans(`${-idx * 120}px`);
+    };
 
     const editName = (e) => {
       if (e.key === "Enter") {
@@ -87,9 +102,7 @@ function Dashboard() {
               className="nameEdit"
               ref={nameRef}
               placeholder={userdata.userName ? userdata.userName : "none"}
-              onKeyPress={(e) => {
-                editName(e);
-              }}
+              onKeyPress={(e) => editName(e)}
               disabled={isdisabled_name}
             ></input>
           </div>
@@ -98,28 +111,53 @@ function Dashboard() {
           </span>
           <div className="login" style={{ width: "50vw", margin: "20px auto" }}>
             <div className="userdatas">
-              account<div className="userdata">{userdata.account}</div>
-              email
+              Account<div className="userdata">{userdata.account}</div>
+              Email
               <div onDoubleClick={mailChangeHandler}>
                 <input
                   className="mailEdit"
                   ref={mailRef}
                   placeholder={userdata.email}
-                  onKeyPress={(e) => {
-                    editMail(e);
-                  }}
+                  onKeyPress={(e) => editMail(e)}
                   disabled={isdisabled}
                 ></input>
                 <FaUndo
-                  style={
-                    isdisabled ? { display: "none" } : { display: "inline" }
-                  }
+                  style={{ display: isdisabled ? "none" : "inline" }}
                   onClick={cancelEdit}
                 />
               </div>
-              purchase
+              My Collection
               <hr />
-              <div className="userdata">{userdata.purchase}</div>
+              <div className="userdata d-flex carousel">
+                <div
+                  className="imgContainer d-flex"
+                  style={{ transform: `translateX(${trans})` }}
+                >
+                  {collectionList.map((v, i) => (
+                    <div className="imgBox" key={i}>
+                      <img src={`../img/${v.img}`} alt="" />
+                    </div>
+                  ))}
+                </div>
+                <div
+                  className="btnContainer d-flex"
+                  style={{ display: collectionList.length > 8 ? "" : "none" }}
+                >
+                  <FaAngleDoubleLeft
+                    onClick={() => {
+                      idx--, changeImg();
+                    }}
+                    className="prev"
+                  />
+
+                  <FaAngleDoubleRight
+                    onClick={() => {
+                      idx++, changeImg();
+                    }}
+                    className="next"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

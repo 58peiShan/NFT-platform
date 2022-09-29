@@ -6,7 +6,7 @@ const sha1 = require('sha1')
 router.post(`/`, async (req, res) => {
   const account = req.body.id;
   const mail = req.body.mail;
-  const password = req.body.password;
+  const password = sha1(req.body.password);
   const sql =
     "INSERT INTO `users` (`account`, `password`, `email`) VALUES (?, ?, ?)";
   if (account && mail && password) {

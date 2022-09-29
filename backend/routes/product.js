@@ -1,6 +1,8 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const request = require("request");
+const router = express.Router();
 const db = require("../util/database");
+require("dotenv").config();
 
 //作品名搜尋篩選
 router.get(`/`, async (req, res) => {
@@ -8,9 +10,9 @@ router.get(`/`, async (req, res) => {
   if (req.query.search) {
     const search = req.query.search;
     const sql = "SELECT * FROM `artwork` WHERE `workName` LIKE ?";
-    const [datas] = await db.query(sql,[`%${search}%`]);
+    const [datas] = await db.query(sql, [`%${search}%`]);
     res.json(datas);
-  } else{
+  } else {
     const sql = "SELECT * FROM artwork";
     const [datas] = await db.query(sql);
     res.json(datas);
@@ -32,6 +34,27 @@ router.get(`/id/:id`, async (req, res) => {
   const sql = "SELECT * FROM artwork WHERE id=?";
   const [datas] = await db.query(sql, [id]);
   res.json(datas);
+});
+
+router.get(`/nft/blockdata`, async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  request(
+    {
+      url: `https://services.tokenview.io/nft/eth/blockdata/transactions/all/1/10?apikey=${process.env.NFT_API_KEY}`,
+    },
+    (error, response, body) => {
+      if (error || response.statusCode !== 200) {
+        return res.status(500).json({ type: "error", message: err.message });
+      }
+
+      res.json(JSON.parse(body));
+    }
+  );
+});
+
+router.post(`/paymentOK`, (req, res) => {
+  console.log(req);
+  res.text("1|OK");
 });
 
 module.exports = router;

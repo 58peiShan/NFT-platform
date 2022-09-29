@@ -1,10 +1,7 @@
 import {
   Routes,
   Route,
-  Navigate,
-  useLocation,
-  useParams,
-  Link,
+  Navigate
 } from "react-router-dom";
 import React from "react";
 import LogIn from "./LogIn.jsx";
