@@ -9,12 +9,13 @@
 
 1.由分支master/dev clone下來後，分別cd至兩個資料夾：frontend,backend，執行npm install  
 
-2.在backend資料夾根目錄建立.env檔案，並在單引號內填入本機資料庫的設定以及前端地址（ex:3000）：  
-MYSQL_HOST = ''  
-MYSQL_USER = ''  
-MYSQL_PASSWORD = ''  
-MYSQL_DB = ''  
-CORS=''  
+2.在backend資料夾根目錄建立.env檔案，並在單引號內填入本機資料庫的設定以及CORS前端端口（ex:3000），例：  
+MYSQL_HOST = 'localhost'  
+MYSQL_USER = 'user'  
+MYSQL_PASSWORD = 'password'  
+MYSQL_DB = 'database'  
+CORS='http://localhost:3000'  
+API_PORT = '5000'  
 
 
 3.在frontend資料夾根目錄建立.env檔案，並在單引號內填入欲連線port（ex:3000）的設定：  

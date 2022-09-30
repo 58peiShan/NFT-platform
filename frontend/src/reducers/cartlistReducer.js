@@ -1,24 +1,34 @@
-const id = JSON.parse(localStorage.getItem("purchase"));
-const a = [];
-const fetchList = () => {
-  if (id) {
-    for (let i = 0; i < id.length; i++) {
-      fetch(`http://localhost:5000/product/id/${id[i]}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          a.push(...data);
-          // console.log(state);
-        });
-    }
-  }
+import * as types from "../actions/types";
+
+const initialState = {
+  purchase: [],
 };
 
-const cartlistReducer = (state = [], action) => {
+const cartlistReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "ADD":
-      fetchList();
-      return a;
+    case types.PURCHASE_RESET: {
+      return {
+        ...state,
+        purchase:[]
+      };
+    }
+    case types.GET_PURCHASE_REQUEST: {
+      return {
+        ...state,
+      };
+    }
+    case types.GET_PURCHASE_SUCCESS: {
+      return {
+        ...state,
+        purchase: [...action.payload.purchase, ...state.purchase]
+      };
+    }
+    case types.GET_PURCHASE_FAILED: {
+      return {
+        ...state,
+        error: action.payload.error,
+      };
+    }
 
     default:
       return state;

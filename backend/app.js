@@ -19,6 +19,6 @@ app.use("/product", productRouter);
 app.use("/adduser", addUserRouter);
 app.use("/user", userRouter);
 
-app.listen(process.env.API_PORT, function () {
-  console.log(`server now is running at port ${process.env.API_PORT}`);
+app.listen(5000, function () {
+  console.log(`server now is running at port 5000`);
 });

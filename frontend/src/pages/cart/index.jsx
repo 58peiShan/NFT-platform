@@ -1,42 +1,39 @@
-import { NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 
 function Cart() {
-  const purchaseList = JSON.parse(localStorage.getItem("purchase"));
-  const list = useSelector((state) => state.cartlist);
   const dispatch = useDispatch();
-  const total = useSelector((state) => state.productReducer);
-  // const list = [
-  //   { id: 3, workName: "Spider Tanks", price: 5, img: "music1.gif", amount: 1 },
-  // ];
+  const purchaseList = JSON.parse(localStorage.getItem("purchase"));
+  const [list, total] = useSelector((state) => [
+    state.cartlist.purchase || [],
+    state.productReducer,
+  ]);
   const handleDel = (id) => {
+    dispatch({ type: "PURCHASE_RESET" });
+    dispatch({ type: "DECREASE" });
     const i = purchaseList.findIndex((element) => element == id);
-    let remove = purchaseList.splice(i, i);
-    localStorage.setItem("purchase", "[" + purchaseList + "]");
+    if (i === 0) {
+      let remove = purchaseList.splice(0, 1);
+    } else {
+      let remove = purchaseList.splice(i, i);
+    }
+    localStorage.setItem("purchase", JSON.stringify(purchaseList));
   };
-
-  const  outputList =  list.map((v, i) => {
-    return (
-      <tr key={i}>
-        <td>
-          <img src={`/img/${v.img}`} alt="" />
-        </td>
-        <td>{v.workName}</td>
-        <td>{v.price}</td>
-        <td>{v.amount}</td>
-        <td>{v.price * v.amount}</td>
-        <td
-          onClick={(e) => {
-            handleDel(v.id);
-          }}
-        >
-          <FaTrash />
-        </td>
-      </tr>
-    );
-  });
+  const outputList = list.map((v, i) => (
+    <tr key={i}>
+      <td>
+        <img src={`/img/${v.img}`} alt="" />
+      </td>
+      <td>{v.workName}</td>
+      <td>{v.price}</td>
+      <td>{v.amount}</td>
+      <td>{v.price * v.amount}</td>
+      <td onClick={(e) => handleDel(v.id)}>
+        <FaTrash />
+      </td>
+    </tr>
+  ));
 
   return (
     <>

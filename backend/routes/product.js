@@ -2,12 +2,28 @@ var express = require("express");
 var router = express.Router();
 const db = require("../util/database");
 
+// router.get(`/`, async (req, res) => {
+//   res.set("Access-Control-Allow-Origin", "*");
+//   const sql = "SELECT * FROM artwork";
+//   const [datas] = await db.query(sql);
+//   res.json(datas);
+// });
+
 router.get(`/`, async (req, res) => {
   res.set("Access-Control-Allow-Origin", "*");
-  const sql = "SELECT * FROM artwork";
-  const [datas] = await db.query(sql);
-  res.json(datas);
+  console.log(req.query);
+  if (req.query.search) {
+    const search = req.query.search;
+    const sql = "SELECT * FROM `artwork` WHERE `workName` LIKE ?";
+    const [datas] = await db.query(sql,[`%${search}%`]);
+    res.json(datas);
+  } else{
+    const sql = "SELECT * FROM artwork";
+    const [datas] = await db.query(sql);
+    res.json(datas);
+  }
 });
+
 router.get(`/:sort`, async (req, res) => {
   const sort = req.params.sort;
   res.set("Access-Control-Allow-Origin", "*");

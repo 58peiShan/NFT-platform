@@ -1,11 +1,9 @@
-import { Routes, Route, NavLink, useLocation, useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { Routes, Route, NavLink } from "react-router-dom";
+import React,{useEffect} from "react";
 import Card from "../../component/Card.jsx";
 import banner from "../../img/product-banner.png";
 
 function Product() {
-  const [bannerlight, setBannerlight] = useState(1);
-
   return (
     <>
       <div className="banner">
@@ -13,7 +11,6 @@ function Product() {
           src={banner}
           alt=""
           style={{
-            opacity: bannerlight,
             width: "100%",
             height: "100%",
             objectFit: "cover",
@@ -37,13 +34,7 @@ function Product() {
           </li>
         </ul>
         <div className="productList">
-          <Routes>
-            <Route path="/image" element={<Card category="image" />} />
-            <Route path="/gifs" element={<Card category="gifs" />} />
-            <Route path="/video" element={<Card category="video" />} />
-            <Route path="/music" element={<Card category="music"/>} />
-            <Route path="/" element={<Card/>} exact/>
-          </Routes>
+          <Card />
         </div>
       </div>
     </>
