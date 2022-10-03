@@ -5,16 +5,17 @@ import indexImg from "../../img/immortal.jpg";
 import authorImg from "../../img/author_JIMMY.png";
 import { useSelector } from "react-redux";
 import Card from "../../component/Card.jsx";
-import { FaUndo,FaClock } from "react-icons/fa";
+import { FaUndo, FaClock } from "react-icons/fa";
 import { useEffect } from "react";
 import { useState } from "react";
 
 function Home() {
   const search = useSelector((state) => state.cardReducer.search);
   const [list, setList] = useState([]);
+  const [ethlist, setEthList] = useState({});
+  const [currentPrice, setCurreunPrice] = useState({});
   const [reload, setReload] = useState(false);
   const override = {
-
     display: "block",
     margin: "150px auto",
     borderColor: "rgb(49, 150, 218)",
@@ -24,7 +25,16 @@ function Home() {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((data) => setList(data.data.data), console.log(list));
+      .then((data) => setList(data.data.data));
+    fetch(`https://api.coingecko.com/api/v3/coins/ethereum`)
+      .then((res) => res.json())
+      .then(
+        (data) => setEthList(data.market_data),
+        (data) => setCurreunPrice(data.market_data.current_price)
+      );
+    fetch(`https://api.coingecko.com/api/v3/coins/ethereum`)
+      .then((res) => res.json())
+      .then((data) => setCurreunPrice(data.market_data.current_price));
   }, [reload]);
   return search ? (
     <div className="divcontainer">
@@ -33,7 +43,7 @@ function Home() {
       </div>
     </div>
   ) : (
-    <div>
+    <div className="homeWrapper">
       <div className="bg" style={{ backgroundImage: `url(${indexImg})` }}></div>
       <div className="divcontainer d-flex">
         <div className="text d-flex">
@@ -43,12 +53,7 @@ function Home() {
             <button className="btnMain" style={{ margin: "0" }}>
               <Link to="/products">Explore</Link>
             </button>
-            <button
-              className="btnSec"
-              onClick={() => {
-                alert("敬請期待!");
-              }}
-            >
+            <button className="btnSec" onClick={() => alert("敬請期待!")}>
               Create
             </button>
           </div>
@@ -79,6 +84,49 @@ function Home() {
         </div>
       </div>
       <div className="divcontainer status">
+        <div className="coinBox">
+          <div className="coin">
+            <p>Ethereum</p>
+          </div>
+          <div className="coin">
+            <p>USD</p>
+            <p>{currentPrice.usd}</p>
+          </div>
+          <div className="coin">
+            <p>24hours</p>
+            <p
+              style={{
+                color:
+                  parseFloat(ethlist.price_change_percentage_7d) >= 0
+                    ? "red"
+                    : "green",
+              }}
+            >
+              {ethlist ? (
+                ethlist.price_change_percentage_24h
+              ) : (
+                <ScaleLoader loading={true} cssOverride={override} size={20} />
+              )}
+            </p>
+          </div>
+          <div className="coin">
+            <p>7days</p>
+            <p
+              style={{
+                color:
+                  parseFloat(ethlist.price_change_percentage_7d) >= 0
+                    ? "red"
+                    : "green",
+              }}
+            >
+              {ethlist ? (
+                ethlist.price_change_percentage_7d
+              ) : (
+                <ScaleLoader loading={true} cssOverride={override} size={20} />
+              )}
+            </p>
+          </div>
+        </div>
         <div
           className="d-flex"
           style={{ alignItems: "center", justifyContent: "space-between" }}
@@ -86,20 +134,23 @@ function Home() {
           <h1>Recent transactions</h1>
           <div
             style={{ cursor: "pointer", height: "50px" }}
-            onClick={() => {setList([]),
-              setReload(!reload);
+            onClick={() => {
+              setList([]), setReload(!reload);
             }}
           >
             <FaUndo className="reload" />
           </div>
         </div>
-        <table>
+
+        <table className="">
           <thead>
             <tr>
               <th>block No</th>
               <th>collection</th>
               <th>collection address</th>
-              <th><FaClock/></th>
+              <th>
+                <FaClock />
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -131,7 +182,7 @@ function Home() {
               })
             ) : (
               <tr>
-                <td colSpan={5} style={{height:"20vh"}}>
+                <td colSpan={5} style={{ height: "20vh" }}>
                   <ScaleLoader
                     loading={true}
                     cssOverride={override}

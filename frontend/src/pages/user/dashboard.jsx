@@ -101,7 +101,7 @@ function Dashboard() {
             <input
               className="nameEdit"
               ref={nameRef}
-              placeholder={userdata.userName ? userdata.userName : "none"}
+              placeholder={userdata.userName ? userdata.userName : "set my nickname"}
               onKeyPress={(e) => editName(e)}
               disabled={isdisabled_name}
             ></input>
@@ -109,7 +109,7 @@ function Dashboard() {
           <span style={{ color: "#dee" }}>
             {isdisabled_name ? "double click to edit" : "press Enter to submit"}
           </span>
-          <div className="login" style={{ width: "50vw", margin: "20px auto" }}>
+          <div className="login dashboard">
             <div className="userdatas">
               Account<div className="userdata">{userdata.account}</div>
               Email

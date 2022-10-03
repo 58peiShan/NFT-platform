@@ -18,19 +18,14 @@ export const getPurchaseError = (error) => {
 
 export const fetchPurchase = () => {
   const id = JSON.parse(localStorage.getItem("purchase"));
-  return (dispatch, state) => {
-    // const { purchase } = state().cartlist;
-    // dispatch(requestpurchase());
-    const a = [];
+  return dispatch => {
     if (!id) return;
     for (let i = 0; i < id.length; i++) {
       fetch(`http://localhost:5000/product/id/${id[i]}`)
         .then((response) => response.json())
         .then((data) => {
-          //  a.push(...data);
           dispatch(getPurchaseSuccess(data));
         })
-        .then()
         .catch((error) => {
           dispatch(getPurchaseError(error));
         });

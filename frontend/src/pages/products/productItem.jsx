@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { FaCheckCircle, FaEthereum } from "react-icons/fa";
 
 function ProductItem(props) {
@@ -13,9 +13,7 @@ function ProductItem(props) {
   const handleBuy = (id, amount) => {
     if (!localStorage.getItem("auth")) {
       alert("請先登入！");
-      return;
     } else if (purchaseList.includes(id) || amount === 0) {
-      return;
     } else {
       const purchase = id;
       purchaseList.push(1*purchase);
@@ -28,11 +26,10 @@ function ProductItem(props) {
 
   useEffect(() => {
     fetch(`http://localhost:5000/product/id/${id}`)
-      .then((res) => res.json())
-      .then((data) => setItem(...data));
+      .then(res => res.json())
+      .then(data => setItem(...data));
   }, []);
   return (
-    <>
       <div className="divcontainer d-flex">
         <div className="itemImgBox">
           <img src={`../../img/${item.img}`} alt="" />
@@ -65,7 +62,6 @@ function ProductItem(props) {
           </div>
         </div>
       </div>
-    </>
   );
 }
 

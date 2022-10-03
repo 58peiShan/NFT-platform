@@ -54,22 +54,14 @@ class Login extends Component {
             <input
               type="text"
               placeholder="account"
-              onChange={(e) => {
-                this.setState({ account: e.target.value });
-              }}
+              onChange={(e) => this.setState({ account: e.target.value })}
             />
             <input
               type={this.state.canSee ? "text" : "password"}
               placeholder="password"
-              onChange={(e) => {
-                this.setState({ password: e.target.value });
-              }}
+              onChange={(e) => this.setState({ password: e.target.value })}
             />
-            <span
-              onClick={() => {
-                this.setState({ canSee: !this.state.canSee });
-              }}
-            >
+            <span onClick={() => this.setState({ canSee: !this.state.canSee })}>
               {this.state.canSee ? (
                 <FaEye className="icon" style={{ color: "gray" }} />
               ) : (
@@ -81,8 +73,12 @@ class Login extends Component {
             {this.state.loginMsg}
           </p>
           <div className="d-flex">
-            <button className="btnSec" onClick={this.hangleLogin}>登入</button>
-            <Link to="/user/SignIn">未有帳號？</Link>
+            <button type="button" className="btnSec" onClick={this.hangleLogin}>
+              登入
+            </button>
+            <button type="button" className="btnSec">
+              <Link to="/user/SignIn">未有帳號？</Link>
+            </button>
           </div>
         </form>
       </div>

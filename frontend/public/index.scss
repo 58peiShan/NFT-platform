@@ -41,6 +41,7 @@ button {
   font-size: var(--btnFont);
   margin-bottom: 20px;
 }
+
 select {
   text-align: center;
   height: 40px;
@@ -55,8 +56,25 @@ option {
 }
 
 .status {
-  margin: 200px auto !important ;
+  margin: 150px auto !important ;
   padding-bottom: 200px;
+  .coinBox {
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .coin {
+      border-left: var(--select) 1px solid;
+      padding-left: 25px;
+    }
+    .coin p:first-child {
+      color: var(--primary);
+    }
+    .coin p:last-child {
+      font-size: 32px;
+      font-weight: 700;
+    }
+  }
   .reload {
     z-index: 10;
     font-size: 30px;
@@ -272,6 +290,10 @@ tbody {
     align-items: center;
   }
 }
+.dashboard {
+  width: 50vw;
+  margin: 20px auto;
+}
 
 header {
   z-index: 3;
@@ -398,14 +420,12 @@ footer {
 .divcontainer {
   margin: 0 auto;
   width: 75vw;
-  // height: 100vh;
   padding-top: 50px;
   .itemImgBox {
     border: 1px solid var(--secondary);
     border-radius: 20px;
-    width: 40%;
     overflow: hidden;
-    height: 600px;
+    // min-height: 600px;
     object-fit: cover;
     img {
       margin-top: 50px;
@@ -449,6 +469,7 @@ footer {
     width: 50%;
   }
   .productList {
+    text-align: center;
     height: 100vh;
     display: flex;
     flex-wrap: wrap;
@@ -488,7 +509,7 @@ footer {
   .text {
     flex-direction: column;
     justify-content: space-around;
-    height: 40vh;
+    padding-top: 50px;
     p {
       width: 75%;
       font-size: 24px;
@@ -586,8 +607,17 @@ footer {
     transition: 0.2s;
   }
 }
+// .m-auto{
+//   margin: 0 auto;
+// }
 
 @media screen and (max-width: 767px) {
+  // .m-auto{
+  //   margin:0;
+  // }
+  h1 {
+    font-size: 32px;
+  }
   header {
     .links {
       // display: none;
@@ -601,7 +631,7 @@ footer {
     }
     .searchContainer input {
       width: 70vw;
-      margin: 20px;
+      margin: 20px 15%;
     }
     input:checked ~ .links {
       display: flex;
@@ -614,39 +644,170 @@ footer {
         width: 100vw;
       }
     }
-    span {
-      display: none;
+    .logo {
+      span {
+        display: none;
+      }
     }
     label,
     .menu {
       display: flex;
     }
+    .buyAmount {
+      position: absolute;
+      left: 60px;
+      top: 55%;
+    }
   }
-  .card {
-    margin: auto;
+  .searchContainer {
+    width: 100vw;
+    align-items: center;
+    input{
+  
+    }
+    // display: contents;
+    .icon {
+      top: 33px;
+      left: 80px;
+    }
   }
 
+  .card.product {
+    .imgContainer {
+      height: 150px;
+    }
+    .container {
+      padding: 0;
+      text-align: center;
+      .price {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+    }
+    h3 {
+      font-size: 16px;
+    }
+    margin: 5px;
+    width: 150px;
+    height: 250px;
+    justify-content: space-between;
+    p {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+  }
+  .login {
+    color: #fff;
+    padding: 40px;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: var(--select);
+    justify-content: space-between;
+    button {
+      margin: 5px 0;
+      width: 100%;
+    }
+    button:last-child {
+      a {
+        color: #eee;
+      }
+      background-color: var(--select-hover);
+    }
+  }
+  .dashboard {
+    width: 75vw;
+    margin: 0 auto;
+  }
+  .nameEdit {
+    font-size: 28px;
+  }
+  .nameEdit:focus-visible {
+    font-size: 28px;
+  }
+  .nameEdit:hover {
+    color: #333;
+    font-size: 28px;
+    transition: none;
+  }
+  .status {
+    position: absolute;
+    top: 800px;
+
+    .d-flex,
+    table {
+      width: 80vw;
+      margin: 0 auto;
+    }
+    th:nth-child(3),
+    td:nth-child(3) {
+      display: none;
+    }
+    .coinBox {
+      flex-direction: column;
+      .coin {
+        justify-content: center;
+        width: 300px;
+      }
+    }
+  }
+  .bg + .divcontainer {
+    top: 0;
+    left: 0;
+  }
+  .homeWrapper {
+    position: relative;
+    height: 200vh;
+  }
   .divcontainer {
+    padding: 0;
     width: 95vw;
     margin: 0 auto;
     flex-direction: column;
     height: auto;
+    .productList {
+      height: auto;
+    }
+    .itemImgBox {
+      border: none;
+      width: auto;
+      height: auto;
+      img {
+        margin: 0;
+      }
+    }
+    .itemInfoBox {
+      margin: 0;
+      width: auto;
+      div:first-child {
+        margin: 20px 0;
+      }
+      .priceBox {
+        width: auto;
+      }
+    }
     .productList {
       justify-content: center;
     }
     ul {
       width: 90vw;
       justify-content: space-around;
-      a {
+      a a.active {
         padding: 0;
+        border: none;
       }
     }
     .img {
-      height: 90vh;
+      height: 60vh;
     }
     .text {
-      width: 100%;
+      width: 70%;
+      margin: 0 auto;
       .d-flex {
+        justify-content: space-between;
         margin: 20px 0;
       }
       h1 {
@@ -656,6 +817,10 @@ footer {
         width: 100%;
         font-size: 18px;
       }
+    }
+    table{
+      height: 40vh;
+   
     }
   }
 }

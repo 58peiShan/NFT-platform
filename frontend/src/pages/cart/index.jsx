@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import ScaleLoader from "react-spinners/ClipLoader";
-import { sha256 } from "js-sha256";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const override = {
@@ -36,7 +35,7 @@ function Cart() {
   fetch(`https://api.coingecko.com/api/v3/coins/ethereum`)
     .then((res) => res.json())
     .then((data) => setUsd(data.market_data.current_price.usd));
-    
+
   const totalPrice = Math.round(ethlPrice * usd);
   const handleDel = (id) => {
     dispatch({ type: "PURCHASE_RESET" });
@@ -59,11 +58,7 @@ function Cart() {
         <td>{v.price}</td>
         <td>{v.amount}</td>
         <td>{v.price * v.amount}</td>
-        <td
-          onClick={(e) => {
-            handleDel(v.id);
-          }}
-        >
+        <td onClick={(e) => handleDel(v.id)}>
           <FaTrash />
         </td>
       </tr>
@@ -76,7 +71,7 @@ function Cart() {
         <table>
           <thead>
             <tr>
-              <th>商品圖片</th>
+              <th>圖片</th>
               <th>商品名稱</th>
               <th>價格</th>
               <th>數量</th>
@@ -97,6 +92,9 @@ function Cart() {
         <hr />
 
         <div className="total">
+          <p className="m-5" style={{ color: "gray", fontSize: "16px" }}>
+            ETH=>USD
+          </p>
           <div className="m-5">total：{totalPrice}</div>
           {totalPrice ? (
             <>

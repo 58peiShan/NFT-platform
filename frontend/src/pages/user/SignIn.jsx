@@ -153,10 +153,10 @@ class SignIn extends Component {
           </div>
 
           <div className="">
-            <button className="btnSec">
+            <button type="button" className="btnSec" onClick={this.signIn}>註冊</button>
+            <button type="button" className="btnSec">
               <Link to="/user/login">已有帳號，登入</Link>
             </button>
-            <button className="btnSec" onClick={this.signIn}>註冊</button>
           </div>
         </form>
       </div>
