@@ -15,15 +15,29 @@ const override = {
 function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [usd, setUsd] = useState(0);
   const token = localStorage.getItem("auth");
   const purchaseList = JSON.parse(localStorage.getItem("purchase"));
-  // const list = useSelector((state) => state.cartlist.purchase) || [];
-  // const total = useSelector((state) => state.productReducer);
   const {
     cartlist: { purchase: list },
     productReducer: total,
   } = useSelector((state) => state);
 
+  const eachPrice = [];
+  list.every((o) => eachPrice.push(o.price));
+  const initialValue = 0;
+  const ethlPrice =
+    total > 0
+      ? eachPrice.reduce(
+          (previousValue, currentValue) => previousValue + currentValue,
+          initialValue
+        )
+      : 0;
+  fetch(`https://api.coingecko.com/api/v3/coins/ethereum`)
+    .then((res) => res.json())
+    .then((data) => setUsd(data.market_data.current_price.usd));
+    
+  const totalPrice = Math.round(ethlPrice * usd);
   const handleDel = (id) => {
     dispatch({ type: "PURCHASE_RESET" });
     dispatch({ type: "DECREASE" });
@@ -35,21 +49,6 @@ function Cart() {
     }
     localStorage.setItem("purchase", JSON.stringify(purchaseList));
   };
-  const eachPrice = [];
-  list.every((o) => eachPrice.push(o.price));
-  const initialValue = 0;
-  const totalPrice =
-    total > 0
-      ? eachPrice.reduce(
-          (previousValue, currentValue) => previousValue + currentValue,
-          initialValue
-        )
-      : 0;
-  const CheckMacValue = sha256(
-    encodeURI(`HashKey=spPjZn66i0OhqJsQ&HashIV=hT5OJckN45isQTTs`)
-  ).toUpperCase();
-  console.log(CheckMacValue);
-
   const outputList = list.map((v, i) => {
     return (
       <tr key={i}>
