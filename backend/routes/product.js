@@ -46,15 +46,39 @@ router.get(`/nft/blockdata`, async (req, res) => {
       if (error || response.statusCode !== 200) {
         return res.status(500).json({ type: "error", message: err.message });
       }
-
       res.json(JSON.parse(body));
     }
   );
 });
 
-router.post(`/paymentOK`, (req, res) => {
-  console.log(req);
-  res.text("1|OK");
+router.get(`/nft/top10`, async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  request(
+    {
+      url: `https://services.tokenview.io/nft/eth/blockdata/statistics/tokens/721/1/10?apikey=${process.env.NFT_API_KEY}`,
+    },
+    (error, response, body) => {
+      if (error || response.statusCode !== 200) {
+        return res.status(500).json({ type: "error", message: err.message });
+      }
+      res.json(JSON.parse(body))
+    }
+  );
 });
 
+router.get(`/nft/top10each`, async (req, res) => {
+  add = req.query.add
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  request(
+    {
+      url: `https://services.tokenview.io/nft/eth/blockdata/collection/info/${add}?apikey=${process.env.NFT_API_KEY}`,
+    },
+    (error, response, body) => {
+      if (error || response.statusCode !== 200) {
+        return res.status(500).json({ type: "error", message: err.message });
+      }
+      res.json(JSON.parse(body))
+    }
+  );
+});
 module.exports = router;

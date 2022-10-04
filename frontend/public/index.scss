@@ -422,8 +422,11 @@ footer {
   width: 75vw;
   padding-top: 50px;
   .itemImgBox {
-    border: 1px solid var(--secondary);
-    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
     overflow: hidden;
     // min-height: 600px;
     object-fit: cover;
@@ -431,10 +434,10 @@ footer {
       margin-top: 50px;
       width: 100%;
       height: 100%;
-      border-radius: 0 0 20px 20px;
     }
   }
   .itemInfoBox {
+    justify-content: end;
     width: 50%;
     flex-direction: column;
     margin-left: 30px;
@@ -455,7 +458,7 @@ footer {
     }
     .priceBox {
       padding: 30px;
-      border: 1px solid var(--secondary);
+      border: 1px solid #ddd;
       border-radius: 20px;
       width: 100%;
       height: 350px;
@@ -607,35 +610,32 @@ footer {
     transition: 0.2s;
   }
 }
-// .m-auto{
-//   margin: 0 auto;
-// }
+
 
 @media screen and (max-width: 767px) {
-  // .m-auto{
-  //   margin:0;
-  // }
+  
   h1 {
     font-size: 32px;
   }
   header {
     .links {
-      // display: none;
+      display: flex;
       z-index: 3;
       width: 100vw;
       position: absolute;
+      height: 0;
       top: 80px;
       max-height: 0;
       overflow: hidden;
-      transition: 0.2s;
+      flex-direction: column;
+      transition: 0.3s;
     }
     .searchContainer input {
       width: 70vw;
       margin: 20px 15%;
     }
     input:checked ~ .links {
-      display: flex;
-      flex-direction: column;
+      height: auto;
       max-height: 100vh;
       clear: none;
       background: #fff;
@@ -662,9 +662,6 @@ footer {
   .searchContainer {
     width: 100vw;
     align-items: center;
-    input{
-  
-    }
     // display: contents;
     .icon {
       top: 33px;
@@ -772,7 +769,6 @@ footer {
       height: auto;
     }
     .itemImgBox {
-      border: none;
       width: auto;
       height: auto;
       img {
@@ -780,13 +776,16 @@ footer {
       }
     }
     .itemInfoBox {
-      margin: 0;
+      margin: 10px;
       width: auto;
       div:first-child {
         margin: 20px 0;
       }
       .priceBox {
         width: auto;
+        button{
+          width: 100%;
+        }
       }
     }
     .productList {

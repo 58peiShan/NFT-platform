@@ -18,13 +18,13 @@ import { decodeToken } from "react-jwt";
 
 const App = () => {
   const { pathname } = useLocation();
-  
+
   if (localStorage.getItem("auth")) {
     const dispatch = useDispatch();
     const total = useSelector((state) => state.productReducer);
     const token = localStorage.getItem("auth");
     const purchaseId = decodeToken(token).purchase;
-  
+
     useEffect(() => {
       window.scroll(0, 0);
     }, [pathname]);
@@ -40,6 +40,7 @@ const App = () => {
   return (
     <>
       <Header />
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/*" element={<Product />} />
@@ -52,10 +53,10 @@ const App = () => {
   );
 };
 let container = null;
-document.addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
   if (!container) {
     container = document.getElementById("root");
-    const root = ReactDOM.createRoot(container)
+    const root = ReactDOM.createRoot(container);
     root.render(
       //<React.StrictMode>
       <BrowserRouter>

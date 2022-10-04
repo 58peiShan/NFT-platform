@@ -14,14 +14,13 @@ const override = {
 function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [usd, setUsd] = useState(0);
   const token = localStorage.getItem("auth");
   const purchaseList = JSON.parse(localStorage.getItem("purchase"));
   const {
     cartlist: { purchase: list },
+    ethReducer: { usd: usd },
     productReducer: total,
   } = useSelector((state) => state);
-
   const eachPrice = [];
   list.every((o) => eachPrice.push(o.price));
   const initialValue = 0;
@@ -32,10 +31,6 @@ function Cart() {
           initialValue
         )
       : 0;
-  fetch(`https://api.coingecko.com/api/v3/coins/ethereum`)
-    .then((res) => res.json())
-    .then((data) => setUsd(data.market_data.current_price.usd));
-
   const totalPrice = Math.round(ethlPrice * usd);
   const handleDel = (id) => {
     dispatch({ type: "PURCHASE_RESET" });
@@ -93,7 +88,7 @@ function Cart() {
 
         <div className="total">
           <p className="m-5" style={{ color: "gray", fontSize: "16px" }}>
-            ETH=>USD
+            ETH to USD
           </p>
           <div className="m-5">total：{totalPrice}</div>
           {totalPrice ? (
