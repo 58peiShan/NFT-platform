@@ -38,6 +38,7 @@ export const fetchSearch = (search) => {
         })
         .catch((error) => {
           console.log(error);
+          
         });
   };
 };

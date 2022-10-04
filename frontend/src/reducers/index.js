@@ -1,13 +1,14 @@
 import { combineReducers } from "redux";
 import productReducer from "./productReducer";
 import cartlist from "./cartlistReducer";
-import cardBtn from "./cardBtnReducer";
 import cardReducer from "./cardReducer";
-
+import userReducer from "./userReducer";
+import ethReducer from "./ethReducer";
 
 export default combineReducers({
   productReducer,
   cartlist,
-  cardBtn,
-  cardReducer
+  cardReducer,
+  userReducer,
+  ethReducer
 });

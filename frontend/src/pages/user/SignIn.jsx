@@ -1,41 +1,54 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import withRouter from "../../component/withRouter";
 
 class SignIn extends Component {
-  state = {
-    account: "",
-    mail: "",
-    password: "",
-    accountMsg: "",
-    mailMsg: "",
-    passwordMsg: "",
-    submitCheck: false,
-  };
-  checkAccount = (account) => {
-    if (account) {
+  constructor() {
+    super();
+    this.state = {
+      account: "",
+      mail: "",
+      password: "",
+      passwordConfirm: "",
+      accountMsg: "",
+      mailMsg: "",
+      passwordMsg: "",
+      submitCheck: false,
+    };
+  }
+  checkAccount = account => {
+    if (account.length >= 6 && account.length <= 12) {
       fetch(`http://localhost:5000/user/${account}`)
-        .then((res) => res.text())
-        .then((data) =>
+        .then(res => res.text())
+        .then((data) => {
           this.setState({
             account: account,
             accountMsg: data,
-          })
-        );
+          });
+        });
     } else {
+      this.setState({
+        accountMsg: "帳號長度需在6~12間",
+      });
       return;
     }
   };
+
   checkMail = (mail) => {
-    if (mail) {
+    if (mail.includes("@")) {
       fetch(`http://localhost:5000/user/mail/${mail}`)
         .then((res) => res.text())
-        .then((data) =>
+        .then((data) => {
           this.setState({
             mail: mail,
             mailMsg: data,
-          })
-        );
+          });
+        });
     } else {
+      this.setState({
+        mailMsg: "格式錯誤",
+      });
       return;
     }
   };
@@ -44,6 +57,7 @@ class SignIn extends Component {
     if (
       this.state.account == "" ||
       this.state.mail == "" ||
+      this.state.passwordConfirm == "" ||
       this.state.password == "" ||
       this.state.passwordMsg !== "" ||
       this.state.accountMsg !== "" ||
@@ -64,54 +78,59 @@ class SignIn extends Component {
           password: this.state.password,
         }),
       })
-        .then(
-          (data) => console.log(data.json()),
-          this.setState({
-            account: "",
-            mail: "",
-            password: "",
-          })
-        )
+        .then((data) => {
+          if (data.ok) {
+            () => {
+              this.setState({
+                account: "",
+                mail: "",
+                password: "",
+                passwordConfirm: "",
+              });
+            },
+              alert("註冊成功，回登入頁"),
+              this.props.navigate("/user/login");
+          }
+        })
         .catch((error) => console.log(error));
     }
   };
   render() {
     return (
-      <>
-        <h1>Welcom</h1>
+      <div className="login d-flex flex-column">
+        <h1>Welcome</h1>
         <form action="" name="signin">
-          <div>
+          <div className="userContainer d-flex">
             <input
               type="text"
               placeholder="account"
               onChange={(e) => this.checkAccount(e.target.value)}
             />
-            <p style={{ color: "white", fontSize: "9px" }}>
-              {this.state.accountMsg}
-            </p>
+            <p>{this.state.accountMsg}</p>
             <input
               type="email"
               placeholder="email"
-              onChange={(e) => {
-                this.checkMail(e.target.value);
-              }}
+              onChange={(e) => this.checkMail(e.target.value)}
+
             />
-            <p style={{ color: "white", fontSize: "9px" }}>
-              {this.state.mailMsg}
-            </p>
+            <p>{this.state.mailMsg}</p>
             <input
-              type="password"
+              type={this.state.canSee ? "text" : "password"}
               placeholder="password"
-              onChange={(e) => {
+              onChange={(e) =>
                 this.setState({
                   password: e.target.value,
-                });
-              }}
+                })
+              }
             />
+            <p></p>
             <input
-              type="password"
+              type={this.state.canSee ? "text" : "password"}
               placeholder="password comfirm"
               onChange={(e) => {
+                this.setState({
+                  passwordConfirm: e.target.value,
+                });
                 if (e.target.value !== this.state.password) {
                   this.setState({
                     passwordMsg: "兩次密碼不一致",
@@ -123,18 +142,25 @@ class SignIn extends Component {
                 }
               }}
             />
-            <p style={{ color: "white", fontSize: "9px" }}>
-              {this.state.passwordMsg}
-            </p>
+            <span onClick={() => this.setState({ canSee: !this.state.canSee })}>
+              {this.state.canSee ? (
+                <FaEye className="iconSignin" style={{ color: "gray" }} />
+              ) : (
+                <FaEyeSlash className="iconSignin" style={{ color: "gray" }} />
+              )}
+            </span>
+            <p>{this.state.passwordMsg}</p>
           </div>
-          <div className="d-flex">
-            <button onClick={this.signIn}>註冊</button>
-            <Link to="/user/login">已有帳號，登入</Link>
+          <div className="">
+            <button type="button" className="btnSec" onClick={this.signIn}>註冊</button>
+            <button type="button" className="btnSec">
+              <Link to="/user/login">已有帳號，登入</Link>
+            </button>
           </div>
         </form>
-      </>
+      </div>
     );
   }
 }
 
-export default SignIn;
+export default withRouter(SignIn);

@@ -18,8 +18,10 @@ h1 {
 }
 body,
 html {
-  height: 100vh;
+  height: 100%;
   width: 100vw;
+}
+body {
   overflow-x: hidden;
 }
 
@@ -37,6 +39,73 @@ button {
   border-radius: 10px;
   font-weight: 700;
   font-size: var(--btnFont);
+  margin-bottom: 20px;
+}
+
+select {
+  text-align: center;
+  height: 40px;
+  width: 40%;
+  border-radius: 10px;
+  font-size: 18px;
+  appearance: none;
+}
+
+option {
+  border-radius: 10px;
+}
+
+.status {
+  margin: 150px auto !important ;
+  padding-bottom: 200px;
+  .coinBox {
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .coin {
+      border-left: var(--select) 1px solid;
+      padding-left: 25px;
+    }
+    .coin p:first-child {
+      color: var(--primary);
+    }
+    .coin p:last-child {
+      font-size: 32px;
+      font-weight: 700;
+    }
+  }
+  .reload {
+    z-index: 10;
+    font-size: 30px;
+    color: rgb(49, 150, 218);
+    transition: 0.2s;
+  }
+  .reload:hover {
+    rotate: -30deg;
+  }
+  table {
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    td a:any-link {
+      color: var(--primary);
+    }
+    th {
+      border: 1px solid var(--primary);
+      background: transparent;
+    }
+    th:first-child {
+      border-radius: 10px 0 0 0;
+    }
+    th:last-child {
+      border-radius: 0 10px 0 0;
+    }
+  }
+  thead {
+    background-color: rgb(255, 255, 255);
+    color: var(--select);
+  }
 }
 
 table {
@@ -44,6 +113,12 @@ table {
   text-align: center;
   th {
     background: #333;
+  }
+  th:first-child {
+    border-radius: 10px 0 0 0;
+  }
+  th:last-child {
+    border-radius: 0 10px 0 0;
   }
 }
 
@@ -57,6 +132,9 @@ tbody {
   th {
     width: 18%;
   }
+  td {
+    height: 50px !important;
+  }
   img {
     width: 60%;
   }
@@ -69,6 +147,7 @@ tbody {
 
 .btnMain {
   background: var(--select);
+  color: #fff;
   a {
     color: #fff;
     align-items: center;
@@ -82,6 +161,10 @@ tbody {
 .btnSec {
   color: var(--select);
   background-color: #fff;
+}
+.btnSOLDOUT {
+  color: #fff;
+  background: var(--primary);
 }
 
 .d-flex {
@@ -97,6 +180,36 @@ tbody {
   grid-template-columns: repeat(2, 1fr);
 }
 
+.nameEdit {
+  color: var(--primary);
+  background: #fff;
+  border: none;
+  font-size: 45px;
+  font-weight: bold;
+}
+.mailEdit {
+  height: 55px !important;
+  font-size: 30px;
+  margin-right: 20px !important;
+}
+.mailEdit::placeholder,
+.mailEdit:disabled {
+  color: #fff;
+}
+.mailEdit:focus-visible.mailEdit::placeholder {
+  color: #ddd;
+}
+.nameEdit:focus-visible {
+  border: none;
+  font-size: 45px;
+  font-weight: bold;
+  outline: none;
+}
+.nameEdit:hover {
+  color: #333;
+  font-size: 50px;
+  transition: 0.3s;
+}
 .login {
   color: #fff;
   padding: 40px;
@@ -106,6 +219,53 @@ tbody {
   border-radius: 10px;
   background-color: var(--select);
   justify-content: space-between;
+  .carousel {
+    overflow: hidden;
+  }
+  .userdatas {
+    cursor: default;
+    color: #eeeeee;
+    .imgContainer {
+      flex-direction: row;
+      justify-content: space-between;
+      .imgBox {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        img {
+          opacity: 0.7;
+          border-radius: 50%;
+          width: 100%;
+          object-fit: cover;
+          transition: border-radius 0.5s, opacity 0.5s;
+        }
+        img:hover {
+          opacity: 1;
+          border-radius: 10%;
+        }
+      }
+    }
+    .btnContainer {
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+      cursor: default;
+      .prev,
+      .next {
+        cursor: pointer;
+        opacity: 0.7;
+      }
+      .prev:hover,
+      .next:hover {
+        opacity: 1;
+        transition: 0.3;
+      }
+    }
+    .userdata {
+      color: #fff;
+      font-size: 30px;
+    }
+  }
   input {
     width: 80%;
     padding: 0 30px;
@@ -130,6 +290,10 @@ tbody {
     align-items: center;
   }
 }
+.dashboard {
+  width: 50vw;
+  margin: 20px auto;
+}
 
 header {
   z-index: 3;
@@ -142,7 +306,13 @@ header {
   color: var(--primary);
   font-size: 1.5rem;
   list-style-type: none;
-  
+
+  label,
+  .menu,
+  #menu {
+    display: none;
+  }
+
   .logo {
     color: var(--highlight);
     font-weight: 700;
@@ -169,7 +339,7 @@ header {
   .links {
     font-size: 20px;
     display: flex;
-    width: 60vw;
+    width: 70%;
     justify-content: space-around;
     a {
       display: flex;
@@ -181,12 +351,31 @@ header {
     color: var(--select);
   }
 }
+
 footer {
   background: black;
   width: 100vw;
   height: 100px;
   position: absolute;
   bottom: 0;
+}
+.userContainer {
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+  input {
+    margin: 10px 0;
+  }
+  .icon {
+    position: absolute;
+    top: 68%;
+    right: 30px;
+  }
+  .iconSignin {
+    position: absolute;
+    right: 30px;
+    bottom: 137px;
+  }
 }
 .searchContainer {
   width: 40vw;
@@ -200,7 +389,7 @@ footer {
     border-radius: 10px;
     padding: 10px 10px 10px 50px;
   }
-  input:focus.icon{
+  input:focus.icon {
     display: none;
   }
   .icon {
@@ -229,20 +418,74 @@ footer {
   margin: 30px 0 40px 0;
 }
 .divcontainer {
+  margin: 0 auto;
   width: 75vw;
-  height: 100vh;
-  margin: auto;
   padding-top: 50px;
+  .itemImgBox {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    // min-height: 600px;
+    object-fit: cover;
+    img {
+      margin-top: 50px;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .itemInfoBox {
+    justify-content: end;
+    width: 50%;
+    flex-direction: column;
+    margin-left: 30px;
+    div {
+      justify-content: center;
+      align-items: center;
+    }
+    div:first-child {
+      margin-bottom: 20px;
+      justify-content: flex-start;
+      font-size: 20px;
+      color: var(--select);
+    }
+    h4 {
+      font-weight: normal;
+      color: var(--primary);
+      margin: 30px 0;
+    }
+    .priceBox {
+      padding: 30px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      width: 100%;
+      height: 350px;
+
+      h2 svg {
+        color: var(--select);
+      }
+    }
+  }
+  .text {
+    width: 50%;
+  }
   .productList {
+    text-align: center;
+    height: 100vh;
     display: flex;
     flex-wrap: wrap;
     margin-top: 30px;
   }
   .total {
+    text-align: end;
     justify-content: end;
-    height: 100px;
-    align-items: center;
+    align-items: flex-end;
     font-size: 24px;
+    .m-5 {
+      margin: 30px;
+    }
   }
   ul {
     cursor: pointer;
@@ -269,7 +512,7 @@ footer {
   .text {
     flex-direction: column;
     justify-content: space-around;
-    height: 40vh;
+    padding-top: 50px;
     p {
       width: 75%;
       font-size: 24px;
@@ -302,6 +545,7 @@ footer {
   border-radius: 20px;
   background-color: #fff;
   box-shadow: #ccc 0px 3px 5px;
+  transition: 0.5s;
 
   .container {
     text-align: start;
@@ -316,6 +560,7 @@ footer {
   .imgContainer {
     height: 70%;
     width: 100%;
+    transition: 0.3s;
   }
   img {
     width: 100%;
@@ -363,5 +608,218 @@ footer {
     object-fit: cover;
     border-radius: 20px 20px 0 0;
     transition: 0.2s;
+  }
+}
+
+
+@media screen and (max-width: 767px) {
+  
+  h1 {
+    font-size: 32px;
+  }
+  header {
+    .links {
+      display: flex;
+      z-index: 3;
+      width: 100vw;
+      position: absolute;
+      height: 0;
+      top: 80px;
+      max-height: 0;
+      overflow: hidden;
+      flex-direction: column;
+      transition: 0.3s;
+    }
+    .searchContainer input {
+      width: 70vw;
+      margin: 20px 15%;
+    }
+    input:checked ~ .links {
+      height: auto;
+      max-height: 100vh;
+      clear: none;
+      background: #fff;
+      a {
+        margin: 20px;
+        width: 100vw;
+      }
+    }
+    .logo {
+      span {
+        display: none;
+      }
+    }
+    label,
+    .menu {
+      display: flex;
+    }
+    .buyAmount {
+      position: absolute;
+      left: 60px;
+      top: 55%;
+    }
+  }
+  .searchContainer {
+    width: 100vw;
+    align-items: center;
+    // display: contents;
+    .icon {
+      top: 33px;
+      left: 80px;
+    }
+  }
+
+  .card.product {
+    .imgContainer {
+      height: 150px;
+    }
+    .container {
+      padding: 0;
+      text-align: center;
+      .price {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+    }
+    h3 {
+      font-size: 16px;
+    }
+    margin: 5px;
+    width: 150px;
+    height: 250px;
+    justify-content: space-between;
+    p {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+  }
+  .login {
+    color: #fff;
+    padding: 40px;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: var(--select);
+    justify-content: space-between;
+    button {
+      margin: 5px 0;
+      width: 100%;
+    }
+    button:last-child {
+      a {
+        color: #eee;
+      }
+      background-color: var(--select-hover);
+    }
+  }
+  .dashboard {
+    width: 75vw;
+    margin: 0 auto;
+  }
+  .nameEdit {
+    font-size: 28px;
+  }
+  .nameEdit:focus-visible {
+    font-size: 28px;
+  }
+  .nameEdit:hover {
+    color: #333;
+    font-size: 28px;
+    transition: none;
+  }
+  .status {
+    position: absolute;
+    top: 800px;
+
+    .d-flex,
+    table {
+      width: 80vw;
+      margin: 0 auto;
+    }
+    th:nth-child(3),
+    td:nth-child(3) {
+      display: none;
+    }
+    .coinBox {
+      flex-direction: column;
+      .coin {
+        justify-content: center;
+        width: 300px;
+      }
+    }
+  }
+  .bg + .divcontainer {
+    top: 0;
+    left: 0;
+  }
+  .homeWrapper {
+    position: relative;
+    height: 200vh;
+  }
+  .divcontainer {
+    padding: 0;
+    width: 95vw;
+    margin: 0 auto;
+    flex-direction: column;
+    height: auto;
+    .productList {
+      height: auto;
+    }
+    .itemImgBox {
+      width: auto;
+      height: auto;
+      img {
+        margin: 0;
+      }
+    }
+    .itemInfoBox {
+      margin: 10px;
+      width: auto;
+      div:first-child {
+        margin: 20px 0;
+      }
+      .priceBox {
+        width: auto;
+        button{
+          width: 100%;
+        }
+      }
+    }
+    .productList {
+      justify-content: center;
+    }
+    ul {
+      width: 90vw;
+      justify-content: space-around;
+      a a.active {
+        padding: 0;
+        border: none;
+      }
+    }
+    .img {
+      height: 60vh;
+    }
+    .text {
+      width: 70%;
+      margin: 0 auto;
+      .d-flex {
+        justify-content: space-between;
+        margin: 20px 0;
+      }
+      h1 {
+        font-size: 32px;
+      }
+      p {
+        width: 100%;
+        font-size: 18px;
+      }
+    }
+    table{
+      height: 40vh;
+   
+    }
   }
 }

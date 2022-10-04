@@ -1,25 +1,30 @@
 import {
   Routes,
-  Route
+  Route,
+  Navigate
+
 } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import LogIn from "./LogIn.jsx";
 import SignIn from "./SignIn.jsx";
+import Dashboard from "./dashboard.jsx";
 
 function User() {
-  return localStorage.getItem("id") ? (
-    <h1>hi,{localStorage.getItem("id")}</h1>
-  ) : (
-    <>
-      <div className="divcontainer d-flex ">
-        <div className="login d-flex flex-column">
-          <Routes>
-            <Route path="/SignIn" element={<SignIn />} />
-            <Route path="/Login" element={<LogIn />} />
-          </Routes>
-        </div>
+  const loggedIn = localStorage.getItem("auth");
+  return (
+      <div className="divcontainer d-flex " style={{ overflow: "hidden" }}>
+        <Routes>
+          <Route path="/SignIn" element={<SignIn />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            exact
+            path="/login"
+            element={
+              loggedIn ? <Navigate to="/user/dashboard" replace /> : <LogIn />
+            }
+          ></Route>
+        </Routes>
       </div>
-    </>
   );
 }
 
