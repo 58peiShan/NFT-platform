@@ -52,7 +52,6 @@ class SignIn extends Component {
       return;
     }
   };
-
   signIn = (e) => {
     e.preventDefault();
     if (
@@ -112,6 +111,7 @@ class SignIn extends Component {
               type="email"
               placeholder="email"
               onChange={(e) => this.checkMail(e.target.value)}
+
             />
             <p>{this.state.mailMsg}</p>
             <input
@@ -151,7 +151,6 @@ class SignIn extends Component {
             </span>
             <p>{this.state.passwordMsg}</p>
           </div>
-
           <div className="">
             <button type="button" className="btnSec" onClick={this.signIn}>註冊</button>
             <button type="button" className="btnSec">

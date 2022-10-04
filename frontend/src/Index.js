@@ -36,7 +36,6 @@ const App = () => {
       dispatch(fetchPurchase());
     }, [total]);
   }
-
   return (
     <>
       <Header />

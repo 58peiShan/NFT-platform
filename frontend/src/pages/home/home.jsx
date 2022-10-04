@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ScaleLoader from "react-spinners/ClipLoader";
 import React from "react";
 import indexImg from "../../img/immortal.jpg";
@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Card from "../../component/Card.jsx";
 import { FaUndo, FaClock } from "react-icons/fa";
 import { fetchPrice } from "../../actions/ethAction";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Home() {
   const dispatch = useDispatch();
@@ -38,6 +37,7 @@ function Home() {
 
   console.log(top10);
 
+
   return search ? (
     <div className="divcontainer">
       <div className="productList d-flex">
@@ -46,6 +46,7 @@ function Home() {
     </div>
   ) : (
     <div className="homeWrapper">
+
       <div className="bg" style={{ backgroundImage: `url(${indexImg})` }}></div>
       <div className="divcontainer d-flex">
         <div className="text d-flex">

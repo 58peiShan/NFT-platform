@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
+
 import { FaEthereum } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from "../actions/cardAction";
@@ -35,6 +36,7 @@ function Card(props) {
   return (
     <>
       {list.length > 0 ? (
+
         list.map((v, i) => {
           return (
             <div key={i}>
@@ -66,8 +68,8 @@ function Card(props) {
                 </div>
               </div>
             </div>
-          );
-        })
+          </div>
+        ))
       ) : (
         <div className="divcontainer">暫無資料</div>
       )}

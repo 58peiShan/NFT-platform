@@ -10,6 +10,7 @@ const cardReducer = (state = initialState, action) => {
     case types.NO_SEARCH: {
       return {
         ...state,
+        card:[],
         search:false
       };
     }

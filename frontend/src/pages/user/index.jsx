@@ -2,6 +2,7 @@ import {
   Routes,
   Route,
   Navigate
+
 } from "react-router-dom";
 import React from "react";
 import LogIn from "./LogIn.jsx";

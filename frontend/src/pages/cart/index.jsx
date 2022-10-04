@@ -32,6 +32,7 @@ function Cart() {
         )
       : 0;
   const totalPrice = Math.round(ethlPrice * usd);
+
   const handleDel = (id) => {
     dispatch({ type: "PURCHASE_RESET" });
     dispatch({ type: "DECREASE" });

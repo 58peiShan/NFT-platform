@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React from "react";
+
 import Card from "../../component/Card.jsx";
 import banner from "../../img/product-banner.png";
 

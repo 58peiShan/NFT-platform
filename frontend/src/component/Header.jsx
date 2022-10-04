@@ -8,6 +8,7 @@ import {
   FaSignOutAlt,
   FaListUl,
 } from "react-icons/fa";
+
 import { useSelector, useDispatch } from "react-redux";
 import logo from "../img/opensea.png";
 import { fetchSearch } from "../actions/cardAction";
@@ -17,6 +18,7 @@ function Header() {
   const buyThing = useSelector((state) => state.productReducer);
   const auth = localStorage.getItem("auth");
   const searchRef = useRef();
+
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -66,9 +68,7 @@ function Header() {
             type="search"
             id="search"
             ref={searchRef}
-            onChange={(e) => {
-              seacherHandler(e.target.value);
-            }}
+            onChange={(e) => seacherHandler(e.target.value)}
           ></input>
         </div>
         <NavLink to="/">Home</NavLink>
