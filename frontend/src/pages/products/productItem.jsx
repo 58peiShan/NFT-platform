@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { FaCheckCircle, FaEthereum, FaEye } from "react-icons/fa";
-import { fetchPrice } from "../../actions/ethAction";
+import { fetchPrice } from "../../actions/nftAction";
 
 function ProductItem() {
-  const usd = useSelector((state) => state.ethReducer.usd);
+  const usd = useSelector((state) => state.nftReducer.usd);
   const dispatch = useDispatch();
   const id = parseInt(useParams().id);
   const purchaseList = JSON.parse(localStorage.getItem("purchase")) || [];

@@ -12,17 +12,19 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import logo from "../img/opensea.png";
 import { fetchSearch } from "../actions/cardAction";
+import { useState } from "react";
 function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const buyThing = useSelector((state) => state.productReducer);
   const auth = localStorage.getItem("auth");
+  const [isChecked, setIsChecked] = useState(false);
   const searchRef = useRef();
-
   const { pathname } = useLocation();
 
   useEffect(() => {
     searchRef.current.value = "";
+    setIsChecked(false)
   }, [pathname]);
 
   const seacherHandler = (e) => {
@@ -56,9 +58,8 @@ function Header() {
       <label htmlFor="menu" className="menu">
         <FaListUl />
       </label>
-      <input type="checkbox" id="menu" />
+      <input checked={isChecked} type="checkbox" id="menu" onChange={()=>setIsChecked(!isChecked)}/>
 
-      
       <ul className="links">
         <div className="searchContainer">
           <span>

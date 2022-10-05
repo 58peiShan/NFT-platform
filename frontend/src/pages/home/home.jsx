@@ -1,31 +1,30 @@
 import { Link } from "react-router-dom";
-import ScaleLoader from "react-spinners/ClipLoader";
+import ClipLoader from "react-spinners/ClipLoader";
+import BeatLoader from "react-spinners/BeatLoader";
 import React from "react";
 import indexImg from "../../img/immortal.jpg";
 import authorImg from "../../img/author_JIMMY.png";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../../component/Card.jsx";
 import { FaUndo, FaClock } from "react-icons/fa";
-import { fetchPrice } from "../../actions/ethAction";
+import { fetchPrice } from "../../actions/nftAction";
 import { useEffect, useState } from "react";
 
 function Home() {
   const dispatch = useDispatch();
-  const usd = useSelector((state) => state.ethReducer.usd);
+  const top10 = useSelector((state) => state.nftReducer.top10);
+  const usd = useSelector((state) => state.nftReducer.usd);
   const search = useSelector((state) => state.cardReducer.search);
   const [list, setList] = useState([]);
   const [ethlist, setEthList] = useState({});
-  const [top10, setTop10] = useState({});
   const [reload, setReload] = useState(false);
+  const [top10each, setTop10each] = useState([]);
   const override = {
     display: "block",
     margin: "150px auto",
     borderColor: "rgb(49, 150, 218)",
   };
   useEffect(() => {
-    fetch(`http://localhost:5000/product/nft/top10`)
-      .then((res) => res.json())
-      .then((data) => setTop10(data.data));
     fetch(`http://localhost:5000/product/nft/blockdata`)
       .then((res) => res.json())
       .then((data) => setList(data.data.data));
@@ -35,9 +34,17 @@ function Home() {
       dispatch(fetchPrice());
   }, [reload]);
 
-  console.log(top10);
-
-
+  useEffect(() => {
+    if (top10 !== {}) {
+      fetch(
+        `http://localhost:5000/product/nft/top10each?add=${JSON.stringify(
+          top10
+        )}`
+      )
+        .then((res) => res.json())
+        .then((data) => setTop10each(data));
+    }
+  }, [top10]);
   return search ? (
     <div className="divcontainer">
       <div className="productList d-flex">
@@ -46,7 +53,6 @@ function Home() {
     </div>
   ) : (
     <div className="homeWrapper">
-
       <div className="bg" style={{ backgroundImage: `url(${indexImg})` }}></div>
       <div className="divcontainer d-flex">
         <div className="text d-flex">
@@ -102,7 +108,7 @@ function Home() {
                 color: "rgb(49, 150, 218)",
               }}
             >
-              {usd}
+              {usd ? usd : <BeatLoader color="#3196DA" />}
             </p>
           </div>
           <div className="coin">
@@ -111,17 +117,17 @@ function Home() {
               {ethlist !== {} ? (
                 ethlist.price_change_percentage_24h
               ) : (
-                <ScaleLoader loading={true} cssOverride={override} size={20} />
+                <BeatLoader />
               )}
             </p>
           </div>
           <div className="coin">
             <p>7days</p>
             <p>
-              {ethlist ? (
+              {ethlist !== {} ? (
                 ethlist.price_change_percentage_7d
               ) : (
-                <ScaleLoader loading={true} cssOverride={override} size={20} />
+                <BeatLoader />
               )}
             </p>
           </div>
@@ -132,9 +138,10 @@ function Home() {
         >
           <h1>TOP10 NFTs</h1>
         </div>
-        <table className="">
+        <table className="nftTop10">
           <thead>
             <tr>
+              <th>logo</th>
               <th>tokenName</th>
               <th>tokenAddress</th>
               <th>交易量(24h)</th>
@@ -142,16 +149,34 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {top10.length > 0 ? (
+            {top10each.length === 10 ? (
               top10.map((v, i) => {
                 const timestamp = new Date(1 * (v.time + "000"));
                 const y = timestamp.getFullYear();
                 const m = timestamp.getMonth() + 1;
                 const d = timestamp.getDate();
+                let ind = top10each.findIndex((item) => {
+                  return item.tokenHash == v.tokenAddress;
+                });
 
                 return (
                   <tr key={i}>
-                    <td>{v.tokenName ? v.tokenName : "none"}</td>
+                    <td style={{ width: "100px" }}>
+                      <div className="logo d-flex">
+                        {top10each[ind].logo ? (
+                          <img src={top10each[ind].logo} alt="" />
+                        ) : (
+                          <div className="d-flex">
+                            {top10each[ind].tokenInfo.s}
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                    <td>
+                      <a href={top10each[ind] ? top10each[ind].webSite : ""}>
+                        {top10each[ind] ? top10each[ind].tokenInfo.f : "none"}
+                      </a>
+                    </td>
                     <td>
                       <a
                         href={`https://etherscan.io/address/${v.tokenAddress}`}
@@ -172,11 +197,7 @@ function Home() {
             ) : (
               <tr>
                 <td colSpan={5} style={{ height: "20vh" }}>
-                  <ScaleLoader
-                    loading={true}
-                    cssOverride={override}
-                    size={50}
-                  />
+                  <ClipLoader loading={true} cssOverride={override} size={50} />
                 </td>
               </tr>
             )}
@@ -196,7 +217,7 @@ function Home() {
             <FaUndo className="reload" />
           </div>
         </div>
-        <table className="">
+        <table className="trans">
           <thead>
             <tr>
               <th>block No</th>
@@ -242,11 +263,7 @@ function Home() {
             ) : (
               <tr>
                 <td colSpan={5} style={{ height: "20vh" }}>
-                  <ScaleLoader
-                    loading={true}
-                    cssOverride={override}
-                    size={50}
-                  />
+                  <ClipLoader loading={true} cssOverride={override} size={50} />
                 </td>
               </tr>
             )}

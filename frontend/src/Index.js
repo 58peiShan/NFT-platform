@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Provider, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import store from "./store/index";
@@ -14,17 +14,21 @@ import User from "./pages/user/index.jsx";
 import Error from "./pages/Error.jsx";
 import { fetchPurchase } from "./actions/cartListAction";
 import { fetchUserCollection } from "./actions/userAction";
+import { fetchNftTop10 } from "./actions/nftAction";
 import { decodeToken } from "react-jwt";
 
 const App = () => {
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchNftTop10());
+  }, []);
 
   if (localStorage.getItem("auth")) {
-    const dispatch = useDispatch();
     const total = useSelector((state) => state.productReducer);
     const token = localStorage.getItem("auth");
     const purchaseId = decodeToken(token).purchase;
-
     useEffect(() => {
       window.scroll(0, 0);
     }, [pathname]);
@@ -39,7 +43,7 @@ const App = () => {
   return (
     <>
       <Header />
-      
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/*" element={<Product />} />

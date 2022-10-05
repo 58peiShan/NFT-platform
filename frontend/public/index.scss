@@ -55,6 +55,33 @@ option {
   border-radius: 10px;
 }
 
+.nftTop10 {
+  width: 80vw;
+
+  .logo {
+    margin: 10px;
+    height: 80px !important;
+    width: 80px !important;
+    border-radius: 50%;
+    overflow: hidden;
+    div {
+      font-size: small;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      background-color: var(--secondary);
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
 .status {
   margin: 150px auto !important ;
   padding-bottom: 200px;
@@ -128,7 +155,6 @@ thead {
 }
 
 tbody {
-  td,
   th {
     width: 18%;
   }
@@ -199,16 +225,20 @@ tbody {
 .mailEdit:focus-visible.mailEdit::placeholder {
   color: #ddd;
 }
-.nameEdit:focus-visible {
-  border: none;
-  font-size: 45px;
-  font-weight: bold;
-  outline: none;
-}
-.nameEdit:hover {
-  color: #333;
-  font-size: 50px;
-  transition: 0.3s;
+.name {
+  justify-content: flex-start;
+  flex-direction: column;
+  .nameEdit:focus-visible {
+    border: none;
+    font-size: 45px;
+    font-weight: bold;
+    outline: none;
+  }
+  .nameEdit:hover {
+    color: #333;
+    font-size: 50px;
+    transition: 0.3s;
+  }
 }
 .login {
   color: #fff;
@@ -235,6 +265,7 @@ tbody {
         img {
           opacity: 0.7;
           border-radius: 50%;
+          height: 100%;
           width: 100%;
           object-fit: cover;
           transition: border-radius 0.5s, opacity 0.5s;
@@ -557,11 +588,6 @@ footer {
       align-items: center;
     }
   }
-  .imgContainer {
-    height: 70%;
-    width: 100%;
-    transition: 0.3s;
-  }
   img {
     width: 100%;
     height: 100%;
@@ -595,6 +621,15 @@ footer {
     color: var(--primary);
   }
 }
+.sm-none {
+  display: flex;
+}
+.sm-show {
+  display: none;
+}
+.imgContainer {
+  height: 75%;
+}
 .card:hover {
   transition: box-shadow 0.3s ease-in 0s;
   box-shadow: var(--primary) 0px 0px 50px;
@@ -611,11 +646,15 @@ footer {
   }
 }
 
-
 @media screen and (max-width: 767px) {
-  
   h1 {
     font-size: 32px;
+  }
+  .sm-none {
+    display: none;
+  }
+  .sm-show {
+    display: flex;
   }
   header {
     .links {
@@ -644,6 +683,7 @@ footer {
         width: 100vw;
       }
     }
+
     .logo {
       span {
         display: none;
@@ -701,7 +741,6 @@ footer {
     width: auto;
     height: auto;
     margin: 0 auto;
-    border-radius: 10px;
     background-color: var(--select);
     justify-content: space-between;
     button {
@@ -715,21 +754,27 @@ footer {
       background-color: var(--select-hover);
     }
   }
-  .dashboard {
-    width: 75vw;
-    margin: 0 auto;
+  .login.dashboard {
+    width: 65vw;
   }
-  .nameEdit {
-    font-size: 28px;
+  .name {
+    justify-content: flex-start;
+    flex-direction: column-reverse;
+    .nameEdit {
+      width: auto;
+      font-size: 20px;
+      margin: 0 0 20px 0;
+    }
+    .nameEdit:focus-visible {
+      font-size: 20px;
+    }
+    .nameEdit:hover {
+      color: #333;
+      font-size: 20px;
+      transition: none;
+    }
   }
-  .nameEdit:focus-visible {
-    font-size: 28px;
-  }
-  .nameEdit:hover {
-    color: #333;
-    font-size: 28px;
-    transition: none;
-  }
+
   .status {
     position: absolute;
     top: 800px;
@@ -739,10 +784,22 @@ footer {
       width: 80vw;
       margin: 0 auto;
     }
-    th:nth-child(3),
-    td:nth-child(3) {
-      display: none;
+    .nftTop10 {
+      th:nth-child(3),th:nth-child(5),
+      td:nth-child(3),td:nth-child(5) {
+        display: none;
+      }
+      th:nth-child(4){
+        border-radius: 0 10px 0 0;
+      }
     }
+    .trans {
+      th:nth-child(3),
+      td:nth-child(3) {
+        display: none;
+      }
+    }
+
     .coinBox {
       flex-direction: column;
       .coin {
@@ -783,7 +840,7 @@ footer {
       }
       .priceBox {
         width: auto;
-        button{
+        button {
           width: 100%;
         }
       }
@@ -817,9 +874,8 @@ footer {
         font-size: 18px;
       }
     }
-    table{
+    table {
       height: 40vh;
-   
     }
   }
 }

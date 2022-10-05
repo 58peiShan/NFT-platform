@@ -18,7 +18,7 @@ function Cart() {
   const purchaseList = JSON.parse(localStorage.getItem("purchase"));
   const {
     cartlist: { purchase: list },
-    ethReducer: { usd: usd },
+    nftReducer: { usd: usd },
     productReducer: total,
   } = useSelector((state) => state);
   const eachPrice = [];

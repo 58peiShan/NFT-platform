@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { FaUndo, FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  FaEdit,
+  FaUndo,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+} from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 function Dashboard() {
@@ -26,12 +31,16 @@ function Dashboard() {
     }, [token]);
 
     const changeImg = () => {
-      if (idx > collectionList.length - 1) {
-        idx = 0;
+      if (parseInt(idx) > parseInt(collectionList.length - 1)) {
+        setTrans(0);
       } else if (idx < 0) {
-        idx = 0;
+        setTrans(trans);
       }
-      setTrans(`${-idx * 120}px`);
+      setTrans(
+        Math.abs(trans) >= (120 * (collectionList.length - 1)) / 2
+          ? 0
+          : trans + -idx * 120
+      );
     };
 
     const editName = (e) => {
@@ -97,22 +106,44 @@ function Dashboard() {
     return (
       <>
         <div className="d-flex flex-column" style={{ margin: "auto" }}>
-          <div onDoubleClick={nameChangeHandler}>
+          <div className="name d-flex" onDoubleClick={nameChangeHandler}>
             <input
               className="nameEdit"
               ref={nameRef}
-              placeholder={userdata.userName ? userdata.userName : "set my nickname"}
+              placeholder={
+                userdata.userName ? userdata.userName : "set my nickname"
+              }
               onKeyPress={(e) => editName(e)}
               disabled={isdisabled_name}
             ></input>
+            <span className="sm-none" style={{ color: "#dee" }}>
+              {isdisabled_name
+                ? "double click to edit"
+                : "press Enter to submit"}
+            </span>
+            <FaEdit className="sm-show" onClick={nameChangeHandler} />
           </div>
-          <span style={{ color: "#dee" }}>
-            {isdisabled_name ? "double click to edit" : "press Enter to submit"}
-          </span>
           <div className="login dashboard">
             <div className="userdatas">
-              Account<div className="userdata">{userdata.account}</div>
-              Email
+              <h4> Account</h4>
+              <div className="userdata">{userdata.account}</div>
+              <div
+                className="d-flex"
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
+                <h4>Email</h4>
+                <FaEdit
+                  className="sm-show"
+                  onClick={mailChangeHandler}
+                  style={{
+                    marginLeft: "5px",
+                  }}
+                />
+              </div>
               <div onDoubleClick={mailChangeHandler}>
                 <input
                   className="mailEdit"
@@ -131,7 +162,10 @@ function Dashboard() {
               <div className="userdata d-flex carousel">
                 <div
                   className="imgContainer d-flex"
-                  style={{ transform: `translateX(${trans})` }}
+                  style={{
+                    transform: `translateX(${trans}px)`,
+                    transition: ".3s",
+                  }}
                 >
                   {collectionList.map((v, i) => (
                     <div className="imgBox" key={i}>
@@ -141,7 +175,7 @@ function Dashboard() {
                 </div>
                 <div
                   className="btnContainer d-flex"
-                  style={{ display: collectionList.length > 8 ? "" : "none" }}
+                  style={{ display: collectionList.length > 2 ? "" : "none" }}
                 >
                   <FaAngleDoubleLeft
                     onClick={() => {
