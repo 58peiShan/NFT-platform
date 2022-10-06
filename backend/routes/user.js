@@ -94,7 +94,6 @@ router.patch(`/addpurchase`, async (req, res) => {
 
   for (let i = 0; i < purchase2.length; i++) {
     const [datas2] = await db.query(sql2, [purchase2[i]]);
-    console.log(purchase2);
   }
   if (datas) {
     const token = jwt.sign(
