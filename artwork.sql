@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-09-29 11:31:59
+-- 產生時間： 2022-10-06 07:05:51
 -- 伺服器版本： 8.0.30
 -- PHP 版本： 8.0.19
 
@@ -35,6 +35,7 @@ CREATE TABLE `artwork` (
   `img` text,
   `amount` int NOT NULL,
   `category` text NOT NULL,
+  `collection_address` text NOT NULL,
   `author` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -42,18 +43,20 @@ CREATE TABLE `artwork` (
 -- 傾印資料表的資料 `artwork`
 --
 
-INSERT INTO `artwork` (`id`, `workName`, `price`, `img`, `amount`, `category`, `author`) VALUES
-(1, 'Spaceface', 3.2, 'Spaceface.jpg', 0, 'image', 'Adamtoksoz'),
-(2, 'Kanpai Panda1', 6, 'imgwork-1.png', 0, 'image', 'Kanpai-Labs'),
-(3, 'Spider Tanks', 5, 'music1.gif', 1, 'music', 'Snoop Dogg - B.O.D.R'),
-(4, '2 Geez (Instrumental)', 6, 'music2.gif', 1, 'music', 'Snoop Dogg - B.O.D.R'),
-(5, 'immortal', 4, 'immortal.jpg', 1, 'image', 'Ier6'),
-(6, 'SPACE COIN', 4.5, 'gif1.gif', 1, 'gifs', 'SDE'),
-(7, 'ZAP#4797', 3.1, 'imgwork-4.jpg', 1, 'image', 'SAAD97'),
-(8, 'Kanpai Panda2', 3.6, 'imgwork-2.png', 1, 'image', 'Kanpai-Labs'),
-(10, 'Leilani Kilgore', 7, 'Leilani Kilgore.jpg', 1, 'music', 'FuntimeNikki'),
-(11, 'Construction Token #496', 70, 'ConstructionToken496.png', 1, 'image', 'jeffgdavis'),
-(12, 'ConstructionToken#113', 35, '113.png', 1, 'image', 'jeffgdavis');
+INSERT INTO `artwork` (`id`, `workName`, `price`, `img`, `amount`, `category`, `collection_address`, `author`) VALUES
+(1, 'Spaceface', 0.2, 'Spaceface.jpg', 1, 'image', '0x495f947276749Ce646f68AC8c248420045cb7b5e', 'Adamtoksoz'),
+(2, 'Kanpai Panda1', 2, 'imgwork-1.png', 1, 'image', '0xaCF63E56fd08970b43401492a02F6F38B6635C91', 'Kanpai-Labs'),
+(3, 'Spider Tanks', 0.5, 'music1.gif', 1, 'music', '0xc36cF0cFcb5d905B8B513860dB0CFE63F6Cf9F5c', 'Snoop Dogg - B.O.D.R'),
+(4, '2 Geez (Instrumental)', 0.006, 'music2.gif', 1, 'music', '0xc36cF0cFcb5d905B8B513860dB0CFE63F6Cf9F5c', 'Snoop Dogg - B.O.D.R'),
+(5, 'IMMORTAL BABBLE', 4, 'immortal.jpg', 1, 'image', '0x09B1A9dfFD64e6dCAdf4241E0Fe66817e21c7a68', 'OBJECTZ by JIMMY'),
+(6, 'Aoki x Snoop', 0.3, 'gif1.gif', 1, 'gifs', '0xc36cF0cFcb5d905B8B513860dB0CFE63F6Cf9F5c', 'Snoop Dogg - B.O.D.R'),
+(7, 'ZAP#4797', 0.02, 'imgwork-4.jpg', 1, 'image', '0x0Cfb5d82BE2b949e8fa73A656dF91821E2aD99FD', '10KTF'),
+(8, 'Kanpai Panda2', 3.6, 'imgwork-2.png', 1, 'image', '0xaCF63E56fd08970b43401492a02F6F38B6635C91', 'Kanpai-Labs'),
+(10, 'Leilani Kilgore', 0.4, 'Leilani Kilgore.jpg', 1, 'music', '0x495f947276749Ce646f68AC8c248420045cb7b5e', 'FuntimeNikki'),
+(11, 'Construction Token #496', 1.5, 'ConstructionToken496.png', 1, 'image', '0x059EDD72Cd353dF5106D2B9cC5ab83a52287aC3a', 'jeffgdavis'),
+(12, 'ConstructionToken#113', 6.3, '113.png', 1, 'image', '0x059EDD72Cd353dF5106D2B9cC5ab83a52287aC3a', 'jeffgdavis'),
+(13, 'Construction Token #156', 6, 'ConstructionToken156.png', 1, 'image', '0x059EDD72Cd353dF5106D2B9cC5ab83a52287aC3a', 'jeffgdavis'),
+(14, 'Strawberry #2561', 0.0465, 'Strawberry2561.png', 1, 'image', '0xdF3a5f8576a6Ff359990688d94cf9c74245607f3', 'GardenLockdown (PLANT)');
 
 -- --------------------------------------------------------
 
@@ -76,9 +79,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `userName`, `account`, `password`, `email`, `purchase`) VALUES
 (95, 'sweetJohn', 'sweet456', '6367c48dd193d56ea7b0baad25b19455e529f5ee', 'biteOne@gmail.com', NULL),
-(97, 'GAGU', 'jack45678', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '583@gass.com', NULL),
-(104, 'Finnona', 'Adventure123', '0ce60eacd334fe2945c1f99e67ff5cb19c2f936f', 'Adventure123@sa.com', '[1]'),
-(105, NULL, 'saysomthing', '8c0da104259ae45f23bfeaab025b3436408ed166', 'saysomthing@as.com', NULL);
+(97, 'GAGU', 'jack45678', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '583@gass.com', NULL);
 
 --
 -- 已傾印資料表的索引
@@ -104,13 +105,13 @@ ALTER TABLE `users`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `artwork`
 --
 ALTER TABLE `artwork`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
