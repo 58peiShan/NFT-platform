@@ -36,6 +36,7 @@ function Home() {
 
   useEffect(() => {
     if (top10 !== {}) {
+      console.log(top10each);
       fetch(
         `http://localhost:5000/product/nft/top10each?add=${JSON.stringify(
           top10
@@ -141,11 +142,11 @@ function Home() {
         <table className="nftTop10">
           <thead>
             <tr>
-              <th>logo</th>
-              <th>tokenName</th>
-              <th>tokenAddress</th>
-              <th>交易量(24h)</th>
-              <th>交易量(7d)</th>
+              <th>Logo</th>
+              <th>Collection Name</th>
+              <th>Collection Address</th>
+              <th>Trans(24h)</th>
+              <th>Trans(7d)</th>
             </tr>
           </thead>
           <tbody>
@@ -156,7 +157,7 @@ function Home() {
                 const m = timestamp.getMonth() + 1;
                 const d = timestamp.getDate();
                 let ind = top10each.findIndex((item) => {
-                  return item.tokenHash == v.tokenAddress;
+                  return item.tokenHash === v.tokenAddress;
                 });
 
                 return (
@@ -220,9 +221,9 @@ function Home() {
         <table className="trans">
           <thead>
             <tr>
-              <th>block No</th>
-              <th>collection</th>
-              <th>collection address</th>
+              <th>Block No</th>
+              <th>Collection abbr</th>
+              <th>Collection Address</th>
               <th>
                 <FaClock />
               </th>

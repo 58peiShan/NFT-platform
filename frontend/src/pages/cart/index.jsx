@@ -47,7 +47,7 @@ function Cart() {
   const outputList = list.map((v, i) => {
     return (
       <tr key={i}>
-        <td>
+        <td style={{width:"150px"}}>
           <img src={`/img/${v.img}`} alt="" />
         </td>
         <td>{v.workName}</td>

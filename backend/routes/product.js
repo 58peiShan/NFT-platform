@@ -18,6 +18,22 @@ router.get(`/`, async (req, res) => {
     res.json(datas);
   }
 });
+//作品詳細資料
+router.get(`/detail`, async (req, res) => {
+  add = req.query.add;
+  res.set("Access-Control-Allow-Origin", "*");
+  request(
+    {
+      url: `https://services.tokenview.io/nft/eth/blockdata/collection/tokentrans/${add}/1/5?apikey=${process.env.NFT_API_KEY}`,
+    },
+    (error, response, body) => {
+      if (error || response.statusCode !== 200) {
+        return res.status(500).json({ type: "error", message: err.message });
+      }
+      res.json(JSON.parse(body).data);
+    }
+  );
+});
 
 //分類篩選
 router.get(`/:sort`, async (req, res) => {
@@ -87,4 +103,5 @@ router.get(`/nft/top10each`, async (req, res) => {
     res.json(result);
   }, 500);
 });
+
 module.exports = router;

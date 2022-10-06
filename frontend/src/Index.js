@@ -20,18 +20,16 @@ import { decodeToken } from "react-jwt";
 const App = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchNftTop10());
-  }, []);
-
+   dispatch(fetchNftTop10());
   if (localStorage.getItem("auth")) {
-    const total = useSelector((state) => state.productReducer);
-    const token = localStorage.getItem("auth");
-    const purchaseId = decodeToken(token).purchase;
     useEffect(() => {
       window.scroll(0, 0);
     }, [pathname]);
+
+    const total = useSelector((state) => state.productReducer);
+    const token = localStorage.getItem("auth");
+    const purchaseId = decodeToken(token).purchase;
+
     useEffect(() => {
       dispatch({ type: "USER_COLLECTION_RESET" });
       dispatch(fetchUserCollection(purchaseId));

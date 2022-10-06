@@ -196,11 +196,12 @@ tbody {
 .d-flex {
   display: flex;
 }
-
+.flex-row {
+  flex-direction: row;
+}
 .flex-column {
   flex-direction: column;
 }
-
 .d-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -459,7 +460,8 @@ footer {
     border: 1px solid #ddd;
     border-radius: 10px;
     overflow: hidden;
-    // min-height: 600px;
+    width: 30vw;
+    height: 30vw;
     object-fit: cover;
     img {
       margin-top: 50px;
@@ -467,9 +469,48 @@ footer {
       height: 100%;
     }
   }
+  .detialBox {
+    margin-bottom: 100px !important;
+    input {
+      display: none;
+    }
+    cursor: pointer;
+    margin: 20px 0 0 0;
+    width: 100%;
+    height: auto;
+    padding: 30px 30px 0;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+  }
+  .detialContent {
+    height: 0;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 0 0 20px 20px;
+    transition: 0.3s;
+    thead {
+      color: var(--select);
+    }
+    th {
+      border-bottom: 1px var(--secondary) solid;
+      border-radius: 0%;
+      background: #fff;
+    }
+  }
+
+  input:checked ~ .detialContent {
+    border: 1px solid #ddd;
+    display: flex;
+    height: 300px;
+    padding: 30px;
+  }
+
+  .itemBox {
+    flex-direction: row;
+  }
   .itemInfoBox {
     justify-content: end;
-    width: 50%;
+    width: 60%;
     flex-direction: column;
     margin-left: 30px;
     div {
@@ -480,19 +521,23 @@ footer {
       margin-bottom: 20px;
       justify-content: flex-start;
       font-size: 20px;
-      color: var(--select);
+      h3:first-child {
+        color: var(--select);
+      }
     }
     h4 {
       font-weight: normal;
       color: var(--primary);
       margin: 30px 0;
     }
+
     .priceBox {
       padding: 30px;
       border: 1px solid #ddd;
       border-radius: 20px;
       width: 100%;
-      height: 350px;
+      height: calc(30vw - 334px);
+      min-height: 190px;
 
       h2 svg {
         color: var(--select);
@@ -708,7 +753,15 @@ footer {
       left: 80px;
     }
   }
-
+  .sm-column {
+    flex-direction: column;
+  }
+  .divcontainer .detialBox {
+    width: auto;
+    .detialContent {
+      overflow: scroll;
+    }
+  }
   .card.product {
     .imgContainer {
       height: 150px;
@@ -785,11 +838,13 @@ footer {
       margin: 0 auto;
     }
     .nftTop10 {
-      th:nth-child(3),th:nth-child(5),
-      td:nth-child(3),td:nth-child(5) {
+      th:nth-child(3),
+      th:nth-child(5),
+      td:nth-child(3),
+      td:nth-child(5) {
         display: none;
       }
-      th:nth-child(4){
+      th:nth-child(4) {
         border-radius: 0 10px 0 0;
       }
     }
