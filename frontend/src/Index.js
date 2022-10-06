@@ -20,28 +20,26 @@ import { decodeToken } from "react-jwt";
 const App = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-   dispatch(fetchNftTop10());
-  if (localStorage.getItem("auth")) {
-    useEffect(() => {
-      window.scroll(0, 0);
-    }, [pathname]);
+  const total = useSelector((state) => state.productReducer);
+  dispatch(fetchNftTop10());
 
-    const total = useSelector((state) => state.productReducer);
-    const token = localStorage.getItem("auth");
-    const purchaseId = decodeToken(token).purchase;
-
-    useEffect(() => {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [pathname]);
+  useEffect(() => {
+    if (localStorage.getItem("auth")) {
+      const token = localStorage.getItem("auth");
+      const purchaseId = decodeToken(token).purchase;
       dispatch({ type: "USER_COLLECTION_RESET" });
       dispatch(fetchUserCollection(purchaseId));
-    }, [token]);
-    useEffect(() => {
-      dispatch(fetchPurchase());
-    }, [total]);
-  }
+    }
+  }, [localStorage,localStorage.getItem("auth")]);
+  useEffect(() => {
+    dispatch(fetchPurchase());
+  }, [total]);
   return (
     <>
       <Header />
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/*" element={<Product />} />

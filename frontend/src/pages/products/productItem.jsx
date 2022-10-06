@@ -62,7 +62,8 @@ function ProductItem() {
           <img src={`../../img/${item.img}`} alt="" />
         </div>
         <div className="itemInfoBox d-flex">
-          <div className="d-flex" style={{ justifyContent: "space-between" }}>
+          <div className="d-flex" style={{ justifyContent: "flex-start" }}>
+              <img className="authorImg" src={`../../img/${item.authorImg}`} alt="" />
             <div className="d-flex">
               <h3>
                 {item.author}
@@ -172,7 +173,7 @@ function ProductItem() {
                 })
               ) : (
                 <tr>
-                  <td colSpan={4}>
+                  <td colSpan={5}>
                     <ClipLoader
                       loading={true}
                       cssOverride={override}

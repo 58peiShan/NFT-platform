@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 import React from "react";
-import indexImg from "../../img/immortal.jpg";
-import authorImg from "../../img/author_JIMMY.png";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../../component/Card.jsx";
 import { FaUndo, FaClock } from "react-icons/fa";
@@ -12,22 +10,30 @@ import { useEffect, useState } from "react";
 
 function Home() {
   const dispatch = useDispatch();
-  const top10 = useSelector((state) => state.nftReducer.top10);
-  const usd = useSelector((state) => state.nftReducer.usd);
-  const search = useSelector((state) => state.cardReducer.search);
+  const {
+    nftReducer: { top10: top10, usd: usd },
+    cardReducer: { search: search, card: worklist },
+  } = useSelector((state) => state);
   const [list, setList] = useState([]);
   const [ethlist, setEthList] = useState({});
   const [reload, setReload] = useState(false);
   const [top10each, setTop10each] = useState([]);
+  const [n, setN] = useState(0);
   const override = {
     display: "block",
     margin: "150px auto",
     borderColor: "rgb(49, 150, 218)",
   };
+  
+  useEffect(()=>{
+    const num = Math.floor(Math.random() * 13) + 1;
+    setN(num);
+  },[])
+
   useEffect(() => {
     fetch(`http://localhost:5000/product/nft/blockdata`)
       .then((res) => res.json())
-      .then((data) => setList(data.data.data));
+      .then((data) => setList(data));
     fetch(`https://api.coingecko.com/api/v3/coins/ethereum`)
       .then((res) => res.json())
       .then((data) => setEthList(data.market_data)),
@@ -36,7 +42,6 @@ function Home() {
 
   useEffect(() => {
     if (top10 !== {}) {
-      console.log(top10each);
       fetch(
         `http://localhost:5000/product/nft/top10each?add=${JSON.stringify(
           top10
@@ -54,7 +59,16 @@ function Home() {
     </div>
   ) : (
     <div className="homeWrapper">
-      <div className="bg" style={{ backgroundImage: `url(${indexImg})` }}></div>
+      <div
+        className="bg"
+        style={{
+          backgroundImage: `url(${
+            worklist.length > 0
+              ? ` ../../img/${worklist[n].img}`
+              : "../../img/immortal.jpg"
+          })`,
+        }}
+      ></div>
       <div className="divcontainer d-flex">
         <div className="text d-flex">
           <h1>Discover, collect, and sell extraordinary NFTs</h1>
@@ -73,28 +87,52 @@ function Home() {
           </div>
         </div>
         <div className="img d-flex">
-          <div
-            className="card"
-            style={{
-              width: "500px",
-              height: "400px",
-              justifyContent: "space-between",
-            }}
-          >
-            <div className="imgContainer">
-              <img src={indexImg} alt="" />
-            </div>
-            <div className="cardInfo d-flex">
-              <div>
-                <img src={authorImg} alt="authorImg" />
+          <Link to={`${
+                      worklist.length > 0
+                        ? `products/item/${worklist[n].id}`
+                        :'products/item/5'
+                    }`} style={{color:"gray"}}>
+            <div
+              className="card"
+              style={{
+                width: "500px",
+                height: "400px",
+                justifyContent: "space-between",
+              }}
+            >
+              <div className="imgContainer">
+                <img
+                  src={
+                    worklist.length > 0
+                      ? ` ../../img/${worklist[n].img}`
+                      : "../../img/immortal.jpg"
+                  }
+                  alt=""
+                />
               </div>
-              <div>
-                <p>IMMOPTAL BABBLE</p>
-                <p>JIMMYYY</p>
+              <div className="cardInfo d-flex">
+                <div>
+                  <img
+                    src={
+                      worklist.length > 0
+                        ? ` ../../img/${worklist[n].authorImg}`
+                        : "../../img/author_JIMMY.png"
+                    }
+                    alt="authorImg" style={{borderRadius:' 50%'}}
+                  />
+                </div>
+                <div>
+                  <p>
+                    {worklist.length > 0
+                      ? worklist[n].workName
+                      : "IMMOPTAL BABBLE"}
+                  </p>
+                  <p>{worklist.length > 0 ? worklist[n].author : "JIMMYYY"}</p>
+                </div>
+                <div>[??????]</div>
               </div>
-              <div>[??????]</div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
       <div className="divcontainer status">

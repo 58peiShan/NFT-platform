@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
-
 import { FaEthereum } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from "../actions/cardAction";
