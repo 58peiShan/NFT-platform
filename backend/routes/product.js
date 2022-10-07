@@ -106,6 +106,8 @@ router.get(`/nft/top10each`,  (req, res) => {
   })
   promise.then((data) => {
     res.json(data);
+  }).catch((err) => {
+    res.status(500).json({ type: "error", message: err });
   })
 });
 
