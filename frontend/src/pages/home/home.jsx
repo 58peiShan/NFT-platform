@@ -24,11 +24,11 @@ function Home() {
     margin: "150px auto",
     borderColor: "rgb(49, 150, 218)",
   };
-  
-  useEffect(()=>{
-    const num = Math.floor(Math.random() * worklist.length-1) + 1;
-    setN(num);    
-  },[worklist])
+
+  useEffect(() => {
+    const num = Math.floor(Math.random() * worklist.length - 1) + 1;
+    setN(num);
+  }, [worklist]);
 
   useEffect(() => {
     fetch(`http://localhost:5000/product/nft/blockdata`)
@@ -51,6 +51,7 @@ function Home() {
         .then((data) => setTop10each(data));
     }
   }, [top10]);
+  console.log(top10each);
   return search ? (
     <div className="divcontainer">
       <div className="productList d-flex">
@@ -87,11 +88,14 @@ function Home() {
           </div>
         </div>
         <div className="img d-flex">
-          <Link to={`${
-                      worklist.length > 0
-                        ? `products/item/${worklist[n].id}`
-                        :'products/item/5'
-                    }`} style={{color:"gray"}}>
+          <Link
+            to={`${
+              worklist.length > 0
+                ? `products/item/${worklist[n].id}`
+                : "products/item/5"
+            }`}
+            style={{ color: "gray" }}
+          >
             <div
               className="card"
               style={{
@@ -118,7 +122,8 @@ function Home() {
                         ? ` ../../img/${worklist[n].authorImg}`
                         : "../../img/author_JIMMY.png"
                     }
-                    alt="authorImg" style={{borderRadius:' 50%'}}
+                    alt="authorImg"
+                    style={{ borderRadius: " 50%" }}
                   />
                 </div>
                 <div>
@@ -188,7 +193,7 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {top10each.length === 10 ? (
+            {top10each.length >0 ? (
               top10.map((v, i) => {
                 const timestamp = new Date(1 * (v.time + "000"));
                 const y = timestamp.getFullYear();
