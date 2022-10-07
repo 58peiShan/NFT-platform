@@ -26,9 +26,9 @@ function Home() {
   };
   
   useEffect(()=>{
-    const num = Math.floor(Math.random() * 13) + 1;
-    setN(num);
-  },[])
+    const num = Math.floor(Math.random() * worklist.length-1) + 1;
+    setN(num);    
+  },[worklist])
 
   useEffect(() => {
     fetch(`http://localhost:5000/product/nft/blockdata`)

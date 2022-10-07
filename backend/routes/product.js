@@ -81,7 +81,7 @@ router.get(`/nft/top10`, async (req, res) => {
     }
   );
 });
-
+//NFT前10名交易量的詳細
 router.get(`/nft/top10each`, async (req, res) => {
   add = JSON.parse(req.query.add);
   res.setHeader("Access-Control-Allow-Origin", "*");
