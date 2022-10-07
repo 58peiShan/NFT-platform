@@ -82,26 +82,31 @@ router.get(`/nft/top10`, async (req, res) => {
   );
 });
 
-router.get(`/nft/top10each`, async (req, res) => {
+router.get(`/nft/top10each`,  (req, res) => {
   add = JSON.parse(req.query.add);
   res.setHeader("Access-Control-Allow-Origin", "*");
-  let result = [];
-  for (let i = 0; i < add.length; i++) {
-    request(
-      {
-        url: `https://services.tokenview.io/nft/eth/blockdata/collection/info/${add[i].tokenAddress}?apikey=${process.env.NFT_API_KEY}`,
-      },
-      (error, response, body) => {
-        if (error || response.statusCode !== 200) {
-          return res.status(500).json({ type: "error", message: err.message });
+  const promise = new Promise((resolve, reject) => {
+    let result = [];
+    for (let i = 0; i < add.length; i++) {
+      const item = add[i];
+      request(
+        {
+          url: `https://services.tokenview.io/nft/eth/blockdata/collection/info/${item.tokenAddress}?apikey=${process.env.NFT_API_KEY}`,
+        },
+        (error, response, body) => {
+          if (error || response.statusCode !== 200) {
+            reject(err.message);
+            // return res.status(500).json({ type: "error", message: err.message });
+          }
+          result.push(JSON.parse(body).data);
+          i === add.length - 1 && resolve(result)
         }
-        result.push(JSON.parse(body).data);
-      }
-    );
-  }
-  setTimeout(() => {
-    res.json(result);
-  }, 500);
+      );
+    }
+  })
+  promise.then((data) => {
+    res.json(data);
+  })
 });
 
 module.exports = router;
