@@ -1,10 +1,14 @@
 import { combineReducers } from "redux";
 import productReducer from "./productReducer";
 import cartlist from "./cartlistReducer";
-import cardBtn from "./cardBtnReducer";
+import cardReducer from "./cardReducer";
+import userReducer from "./userReducer";
+import nftReducer from "./nftReducer";
 
 export default combineReducers({
   productReducer,
   cartlist,
-  cardBtn
+  cardReducer,
+  userReducer,
+  nftReducer
 });

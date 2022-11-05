@@ -5,8 +5,12 @@ const productReducer = (
   action
 ) => {
   switch (action.type) {
-    case "CHANGE":
+    case "CARTLIST_RESET":
+      return (state = 0);
+    case "INCREASE":
       return (state = state += 1);
+    case "DECREASE":
+      return (state = state -= 1);
     default:
       return state;
   }

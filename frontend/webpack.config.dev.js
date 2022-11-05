@@ -7,7 +7,7 @@ module.exports = {
   mode: "development",
   devtool: "source-map",
   entry: [
-    "webpack-hot-middleware/client?noInfo=true&reload=true",
+    // "webpack-hot-middleware/client?noInfo=true&reload=true",
     "./src/index.js",
   ],
   output: {
@@ -54,7 +54,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       filename: "index.html",
