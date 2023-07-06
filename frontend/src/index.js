@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Provider, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import store from "./store/index";
@@ -40,6 +40,7 @@ const App = () => {
   return (
     <>
       <Header />
+      <Suspense fallback={<>loading...</>}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products/*" element={<Product />} />
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="/user/*" element={<User />} />
             <Route path="*" element={<Error />} />
           </Routes>
+          </Suspense>
     </>
   );
 };
