@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import withRouter from "../../component/withRouter";
+// import {bcrypt} from "bcrypt";
 
 class Login extends Component {
   constructor(props) {
@@ -77,7 +78,7 @@ class Login extends Component {
               登入
             </button>
             <button type="button" className="btnSec">
-              <Link to="/user/SignIn">未有帳號？</Link>
+              <Link to="/user/SignIn"><span style={{color:"gray"}}>未有帳號？</span></Link>
             </button>
           </div>
         </form>

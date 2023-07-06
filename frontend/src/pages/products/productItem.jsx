@@ -52,7 +52,7 @@ function ProductItem() {
         `http://localhost:5000/product/detail?add=${item.collection_address}`
       )
         .then((res) => res.json())
-        .then((data) => setDetail(data.data));
+        .then((data) => data.type?setDetail({'錯誤':'查無資料'}):setDetail(data.data));
     }
   };
   return (
@@ -172,6 +172,10 @@ function ProductItem() {
                   );
                 })
               ) : (
+                detail !=={}?
+                <tr>
+              <td colSpan={5}>查無資料</td>
+              </tr>:
                 <tr>
                   <td colSpan={5}>
                     <ClipLoader

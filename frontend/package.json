@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.prod.js",
+    "build": "webpack  --config webpack.config.prod.js",
     "dev": "webpack-dev-server --config webpack.config.dev.js",
     "server": "node server.js --config webpack.config.dev.js"
   },
@@ -12,8 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "@paypal/react-paypal-js": "^7.8.1",
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
+    "image-webpack-loader": "^8.1.0",
     "js-sha256": "^0.9.0",
     "proxy": "^1.0.2",
     "react": "^18.2.0",

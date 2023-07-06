@@ -27,7 +27,22 @@ function Header() {
     setIsChecked(false)
   }, [pathname]);
 
-  const seacherHandler = (e) => {
+
+  const debounce =(fn,time)=>{
+    let timeoutId;
+    return wrapper;
+    function wrapper (...args){
+      if(timeoutId){
+        clearTimeout(timeoutId)
+      }
+      timeoutId = setTimeout(()=>{
+        timeoutId = null
+      fn(...args)
+      },time)
+    }
+  }
+
+  const seacherHandler = debounce( e => {
     if (e) {
       console.log(e);
       dispatch({ type: "GET_CARD" });
@@ -35,7 +50,7 @@ function Header() {
     } else {
       dispatch({ type: "NO_SEARCH" });
     }
-  };
+  },600);
   const logoutHandler = () => {
     const logout = confirm("確定要登出嗎？");
     if (logout) {

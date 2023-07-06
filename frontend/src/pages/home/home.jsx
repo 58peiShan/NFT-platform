@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
-import React from "react";
+import React ,{ useEffect, useState }from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../../component/Card.jsx";
 import { FaUndo, FaClock } from "react-icons/fa";
 import { fetchPrice } from "../../actions/nftAction";
-import { useEffect, useState } from "react";
+import style from "./home.scss"
+
 
 function Home() {
   const dispatch = useDispatch();
@@ -41,17 +42,16 @@ function Home() {
   }, [reload]);
 
   useEffect(() => {
-    if (top10 !== {}) {
+   if (top10.length >= 1)
       fetch(
         `http://localhost:5000/product/nft/top10each?add=${JSON.stringify(
           top10
         )}`
       )
-        .then((res) => res.json())
-        .then((data) => setTop10each(data));
-    }
+        .then((res) =>res.json())
+        .then((data) => setTop10each(data)).catch((data)=>console.log(data));
+    
   }, [top10]);
-  console.log(top10each);
   return search ? (
     <div className="divcontainer">
       <div className="productList d-flex">
@@ -105,14 +105,15 @@ function Home() {
               }}
             >
               <div className="imgContainer">
-                <img
+                <div className={worklist.length > 0?`${style.indexWork[worklist[n]]}`:`${style.indexWork}`}></div>
+                {/* <img
                   src={
                     worklist.length > 0
-                      ? ` ../../img/${worklist[n].img}`
-                      : "../../img/immortal.jpg"
+                      ? `assetsPath/img/${worklist[n].img}`
+                      : "assetsPath/img/immortal.jpg"
                   }
                   alt=""
-                />
+                /> */}
               </div>
               <div className="cardInfo d-flex">
                 <div>
@@ -193,7 +194,7 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {top10each.length >0 ? (
+            {top10each.length > 1 ? (
               top10.map((v, i) => {
                 const timestamp = new Date(1 * (v.time + "000"));
                 const y = timestamp.getFullYear();

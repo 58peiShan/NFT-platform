@@ -21,6 +21,7 @@ module.exports = {
     open: true,
     historyApiFallback: true,
   },
+
   module: {
     rules: [
       {
@@ -37,16 +38,22 @@ module.exports = {
       },
       {
         test: /\.s[ca]ss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [
+          {loader:MiniCssExtractPlugin.loader}, {loader:"css-loader",options: {
+            modules: true,
+        },}, {loader:"sass-loader"}
+        ],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: "file-loader",
+            loader: "url-loader",
             options: {
+              limit: 8192,
+              fallback: 'file-loader',
               name: "[name].[ext]",
-              outputPath: "./img",
+              //: "/img",
             },
           },
         ],
@@ -54,7 +61,6 @@ module.exports = {
     ],
   },
   plugins: [
-    // new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       filename: "index.html",
@@ -65,4 +71,9 @@ module.exports = {
       filename: "./css/index.css",
     }),
   ],
+  resolve: {
+    alias: {
+        assetsPath: path.resolve(__dirname, "src/assets"),
+    },
+},
 };

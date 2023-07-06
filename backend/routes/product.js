@@ -1,7 +1,8 @@
 const express = require("express");
-const request = require("request");
+const axios = require('axios');
 const router = express.Router();
 const db = require("../util/database");
+const NFT_API_KEY = process.env.NFT_API_KEY;
 require("dotenv").config();
 
 //作品名搜尋篩選
@@ -19,21 +20,19 @@ router.get(`/`, async (req, res) => {
   }
 });
 //作品詳細資料
+
 router.get(`/detail`, async (req, res) => {
-  add = req.query.add;
-  res.set("Access-Control-Allow-Origin", "*");
-  request(
-    {
-      url: `https://services.tokenview.io/nft/eth/blockdata/collection/tokentrans/${add}/1/5?apikey=${process.env.NFT_API_KEY}`,
-    },
-    (error, response, body) => {
-      if (error || response.statusCode !== 200) {
-        return res.status(500).json({ type: "error", message: err.message });
-      }
-      res.json(JSON.parse(body).data);
-    }
-  );
-});
+  try{
+    res.set("Access-Control-Allow-Origin", "*");
+    add = req.query.add;
+    const {data} =await axios.get (`https://services.tokenview.io/nft/eth/blockdata/collection/tokentrans/${add}/1/5?apikey=${NFT_API_KEY}`)
+    res.json(data.data)
+    console.log(data.data.data);
+  }
+  catch(error){
+    console.error(error.message)
+    res.status(500).json({ type: 'error', message: error.message })
+  }})
 
 //分類篩選
 router.get(`/:sort`, async (req, res) => {
@@ -52,61 +51,41 @@ router.get(`/id/:id`, async (req, res) => {
   res.json(datas);
 });
 
-router.get(`/nft/blockdata`, async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  request(
-    {
-      url: `https://services.tokenview.io/nft/eth/blockdata/transactions/all/1/10?apikey=${process.env.NFT_API_KEY}`,
-    },
-    (error, response, body) => {
-      if (error || response.statusCode !== 200) {
-        return res.status(500).json({ type: "error", message: err.message });
-      }
-      res.json(JSON.parse(body).data.data);
-    }
-  );
+router.get('/nft/blockdata', async (req, res) => {
+  try {
+    const { data } = await axios.get(`https://services.tokenview.io/nft/eth/blockdata/transactions/all/1/10?apikey=${NFT_API_KEY}`);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.json(data.data.data);
+  } catch (error) {
+    console.error(`報告: ${error.message}`);
+    res.status(500).json({ type: 'error', message: error.message });
+  }
 });
 
-router.get(`/nft/top10`, async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  request(
-    {
-      url: `https://services.tokenview.io/nft/eth/blockdata/statistics/tokens/721/1/10?apikey=${process.env.NFT_API_KEY}`,
-    },
-    (error, response, body) => {
-      if (error || response.statusCode !== 200) {
-        return res.status(500).json({ type: "error", message: err.message });
-      }
-      res.json(JSON.parse(body));
-    }
-  );
-});
-//NFT前10名交易量的詳細
-router.get(`/nft/top10each`, async (req, res) => {
-  add = JSON.parse(req.query.add);
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  const promise = new Promise((resolve, reject) => {
-    let result = [];
-    for (let i = 0; i < add.length; i++) {
-      const item = add[i];
-      request(
-        {
-          url: `https://services.tokenview.io/nft/eth/blockdata/collection/info/${item.tokenAddress}?apikey=${process.env.NFT_API_KEY}`,
-        },
-        (error, response, body) => {
-          if (error || response.statusCode !== 200) {
-            reject(err.message);
-            // return res.status(500).json({ type: "error", message: err.message });
-          }
-          result.push(JSON.parse(body).data);
-          result.length === add.length  && resolve(result);
-        }
-      );
-    }
-  })
-  promise.then((data) => {
+router.get('/nft/top10', async (req, res) => {
+  try {
+    const { data } = await axios.get(`https://services.tokenview.io/nft/eth/blockdata/statistics/tokens/721/1/10?apikey=${NFT_API_KEY}`);
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.json(data);
-  })
+  } catch (error) {
+    console.error(`報告: ${error.message}`);
+    res.status(500).json({ type: 'error', message: error.message });
+  }
+});
+
+//NFT前10名交易量的詳細
+router.get('/nft/top10each', async (req, res) => {
+  try {
+    const add = JSON.parse(req.query.add);
+    const result = await Promise.all(add.map(async (item) => {
+      const { data } = await axios.get(`https://services.tokenview.io/nft/eth/blockdata/collection/info/${item.tokenAddress}?apikey=${NFT_API_KEY}`);
+      return data.data;
+    }));
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ type: 'error', message:'error.message' });
+  }
 });
 
 module.exports = router;

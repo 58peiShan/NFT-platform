@@ -2,20 +2,22 @@ import React, { useEffect, useState } from "react";
 import { Provider, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import store from "./store/index";
-import "../public/index.scss";
+import "./scss/_global.scss";
+// import "../public/index.scss";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import ReactDOM from "react-dom/client";
-import Header from "./component/Header.jsx";
-import Home from "./pages/home/home.jsx";
-import Product from "./pages/products/index.jsx";
-import ProductItem from "./pages/products/productItem.jsx";
-import Cart from "./pages/cart/index.jsx";
-import User from "./pages/user/index.jsx";
-import Error from "./pages/Error.jsx";
+const Header = React.lazy(()=>import("./component/Header.jsx"))
+const Home = React.lazy(()=>import("./pages/home/home.jsx"))
+const Product = React.lazy(()=>import("./pages/products/index.jsx"))
+const ProductItem = React.lazy(()=>import("./pages/products/productItem.jsx"))
+const Cart = React.lazy(()=>import("./pages/cart/index.jsx"))
+const User = React.lazy(()=>import("./pages/user/index.jsx"))
+const Error = React.lazy(()=>import("./pages/Error.jsx"))
 import { fetchPurchase } from "./actions/cartListAction";
 import { fetchUserCollection } from "./actions/userAction";
 import { fetchNftTop10 } from "./actions/nftAction";
 import { decodeToken } from "react-jwt";
+import ErrorBoundary from "./component/errorboundary/errorBoundary.jsx";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -40,14 +42,16 @@ const App = () => {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products/*" element={<Product />} />
-        <Route path="/products/item/:id" element={<ProductItem />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/user/*" element={<User />} />
-        <Route path="*" element={<Error />} />
-      </Routes>
+        <ErrorBoundary>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products/*" element={<Product />} />
+          <Route path="/products/item/:id" element={<ProductItem />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/user/*" element={<User />} />
+          <Route path="*" element={<Error />} />
+       </Routes>
+          </ErrorBoundary>
     </>
   );
 };

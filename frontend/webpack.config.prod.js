@@ -31,7 +31,11 @@ module.exports = {
       },
       {
         test: /\.s[ca]ss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [
+          {loader:MiniCssExtractPlugin.loader}, {loader:"css-loader",options: {
+            modules: true,
+        },}, {loader:"sass-loader"}
+        ],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -41,6 +45,12 @@ module.exports = {
             options: {
               name: "[name].[ext]",
               outputPath: "./img",
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              disable: false ,
             },
           },
         ],
