@@ -7,6 +7,7 @@ import Card from "../../component/Card.jsx";
 import { FaUndo, FaClock } from "react-icons/fa";
 import { fetchPrice } from "../../actions/nftAction";
 import style from "./home.scss"
+import ErrorBoundary from "../../component/errorboundary/errorBoundary.jsx";
 
 
 function Home() {
@@ -42,7 +43,8 @@ function Home() {
   }, [reload]);
 
   useEffect(() => {
-   if (top10.length >= 1)
+    top10 &&
+   top10.length >= 1 &&
       fetch(
         `http://localhost:5000/product/nft/top10each?add=${JSON.stringify(
           top10
@@ -106,14 +108,14 @@ function Home() {
             >
               <div className="imgContainer">
                 <div className={worklist.length > 0?`${style.indexWork[worklist[n]]}`:`${style.indexWork}`}></div>
-                {/* <img
+                <img
                   src={
                     worklist.length > 0
-                      ? `assetsPath/img/${worklist[n].img}`
-                      : "assetsPath/img/immortal.jpg"
+                      ? `../../img/${worklist[n].img}`
+                      : "../../img/immortal.jpg"
                   }
                   alt=""
-                /> */}
+                />
               </div>
               <div className="cardInfo d-flex">
                 <div>
@@ -194,6 +196,7 @@ function Home() {
             </tr>
           </thead>
           <tbody>
+          <ErrorBoundary>
             {top10each.length > 1 ? (
               top10.map((v, i) => {
                 const timestamp = new Date(1 * (v.time + "000"));
@@ -246,6 +249,7 @@ function Home() {
                 </td>
               </tr>
             )}
+            </ErrorBoundary>
           </tbody>
         </table>
         <div
@@ -274,6 +278,7 @@ function Home() {
             </tr>
           </thead>
           <tbody>
+          <ErrorBoundary>
             {list.length > 0 ? (
               list.map((v, i) => {
                 const timestamp = new Date(1 * (v.time + "000"));
@@ -312,10 +317,12 @@ function Home() {
                 </td>
               </tr>
             )}
+            </ErrorBoundary>
           </tbody>
         </table>
       </div>
     </div>
+    
   );
 }
 

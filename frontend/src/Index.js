@@ -3,7 +3,6 @@ import { Provider, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import store from "./store/index";
 import "./scss/_global.scss";
-// import "../public/index.scss";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 const Header = React.lazy(()=>import("./component/Header.jsx"))
@@ -17,7 +16,6 @@ import { fetchPurchase } from "./actions/cartListAction";
 import { fetchUserCollection } from "./actions/userAction";
 import { fetchNftTop10 } from "./actions/nftAction";
 import { decodeToken } from "react-jwt";
-import ErrorBoundary from "./component/errorboundary/errorBoundary.jsx";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -42,16 +40,14 @@ const App = () => {
   return (
     <>
       <Header />
-        <ErrorBoundary>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products/*" element={<Product />} />
-          <Route path="/products/item/:id" element={<ProductItem />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/user/*" element={<User />} />
-          <Route path="*" element={<Error />} />
-       </Routes>
-          </ErrorBoundary>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products/*" element={<Product />} />
+            <Route path="/products/item/:id" element={<ProductItem />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/user/*" element={<User />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
     </>
   );
 };

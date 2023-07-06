@@ -52,8 +52,15 @@ module.exports = {
             options: {
               limit: 8192,
               fallback: 'file-loader',
-              name: "[name].[ext]",
-              //: "/img",
+              name(resourcePath) {
+                const willRemovePath = path.resolve(__dirname, "src");
+                const parseDir = path.resolve(path.dirname(resourcePath));
+                const exportPath = parseDir
+                    .replace(willRemovePath, "")
+                    .replace(/^[\\/]/, "")
+                    .replace(/\\/g, "/");
+                return `${exportPath}/[name].[ext]`;
+            },
             },
           },
         ],
@@ -73,7 +80,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
-        assetsPath: path.resolve(__dirname, "src/assets"),
+      assetsPath: path.resolve(__dirname, "src/img"),
     },
 },
 };

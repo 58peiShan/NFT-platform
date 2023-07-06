@@ -43,8 +43,15 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              name: "[name].[ext]",
-              outputPath: "./img",
+              name(resourcePath) {
+                const willRemovePath = path.resolve(__dirname, "src");
+                const parseDir = path.resolve(path.dirname(resourcePath));
+                const exportPath = parseDir
+                    .replace(willRemovePath, "")
+                    .replace(/^[\\/]/, "")
+                    .replace(/\\/g, "/");
+                return `${exportPath}/[name].[ext]`;
+            },
             },
           },
           {
@@ -57,6 +64,11 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    alias: {
+      assetsPath: path.resolve(__dirname, "src/img"),
+    },
+},
   plugins: [
   
     new webpack.HotModuleReplacementPlugin(),
